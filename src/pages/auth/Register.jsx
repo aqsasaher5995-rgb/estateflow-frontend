@@ -13,27 +13,60 @@ const Register = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(''); // Clear error on typing
+    setSuccessMsg(''); // Clear success message
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setSuccessMsg('');
+
     try {
+      console.log('Submitting registration:', formData);
       const result = await authService.register(formData);
       console.log('Register result:', result);
       
       if (result.success) {
-        window.location.href = '/';
+        setSuccessMsg('✅ Registration successful! Redirecting...');
+        // Store token if needed
+        if (result.data?.token) {
+          localStorage.setItem('token', result.data.token);
+        }
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1500);
       } else {
-        setError('Registration failed');
+        setError(result.message || 'Registration failed. Please try again.');
       }
     } catch (err) {
       console.error('Register error:', err);
-      setError(err.response?.data?.message || 'Registration failed');
+      
+      // Better error handling
+      let errorMessage = 'Registration failed. Please try again.';
+      
+      if (err.response) {
+        // Server responded with error
+        const serverMessage = err.response.data?.message;
+        console.log('Server error message:', serverMessage);
+        
+        if (serverMessage?.toLowerCase().includes('already exists')) {
+          errorMessage = '❌ This email is already registered. Please login instead.';
+        } else if (serverMessage?.toLowerCase().includes('duplicate')) {
+          errorMessage = '❌ This email is already registered. Please login instead.';
+        } else if (serverMessage) {
+          errorMessage = `❌ ${serverMessage}`;
+        }
+      } else if (err.message) {
+        errorMessage = `❌ ${err.message}`;
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -49,7 +82,31 @@ const Register = () => {
           <h1 className="heading">Create account</h1>
           <p className="subheading">Join the future of property management</p>
 
-          {error && <div className="error-msg">{error}</div>}
+          {successMsg && (
+            <div style={{ 
+              background: 'rgba(16, 185, 129, 0.15)', 
+              border: '1px solid rgba(16, 185, 129, 0.3)',
+              color: '#34d399',
+              padding: '12px 16px',
+              borderRadius: '10px',
+              marginBottom: '16px',
+              fontSize: '14px',
+              textAlign: 'center'
+            }}>{successMsg}</div>
+          )}
+
+          {error && (
+            <div style={{ 
+              background: 'rgba(239, 68, 68, 0.15)', 
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              color: '#f87171',
+              padding: '12px 16px',
+              borderRadius: '10px',
+              marginBottom: '16px',
+              fontSize: '14px',
+              textAlign: 'center'
+            }}>{error}</div>
+          )}
 
           <form onSubmit={handleSubmit}>
             <div className="input-group">
