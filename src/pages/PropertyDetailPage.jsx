@@ -230,7 +230,7 @@ const PropertyDetailPage = () => {
   const loadPropertyData = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`http://localhost:5000/api/properties/${id}`);
+      const res = await fetch(`https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${id}`);
       const data = await res.json();
       
       let fetchedProp = null;
@@ -295,7 +295,7 @@ const PropertyDetailPage = () => {
 
   const fetchReviews = async (propertyId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/properties/${propertyId}/reviews`);
+      const res = await fetch(`https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${propertyId}/reviews`);
       const data = await res.json();
       if (data.success) {
         setReviews(data.data.reviews);
@@ -314,7 +314,7 @@ const PropertyDetailPage = () => {
     setSubmittingReview(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:5000/api/properties/${property.id}/reviews`, {
+      const res = await fetch(`https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${property.id}/reviews`, {
         method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ rating: ratingInput, comment: commentInput })
       });

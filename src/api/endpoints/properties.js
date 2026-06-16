@@ -1,11 +1,11 @@
 import api from '../client';
 
-export const propertyAPI = {
-  getAll: (params) => api.get('/properties', { params }),
-  getById: (id) => api.get(`/properties/${id}`),
-  create: (data) => api.post('/properties', data),
-  update: (id, data) => api.put(`/properties/${id}`, data),
-  delete: (id) => api.delete(`/properties/${id}`),
-  getMyProperties: () => api.get('/properties/my/properties'),
-  getStats: () => api.get('/properties/my/stats')
+export const propertyEndpoints = {
+  getAll: (params) => api.get('/api/properties', { params }),
+  getById: (id) => api.get(`/api/properties/${id}`),
+  create: (data) => api.post('/api/properties', data),
+  update: (id, data) => api.put(`/api/properties/${id}`, data),
+  delete: (id) => api.delete(`/api/properties/${id}`),
+  getMyProperties: () => api.get('/api/properties/my/properties'),
+  getStats: () => api.get('/api/properties/my/stats'),
 };

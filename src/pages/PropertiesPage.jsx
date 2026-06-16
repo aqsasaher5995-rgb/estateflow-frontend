@@ -133,7 +133,7 @@ const PropertiesPage = () => {
   const fetchProperties = async () => {
     try {
       setLoading(true);
-      const res = await fetch('http://localhost:5000/api/properties');
+      const res = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties');
       const data = await res.json();
       if (data.success && data.data.properties.length > 0) {
         const normalized = data.data.properties.map(p => ({

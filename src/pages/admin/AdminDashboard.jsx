@@ -29,7 +29,7 @@ const AdminDashboard = () => {
       const [statsRes, usersRes, propsRes, mainRes] = await Promise.all([
         fetch('http://localhost:5000/api/admin/stats', { headers: { Authorization: `Bearer ${token}` } }),
         fetch('http://localhost:5000/api/admin/users', { headers: { Authorization: `Bearer ${token}` } }),
-        fetch('http://localhost:5000/api/properties'),
+        fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties'),
         fetch('http://localhost:5000/api/admin/maintenance', { headers: { Authorization: `Bearer ${token}` } }),
       ]);
       const [statsData, usersData, propsData, mainData] = await Promise.all([

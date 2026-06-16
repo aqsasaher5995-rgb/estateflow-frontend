@@ -67,7 +67,7 @@ const TenantDashboard = () => {
       const token = localStorage.getItem('token');
       
       // 1. Fetch properties to associate one as "rented"
-      const propRes = await fetch('http://localhost:5000/api/properties');
+      const propRes = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties');
       const propData = await propRes.json();
       
       let selectedProp = null;

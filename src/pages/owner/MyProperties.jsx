@@ -71,7 +71,7 @@ const MyProperties = () => {
         window.location.href = '/login';
         return;
       }
-      const response = await fetch('http://localhost:5000/api/properties/my/properties', {
+      const response = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/my/properties', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -170,7 +170,7 @@ const MyProperties = () => {
         formDataToSend.append('image', selectedImage);
       }
 
-      const response = await fetch('http://localhost:5000/api/properties', {
+      const response = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formDataToSend
@@ -203,7 +203,7 @@ const MyProperties = () => {
         details: { bedrooms: parseInt(editFormData.bedrooms) || 0, bathrooms: parseInt(editFormData.bathrooms) || 0, area: parseInt(editFormData.area) || 0, furnishing: selectedProperty?.details?.furnishing || 'unfurnished' },
         rent: { amount: parseInt(editFormData.rent), deposit: parseInt(editFormData.rent) * 2, maintenance: Math.round(parseInt(editFormData.rent) * 0.05) }
       };
-      const response = await fetch(`http://localhost:5000/api/properties/${selectedProperty._id}`, {
+      const response = await fetch(`https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${selectedProperty._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(propertyData)
@@ -226,7 +226,7 @@ const MyProperties = () => {
     if (window.confirm('Are you sure you want to delete this property?')) {
       try {
         const token = localStorage.getItem('token');
-        await fetch(`http://localhost:5000/api/properties/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        await fetch(`https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         toast.success('Property deleted successfully!');
         fetchProperties();
       } catch (error) {
