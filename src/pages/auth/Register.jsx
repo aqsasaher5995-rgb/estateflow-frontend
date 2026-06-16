@@ -27,7 +27,6 @@ const Register = () => {
       console.log('Register result:', result);
       
       if (result.success) {
-        // CHANGE THIS LINE - Dashboard se Home page pe
         window.location.href = '/';
       } else {
         setError('Registration failed');
@@ -41,87 +40,88 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative" style={{ background: '#000000' }}>
-      <div className="bg-property"></div>
-      <div className="glow-card fade-up">
-        <div className="text-center">
-          <span className="logo">EstateFlow</span>
-        </div>
-        <h1 className="heading">Create account</h1>
-        <p className="subheading">Join the future of property management</p>
+    <div className="min-h-screen w-full flex items-center justify-center p-4" style={{ background: '#000000', margin: 0, padding: 0 }}>
+      <div className="flex items-center justify-center w-full h-screen">
+        <div className="glow-card fade-up" style={{ maxWidth: '420px', width: '100%', margin: '0 auto' }}>
+          <div className="text-center">
+            <span className="logo">EstateFlow</span>
+          </div>
+          <h1 className="heading">Create account</h1>
+          <p className="subheading">Join the future of property management</p>
 
-        {error && <div className="error-msg">{error}</div>}
+          {error && <div className="error-msg">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label className="input-label">Full name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="modern-input"
-              placeholder="John Doe"
-              required
-            />
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label className="input-label">Full name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="modern-input"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="modern-input"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">Phone number</label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="modern-input"
+                placeholder="+92 98765 43210"
+                required
+              />
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="modern-input"
+                placeholder="Create a password"
+                required
+              />
+            </div>
+
+            <button type="submit" disabled={loading} className="primary-btn">
+              {loading ? <div className="spinner"></div> : 'Create account'}
+            </button>
+          </form>
+
+          <div className="footer-text">
+            Already have an account?
+            <a href="/login" className="footer-link">Sign in</a>
           </div>
 
-          <div className="input-group">
-            <label className="input-label">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="modern-input"
-              placeholder="you@example.com"
-              required
-            />
+          <div className="bottom-nav">
+            <button className="nav-btn" onClick={() => navigate('/login')}>
+              Login
+            </button>
+            <button className={`nav-btn ${window.location.pathname === '/register' ? 'active' : ''}`} onClick={() => navigate('/register')}>
+              Sign Up
+            </button>
           </div>
-
-          <div className="input-group">
-            <label className="input-label">Phone number</label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="modern-input"
-              placeholder="+92 98765 43210"
-              required
-            />
-          </div>
-
-          <div className="input-group">
-            <label className="input-label">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="modern-input"
-              placeholder="Create a password"
-              required
-            />
-          </div>
-
-          <button type="submit" disabled={loading} className="primary-btn">
-            {loading ? <div className="spinner"></div> : 'Create account'}
-          </button>
-        </form>
-
-        <div className="footer-text">
-          Already have an account?
-          <a href="/login" className="footer-link">Sign in</a>
-        </div>
-
-        <div className="bottom-nav">
-          <button className="nav-btn" onClick={() => navigate('/login')}>
-            Login
-          </button>
-          <button className={`nav-btn ${window.location.pathname === '/register' ? 'active' : ''}`} onClick={() => navigate('/register')}>
-            Sign Up
-          </button>
         </div>
       </div>
     </div>
