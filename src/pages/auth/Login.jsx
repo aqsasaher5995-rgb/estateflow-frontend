@@ -36,71 +36,72 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative" style={{ background: '#000000' }}>
-      <div className="bg-property"></div>
-      <div className="glow-card fade-up">
-        <div className="text-center">
-          <span className="logo">EstateFlow</span>
-        </div>
-        <h1 className="heading">Welcome back</h1>
-        <p className="subheading">Sign in to your account</p>
-
-        {error && <div className="error-msg">{error}</div>}
-
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label className="input-label">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="modern-input"
-              placeholder="you@example.com"
-              required
-            />
+    <div className="min-h-screen w-full flex items-center justify-center p-4" style={{ background: '#000000', margin: 0, padding: 0 }}>
+      <div className="flex items-center justify-center w-full h-screen">
+        <div className="glow-card fade-up" style={{ maxWidth: '420px', width: '100%', margin: '0 auto' }}>
+          <div className="text-center">
+            <span className="logo">EstateFlow</span>
           </div>
+          <h1 className="heading">Welcome back</h1>
+          <p className="subheading">Sign in to your account</p>
 
-          <div className="input-group">
-            <label className="input-label">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="modern-input"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
+          {error && <div className="error-msg">{error}</div>}
 
-          <div className="checkbox-row">
-            <label className="checkbox-label">
+          <form onSubmit={handleSubmit}>
+            <div className="input-group">
+              <label className="input-label">Email</label>
               <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="modern-input"
+                placeholder="you@example.com"
+                required
               />
-              <span>Remember me</span>
-            </label>
-            <a href="#" className="forgot-link">Forgot password?</a>
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="modern-input"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            <div className="checkbox-row">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
+                <span>Remember me</span>
+              </label>
+              <a href="#" className="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" disabled={loading} className="primary-btn">
+              {loading ? <div className="spinner"></div> : 'Sign in'}
+            </button>
+          </form>
+
+          <div className="footer-text">
+            Don't have an account?
+            <a href="/register" className="footer-link">Sign up</a>
           </div>
 
-          <button type="submit" disabled={loading} className="primary-btn">
-            {loading ? <div className="spinner"></div> : 'Sign in'}
-          </button>
-        </form>
-
-        <div className="footer-text">
-          Don't have an account?
-          <a href="/register" className="footer-link">Sign up</a>
-        </div>
-
-        <div className="bottom-nav">
-          <button className={`nav-btn ${window.location.pathname === '/login' ? 'active' : ''}`} onClick={() => navigate('/login')}>
-            Login
-          </button>
-          <button className="nav-btn" onClick={() => navigate('/register')}>
-            Sign Up
-          </button>
+          <div className="bottom-nav">
+            <button className={`nav-btn ${window.location.pathname === '/login' ? 'active' : ''}`} onClick={() => navigate('/login')}>
+              Login
+            </button>
+            <button className="nav-btn" onClick={() => navigate('/register')}>
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
     </div>
