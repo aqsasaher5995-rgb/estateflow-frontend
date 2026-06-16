@@ -2,7 +2,7 @@ import api from './api';
 
 export const authService = {
   register: async (userData) => {
-    const response = await api.post('/auth/register', userData);
+    const response = await api.post('/api/auth/register', userData);
     console.log('Register response:', response.data);
     if (response.data.data?.token) {
       localStorage.setItem('token', response.data.data.token);
@@ -12,7 +12,7 @@ export const authService = {
   },
 
   login: async (credentials) => {
-    const response = await api.post('/auth/login', credentials);
+    const response = await api.post('/api/auth/login', credentials);
     console.log('Login response:', response.data);
     if (response.data.data?.token) {
       localStorage.setItem('token', response.data.data.token);
