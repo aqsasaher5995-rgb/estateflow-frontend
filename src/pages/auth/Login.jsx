@@ -23,7 +23,6 @@ const Login = () => {
         if (rememberMe) {
           localStorage.setItem('rememberMe', 'true');
         }
-        // CHANGE THIS - Dashboard se Home page pe
         window.location.href = '/';
       } else {
         setError('Login failed');
