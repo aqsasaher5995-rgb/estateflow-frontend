@@ -90,7 +90,7 @@ const MyProperties = () => {
     try {
       setTicketsLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/maintenance/owner', {
+      const response = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/owner', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -107,7 +107,7 @@ const MyProperties = () => {
   const handleUpdateTicketStatus = async (ticketId, newStatus) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/api/maintenance/${ticketId}/status`, {
+      const response = await fetch(`https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/${ticketId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
