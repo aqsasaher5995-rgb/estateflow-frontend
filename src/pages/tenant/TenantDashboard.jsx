@@ -67,7 +67,7 @@ const TenantDashboard = () => {
       const token = localStorage.getItem('token');
       
       // 1. Fetch properties to associate one as "rented"
-      const propRes = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties');
+      const propRes = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties');
       const propData = await propRes.json();
       
       let selectedProp = null;
@@ -89,7 +89,7 @@ const TenantDashboard = () => {
       setRentedProperty(selectedProp);
 
       // 2. Fetch payments from backend
-      const payRes = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/payments/my', {
+      const payRes = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/payments/my', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const payData = await payRes.json();
@@ -115,7 +115,7 @@ const TenantDashboard = () => {
       }
 
       // 3. Fetch maintenance tickets from backend
-      const ticketRes = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/my', {
+      const ticketRes = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/my', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const ticketData = await ticketRes.json();
@@ -152,7 +152,7 @@ const TenantDashboard = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/payments', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/payments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ const TenantDashboard = () => {
     setSubmittingTicket(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -33,7 +33,7 @@ const ProfilePage = () => {
     setUpdateMessage('');
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://estateflow-backend-djex6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/auth/update-profile', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/auth/update-profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
