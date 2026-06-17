@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X, Home, Building2, Warehouse, Store, Crown, Apartment } from 'lucide-react';
+import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X, Home, Building2, Warehouse, Store, Crown, Building } from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
@@ -215,7 +215,7 @@ const PropertiesPage = () => {
     { id: 'farmhouse', label: 'Farmhouses', icon: <Warehouse size={16} /> },
     { id: 'commercial', label: 'Commercials', icon: <Store size={16} /> },
     { id: 'bowser', label: 'Bowser', icon: <Crown size={16} /> },
-    { id: 'apartment', label: 'Apartments', icon: <Apartment size={16} /> },
+    { id: 'apartment', label: 'Apartments', icon: <Building size={16} /> },
   ];
 
   const categoryProperties = getFilteredByCategory();
