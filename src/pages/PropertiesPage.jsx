@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X, Home, Building2, Warehouse, Store, Crown } from 'lucide-react';
+import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X, Home, Building2, Warehouse, Store, Crown, Apartment } from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
@@ -52,12 +52,21 @@ const commercialImages = [
   "https://media.istockphoto.com/id/2241825793/photo/aerial-drone-view-of-standing-seam-metal-roof-on-modern-commercial-buildings.jpg?s=612x612&w=0&k=20&c=L56By6JNcFIUe2HgTxvIxsq07em3sMPb-Yc975xhBZk="
 ];
 
-// ========== BOWSER PROPERTIES (ID 32-35) - 4 new properties ==========
+// ========== BOWSER PROPERTIES (ID 32-35) - 4 properties ==========
 const bowserImages = [
   "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop",
   "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&h=400&fit=crop",
   "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&h=400&fit=crop",
   "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop"
+];
+
+// ========== APARTMENTS (ID 36-40) - 5 properties ==========
+const apartmentImages = [
+  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=600&h=400&fit=crop"
 ];
 
 // ========== ALL PROPERTIES ==========
@@ -105,7 +114,14 @@ const ALL_PROPERTIES = [
   { id: 32, title: "Bowser Luxury Castle", city: "Islamabad", state: "Capital", type: "Bowser", beds: 8, baths: 6, area: 10000, rent: 800000, status: "available", image: bowserImages[0] },
   { id: 33, title: "Bowser Mega Mansion", city: "Lahore", state: "Punjab", type: "Bowser", beds: 10, baths: 8, area: 15000, rent: 1000000, status: "available", image: bowserImages[1] },
   { id: 34, title: "Bowser Royal Estate", city: "Karachi", state: "Sindh", type: "Bowser", beds: 7, baths: 5, area: 8500, rent: 700000, status: "available", image: bowserImages[2] },
-  { id: 35, title: "Bowser Grand Palace", city: "Rawalpindi", state: "Punjab", type: "Bowser", beds: 9, baths: 7, area: 12000, rent: 900000, status: "available", image: bowserImages[3] }
+  { id: 35, title: "Bowser Grand Palace", city: "Rawalpindi", state: "Punjab", type: "Bowser", beds: 9, baths: 7, area: 12000, rent: 900000, status: "available", image: bowserImages[3] },
+
+  // APARTMENTS (ID 36-40)
+  { id: 36, title: "Luxury Apartment Clifton", city: "Karachi", state: "Sindh", type: "Apartment", beds: 3, baths: 2, area: 1800, rent: 120000, status: "available", image: apartmentImages[0] },
+  { id: 37, title: "Modern Apartment DHA", city: "Lahore", state: "Punjab", type: "Apartment", beds: 2, baths: 2, area: 1500, rent: 90000, status: "available", image: apartmentImages[1] },
+  { id: 38, title: "Studio Apartment Islamabad", city: "Islamabad", state: "Capital", type: "Apartment", beds: 1, baths: 1, area: 800, rent: 50000, status: "available", image: apartmentImages[2] },
+  { id: 39, title: "Premium Apartment Gulshan", city: "Karachi", state: "Sindh", type: "Apartment", beds: 4, baths: 3, area: 2200, rent: 160000, status: "available", image: apartmentImages[3] },
+  { id: 40, title: "Executive Apartment Johar", city: "Lahore", state: "Punjab", type: "Apartment", beds: 3, baths: 2, area: 2000, rent: 130000, status: "available", image: apartmentImages[4] }
 ];
 
 const SkeletonCard = () => (
@@ -199,6 +215,7 @@ const PropertiesPage = () => {
     { id: 'farmhouse', label: 'Farmhouses', icon: <Warehouse size={16} /> },
     { id: 'commercial', label: 'Commercials', icon: <Store size={16} /> },
     { id: 'bowser', label: 'Bowser', icon: <Crown size={16} /> },
+    { id: 'apartment', label: 'Apartments', icon: <Apartment size={16} /> },
   ];
 
   const categoryProperties = getFilteredByCategory();
@@ -380,7 +397,7 @@ const PropertiesPage = () => {
             {filteredAndSorted.map(p => {
               const { label, cls } = statusBadge(p.status);
               const isFav = favourites.includes(p.id);
-              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : p.type === 'Commercial' ? '🏪' : '👑';
+              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : p.type === 'Commercial' ? '🏪' : p.type === 'Apartment' ? '🏢' : '👑';
               return (
                 <div key={p.id} className="glass-panel" style={{ overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => navigate(`/property/${p.id}`)}>
                   <div style={{ height: '210px', position: 'relative', overflow: 'hidden', background: '#090d16' }}>
@@ -425,7 +442,7 @@ const PropertiesPage = () => {
             {filteredAndSorted.map(p => {
               const { label, cls } = statusBadge(p.status);
               const isFav = favourites.includes(p.id);
-              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : p.type === 'Commercial' ? '🏪' : '👑';
+              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : p.type === 'Commercial' ? '🏪' : p.type === 'Apartment' ? '🏢' : '👑';
               return (
                 <div key={p.id} className="glass-panel" style={{ display: 'flex', overflow: 'hidden', cursor: 'pointer' }} onClick={() => navigate(`/property/${p.id}`)}>
                   <div style={{ width: '220px', minWidth: '220px', position: 'relative', overflow: 'hidden' }}>
