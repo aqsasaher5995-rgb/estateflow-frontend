@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X } from 'lucide-react';
+import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X, Home, Building2, Warehouse, Store, Crown } from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
@@ -60,7 +60,7 @@ const bowserImages = [
   "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop"
 ];
 
-// ========== ALL PROPERTIES (No Apartments) ==========
+// ========== ALL PROPERTIES ==========
 const ALL_PROPERTIES = [
   // VILLAS (ID 1-12)
   { id: 1, title: "Luxury Villa DHA Karachi", city: "Karachi", state: "Sindh", type: "Villa", beds: 4, baths: 3, area: 2800, rent: 180000, status: "available", image: villaImages[0] },
@@ -141,6 +141,7 @@ const PropertiesPage = () => {
   const [favourites, setFavourites] = useState(() => {
     try { return JSON.parse(localStorage.getItem('ef_favourites') || '[]'); } catch { return []; }
   });
+  const [activeCategory, setActiveCategory] = useState('all');
 
   useEffect(() => { fetchProperties(); }, []);
 
@@ -179,19 +180,41 @@ const PropertiesPage = () => {
 
   const cities = ['all', ...new Set(properties.map(p => p.city))];
 
-  const filteredAndSorted = [...properties]
+  // Get category counts
+  const getCategoryCount = (type) => {
+    if (type === 'all') return properties.length;
+    return properties.filter(p => p.type.toLowerCase() === type.toLowerCase()).length;
+  };
+
+  // Filter by category
+  const getFilteredByCategory = () => {
+    if (activeCategory === 'all') return properties;
+    return properties.filter(p => p.type.toLowerCase() === activeCategory.toLowerCase());
+  };
+
+  const categoryData = [
+    { id: 'all', label: 'All Properties', icon: <Home size={16} /> },
+    { id: 'villa', label: 'Villas', icon: <Building2 size={16} /> },
+    { id: 'penthouse', label: 'Penthouses', icon: <Building2 size={16} /> },
+    { id: 'farmhouse', label: 'Farmhouses', icon: <Warehouse size={16} /> },
+    { id: 'commercial', label: 'Commercials', icon: <Store size={16} /> },
+    { id: 'bowser', label: 'Bowser', icon: <Crown size={16} /> },
+  ];
+
+  const categoryProperties = getFilteredByCategory();
+
+  const filteredAndSorted = [...categoryProperties]
     .filter(p => {
       const s = searchTerm.toLowerCase();
       const matchSearch = p.title.toLowerCase().includes(s) || p.city.toLowerCase().includes(s);
       const matchCity = filterCity === 'all' || p.city === filterCity;
-      const matchType = filterType === 'all' || p.type.toLowerCase() === filterType.toLowerCase();
       const matchBeds = filterBeds === 'all' || p.beds >= parseInt(filterBeds);
       let matchPrice = true;
       if (filterPrice === 'under50k') matchPrice = p.rent < 50000;
       else if (filterPrice === '50k-100k') matchPrice = p.rent >= 50000 && p.rent <= 100000;
       else if (filterPrice === '100k-200k') matchPrice = p.rent > 100000 && p.rent <= 200000;
       else if (filterPrice === 'above200k') matchPrice = p.rent > 200000;
-      return matchSearch && matchCity && matchType && matchBeds && matchPrice;
+      return matchSearch && matchCity && matchBeds && matchPrice;
     })
     .sort((a, b) => {
       if (sortBy === 'price-asc') return a.rent - b.rent;
@@ -200,9 +223,9 @@ const PropertiesPage = () => {
       return 0;
     });
 
-  const activeFilterCount = [filterCity !== 'all', filterType !== 'all', filterPrice !== 'all', filterBeds !== 'all'].filter(Boolean).length;
+  const activeFilterCount = [filterCity !== 'all', filterPrice !== 'all', filterBeds !== 'all'].filter(Boolean).length;
 
-  const clearFilters = () => { setFilterCity('all'); setFilterType('all'); setFilterPrice('all'); setFilterBeds('all'); setSearchTerm(''); };
+  const clearFilters = () => { setFilterCity('all'); setFilterPrice('all'); setFilterBeds('all'); setSearchTerm(''); setActiveCategory('all'); };
 
   const statusBadge = (status) => ({
     available: { label: 'Available', cls: 'badge-success' },
@@ -224,6 +247,61 @@ const PropertiesPage = () => {
           <p style={{ color: '#9ca3af', fontSize: '15px' }}>Curated collection of luxury properties across Pakistan's prime locations.</p>
         </div>
 
+        {/* Category Buttons */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '24px' }}>
+          {categoryData.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '10px 20px',
+                background: activeCategory === cat.id ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : 'rgba(255,255,255,0.05)',
+                border: activeCategory === cat.id ? '1px solid #6366f1' : '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '30px',
+                color: activeCategory === cat.id ? 'white' : '#9ca3af',
+                fontSize: '14px',
+                fontWeight: activeCategory === cat.id ? '600' : '500',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {cat.icon}
+              {cat.label}
+              <span style={{
+                background: activeCategory === cat.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)',
+                padding: '2px 8px',
+                borderRadius: '12px',
+                fontSize: '11px',
+                fontWeight: '600'
+              }}>
+                {getCategoryCount(cat.id)}
+              </span>
+            </button>
+          ))}
+          <button
+            onClick={clearFilters}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '10px 18px',
+              background: 'rgba(239,68,68,0.1)',
+              border: '1px solid rgba(239,68,68,0.25)',
+              borderRadius: '30px',
+              color: '#f87171',
+              fontSize: '13px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            <X size={15} /> Reset Filters
+          </button>
+        </div>
+
         {/* Filters Bar */}
         <div className="glass-panel" style={{ padding: '20px', marginBottom: '24px' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
@@ -236,15 +314,6 @@ const PropertiesPage = () => {
 
             <select value={filterCity} onChange={e => setFilterCity(e.target.value)} style={sel}>
               {cities.map(c => <option key={c} value={c}>{c === 'all' ? 'All Cities' : c}</option>)}
-            </select>
-
-            <select value={filterType} onChange={e => setFilterType(e.target.value)} style={sel}>
-              <option value="all">All Types</option>
-              <option value="villa">🏡 Villa</option>
-              <option value="penthouse">🏢 Penthouse</option>
-              <option value="farmhouse">🌾 Farmhouse</option>
-              <option value="commercial">🏪 Commercial</option>
-              <option value="bowser">👑 Bowser</option>
             </select>
 
             <select value={filterPrice} onChange={e => setFilterPrice(e.target.value)} style={sel}>
