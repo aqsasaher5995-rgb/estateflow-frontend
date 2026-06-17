@@ -7,7 +7,7 @@ export const getMyProperties = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/my/properties', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties/my/properties', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -29,7 +29,7 @@ export const getStats = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/my/stats', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties/my/stats', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -51,7 +51,7 @@ export const createProperty = createAsyncThunk(
   async (propertyData, { rejectWithValue, dispatch }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export const updateProperty = createAsyncThunk(
   async ({ id, data }, { rejectWithValue, dispatch }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${id}`, {
+      const response = await fetch(`https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ export const deleteProperty = createAsyncThunk(
   async (id, { rejectWithValue, dispatch }) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${id}`, {
+      const response = await fetch(`https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

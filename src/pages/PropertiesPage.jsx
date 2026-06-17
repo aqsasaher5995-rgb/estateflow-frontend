@@ -52,6 +52,14 @@ const commercialImages = [
   "https://media.istockphoto.com/id/2241825793/photo/aerial-drone-view-of-standing-seam-metal-roof-on-modern-commercial-buildings.jpg?s=612x612&w=0&k=20&c=L56By6JNcFIUe2HgTxvIxsq07em3sMPb-Yc975xhBZk="
 ];
 
+// ========== BOWSER PROPERTIES (ID 32-35) - 4 new properties ==========
+const bowserImages = [
+  "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop"
+];
+
 // ========== ALL PROPERTIES (No Apartments) ==========
 const ALL_PROPERTIES = [
   // VILLAS (ID 1-12)
@@ -91,7 +99,13 @@ const ALL_PROPERTIES = [
   // COMMERCIAL (ID 29-31)
   { id: 29, title: "Commercial Plaza DHA", city: "Karachi", state: "Sindh", type: "Commercial", beds: 0, baths: 4, area: 3000, rent: 180000, status: "available", image: commercialImages[0] },
   { id: 30, title: "Office Space IT Tower", city: "Karachi", state: "Sindh", type: "Commercial", beds: 0, baths: 3, area: 2500, rent: 220000, status: "available", image: commercialImages[1] },
-  { id: 31, title: "Commercial Building with Roof", city: "Lahore", state: "Punjab", type: "Commercial", beds: 0, baths: 5, area: 4000, rent: 300000, status: "available", image: commercialImages[2] }
+  { id: 31, title: "Commercial Building with Roof", city: "Lahore", state: "Punjab", type: "Commercial", beds: 0, baths: 5, area: 4000, rent: 300000, status: "available", image: commercialImages[2] },
+
+  // BOWSER PROPERTIES (ID 32-35)
+  { id: 32, title: "Bowser Luxury Castle", city: "Islamabad", state: "Capital", type: "Bowser", beds: 8, baths: 6, area: 10000, rent: 800000, status: "available", image: bowserImages[0] },
+  { id: 33, title: "Bowser Mega Mansion", city: "Lahore", state: "Punjab", type: "Bowser", beds: 10, baths: 8, area: 15000, rent: 1000000, status: "available", image: bowserImages[1] },
+  { id: 34, title: "Bowser Royal Estate", city: "Karachi", state: "Sindh", type: "Bowser", beds: 7, baths: 5, area: 8500, rent: 700000, status: "available", image: bowserImages[2] },
+  { id: 35, title: "Bowser Grand Palace", city: "Rawalpindi", state: "Punjab", type: "Bowser", beds: 9, baths: 7, area: 12000, rent: 900000, status: "available", image: bowserImages[3] }
 ];
 
 const SkeletonCard = () => (
@@ -133,7 +147,7 @@ const PropertiesPage = () => {
   const fetchProperties = async () => {
     try {
       setLoading(true);
-      const res = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties');
+      const res = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties');
       const data = await res.json();
       if (data.success && data.data.properties.length > 0) {
         const normalized = data.data.properties.map(p => ({
@@ -230,6 +244,7 @@ const PropertiesPage = () => {
               <option value="penthouse">🏢 Penthouse</option>
               <option value="farmhouse">🌾 Farmhouse</option>
               <option value="commercial">🏪 Commercial</option>
+              <option value="bowser">👑 Bowser</option>
             </select>
 
             <select value={filterPrice} onChange={e => setFilterPrice(e.target.value)} style={sel}>
@@ -296,7 +311,7 @@ const PropertiesPage = () => {
             {filteredAndSorted.map(p => {
               const { label, cls } = statusBadge(p.status);
               const isFav = favourites.includes(p.id);
-              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : '🏪';
+              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : p.type === 'Commercial' ? '🏪' : '👑';
               return (
                 <div key={p.id} className="glass-panel" style={{ overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => navigate(`/property/${p.id}`)}>
                   <div style={{ height: '210px', position: 'relative', overflow: 'hidden', background: '#090d16' }}>
@@ -341,7 +356,7 @@ const PropertiesPage = () => {
             {filteredAndSorted.map(p => {
               const { label, cls } = statusBadge(p.status);
               const isFav = favourites.includes(p.id);
-              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : '🏪';
+              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : p.type === 'Commercial' ? '🏪' : '👑';
               return (
                 <div key={p.id} className="glass-panel" style={{ display: 'flex', overflow: 'hidden', cursor: 'pointer' }} onClick={() => navigate(`/property/${p.id}`)}>
                   <div style={{ width: '220px', minWidth: '220px', position: 'relative', overflow: 'hidden' }}>

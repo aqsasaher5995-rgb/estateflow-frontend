@@ -27,10 +27,10 @@ const AdminDashboard = () => {
     setLoading(true);
     try {
       const [statsRes, usersRes, propsRes, mainRes] = await Promise.all([
-        fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/admin/stats', { headers: { Authorization: `Bearer ${token}` } }),
-        fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/admin/users', { headers: { Authorization: `Bearer ${token}` } }),
-        fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties'),
-        fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/admin/maintenance', { headers: { Authorization: `Bearer ${token}` } }),
+        fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/admin/stats', { headers: { Authorization: `Bearer ${token}` } }),
+        fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/admin/users', { headers: { Authorization: `Bearer ${token}` } }),
+        fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties'),
+        fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/admin/maintenance', { headers: { Authorization: `Bearer ${token}` } }),
       ]);
       const [statsData, usersData, propsData, mainData] = await Promise.all([
         statsRes.json(), usersRes.json(), propsRes.json(), mainRes.json()
@@ -48,7 +48,7 @@ const AdminDashboard = () => {
 
   const handleRoleChange = async (userId, newRole) => {
     try {
-      const res = await fetch(`https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/admin/users/${userId}/role`, {
+      const res = await fetch(`https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/admin/users/${userId}/role`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ role: newRole }),
@@ -63,7 +63,7 @@ const AdminDashboard = () => {
 
   const handleUpdateMaintenanceStatus = async (id, status) => {
     try {
-      const res = await fetch(`https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/${id}/status`, {
+      const res = await fetch(`https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status }),

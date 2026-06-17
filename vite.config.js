@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app',
+        target: 'https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app',
         changeOrigin: true,
         secure: true,
       }

@@ -71,7 +71,7 @@ const MyProperties = () => {
         window.location.href = '/login';
         return;
       }
-      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/my/properties', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties/my/properties', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -90,7 +90,7 @@ const MyProperties = () => {
     try {
       setTicketsLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/owner', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/owner', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -107,7 +107,7 @@ const MyProperties = () => {
   const handleUpdateTicketStatus = async (ticketId, newStatus) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/${ticketId}/status`, {
+      const response = await fetch(`https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/maintenance/${ticketId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ const MyProperties = () => {
         formDataToSend.append('image', selectedImage);
       }
 
-      const response = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties', {
+      const response = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formDataToSend
@@ -203,7 +203,7 @@ const MyProperties = () => {
         details: { bedrooms: parseInt(editFormData.bedrooms) || 0, bathrooms: parseInt(editFormData.bathrooms) || 0, area: parseInt(editFormData.area) || 0, furnishing: selectedProperty?.details?.furnishing || 'unfurnished' },
         rent: { amount: parseInt(editFormData.rent), deposit: parseInt(editFormData.rent) * 2, maintenance: Math.round(parseInt(editFormData.rent) * 0.05) }
       };
-      const response = await fetch(`https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${selectedProperty._id}`, {
+      const response = await fetch(`https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${selectedProperty._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(propertyData)
@@ -226,7 +226,7 @@ const MyProperties = () => {
     if (window.confirm('Are you sure you want to delete this property?')) {
       try {
         const token = localStorage.getItem('token');
-        await fetch(`https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        await fetch(`https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
         toast.success('Property deleted successfully!');
         fetchProperties();
       } catch (error) {

@@ -466,10 +466,10 @@ const HomePage = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const usersRes = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/users/count');
+        const usersRes = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/users/count');
         const usersData = await usersRes.json();
         
-        const agentsRes = await fetch('https://estateflow-backend-mt7ox7s2k6wllj-aqsasaher5995-rgbs-projects.vercel.app/api/users/agents/count');
+        const agentsRes = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/users/agents/count');
         const agentsData = await agentsRes.json();
         
         setStats({
