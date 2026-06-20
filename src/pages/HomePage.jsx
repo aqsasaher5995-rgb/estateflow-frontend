@@ -720,7 +720,7 @@ const HomePage = () => {
     toast.success("All filters reset!");
   };
 
-  // Navigate to separate Properties page
+  // Navigate to separate Properties page (shows ALL 31 properties)
   const handleViewAllProperties = () => {
     navigate('/properties');
   };
@@ -1166,7 +1166,7 @@ const HomePage = () => {
                 ))}
               </div>
 
-              {/* View All Properties Button - Navigates to separate Properties Page */}
+              {/* View All Properties Button - Navigates to separate Properties Page (ALL 31 properties) */}
               <div style={{ textAlign: 'center', marginTop: '50px' }}>
                 <button 
                   onClick={handleViewAllProperties}
