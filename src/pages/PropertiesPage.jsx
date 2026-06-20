@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X, Sparkles, Building2, Award, TrendingUp } from 'lucide-react';
+import { 
+  Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, X, 
+  Sparkles, Building2, Award, TrendingUp, Building as BuildingIcon 
+} from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
@@ -358,7 +361,7 @@ const PropertiesPage = () => {
               }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.15)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; }}>
-                <Building size={12} style={{ color: '#6366f1' }} /> Commercial
+                <BuildingIcon size={12} style={{ color: '#6366f1' }} /> Commercial
               </span>
             </div>
           </div>
