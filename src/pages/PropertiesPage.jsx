@@ -8,6 +8,9 @@ import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
 
+// ===== IMPORT LOGO FROM src/public =====
+import Logo from '../public/logo.png';
+
 // ========== VILLAS (ID 1-12) - 12 properties ==========
 const villaImages = [
   "https://plus.unsplash.com/premium_photo-1661915661139-5b6a4e4a6fcc?w=600&h=400&fit=crop",
@@ -201,7 +204,7 @@ const PropertiesPage = () => {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }}>
         
-        {/* ===== ESTATEFLOW HERO SECTION WITH LOGO.PNG ===== */}
+        {/* ===== ESTATEFLOW HERO SECTION WITH LOGO ===== */}
         <div style={{ 
           marginBottom: '40px', 
           padding: '60px 40px', 
@@ -235,7 +238,7 @@ const PropertiesPage = () => {
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* ===== ESTATEFLOW LOGO WITH IMAGE ===== */}
+            {/* ===== ESTATEFLOW LOGO WITH IMPORTED IMAGE ===== */}
             <div style={{ 
               display: 'inline-flex', 
               alignItems: 'center', 
@@ -248,9 +251,9 @@ const PropertiesPage = () => {
               backdropFilter: 'blur(10px)',
               boxShadow: '0 4px 20px rgba(99,102,241,0.08)'
             }}>
-              {/* ===== ACTUAL LOGO.PNG IMAGE ===== */}
+              {/* ===== LOGO USING IMPORT ===== */}
               <img 
-                src="/logo.png" 
+                src={Logo} 
                 alt="EstateFlow Logo" 
                 style={{
                   width: '36px',
