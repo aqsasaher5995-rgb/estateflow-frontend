@@ -204,7 +204,7 @@ const PropertiesPage = () => {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }}>
         
-        {/* ===== ESTATEFLOW HERO SECTION ===== */}
+        {/* ===== ESTATEFLOW HERO SECTION WITH HOME PAGE STYLE LOGO ===== */}
         <div style={{ 
           marginBottom: '40px', 
           padding: '60px 40px', 
@@ -238,26 +238,53 @@ const PropertiesPage = () => {
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* ===== ESTATEFLOW LOGO - NAVBAR STYLE ===== */}
-            <div
-              style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', justifyContent: 'center' }}
-              onClick={() => navigate('/')}
-            >
-              <img 
-                src={Logo} 
-                alt="EstateFlow Logo" 
-                style={{
-                  width: '38px',
-                  height: '38px',
-                  borderRadius: '10px',
-                  objectFit: 'contain',
-                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                  padding: '4px'
-                }}
-              />
-              <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>
-                EstateFlow
-              </span>
+            {/* ===== ESTATEFLOW LOGO - HOME PAGE STYLE ===== */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div 
+                  style={{ 
+                    width: '55px', 
+                    height: '55px', 
+                    background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                    borderRadius: '14px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 20px rgba(99,102,241,0.4)',
+                    overflow: 'hidden',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    cursor: 'pointer',
+                    position: 'relative'
+                  }}
+                  onClick={() => navigate('/')}
+                  onMouseEnter={e => { 
+                    e.currentTarget.style.transform = 'scale(1.08)'; 
+                    e.currentTarget.style.boxShadow = '0 4px 30px rgba(99,102,241,0.6)';
+                  }}
+                  onMouseLeave={e => { 
+                    e.currentTarget.style.transform = 'scale(1)'; 
+                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(99,102,241,0.4)';
+                  }}
+                >
+                  <img 
+                    src={Logo} 
+                    alt="EstateFlow Logo" 
+                    style={{ 
+                      width: '42px', 
+                      height: '42px', 
+                      objectFit: 'contain'
+                    }} 
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <span style={{ fontSize: '10px', color: '#818cf8', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase' }}>
+                    LUXURY HOUSE
+                  </span>
+                  <span style={{ fontSize: '22px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px', lineHeight: '1.2' }}>
+                    EstateFlow
+                  </span>
+                </div>
+              </div>
             </div>
             
             {/* Main Heading */}
@@ -265,7 +292,7 @@ const PropertiesPage = () => {
               fontSize: '48px', 
               fontWeight: '900', 
               color: 'white', 
-              margin: '12px 0 12px 0', 
+              margin: '20px 0 12px 0', 
               letterSpacing: '-1.5px',
               lineHeight: '1.1'
             }}>
