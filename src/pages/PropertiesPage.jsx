@@ -99,19 +99,24 @@ const ALL_PROPERTIES = [
 
 // Skeleton Card Component
 const SkeletonCard = () => (
-  <div className="skeleton-card" style={{ overflow: 'hidden' }}>
-    <div className="skeleton" style={{ height: '200px', borderRadius: 0 }} />
+  <div style={{ 
+    background: 'rgba(255,255,255,0.03)', 
+    borderRadius: '20px', 
+    border: '1px solid rgba(255,255,255,0.06)',
+    overflow: 'hidden'
+  }}>
+    <div style={{ height: '200px', background: 'linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
     <div style={{ padding: '20px' }}>
-      <div className="skeleton" style={{ height: '20px', width: '70%', marginBottom: '10px' }} />
-      <div className="skeleton" style={{ height: '14px', width: '50%', marginBottom: '16px' }} />
+      <div style={{ height: '20px', width: '70%', background: 'linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', borderRadius: '8px', marginBottom: '10px' }} />
+      <div style={{ height: '14px', width: '50%', background: 'linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', borderRadius: '8px', marginBottom: '16px' }} />
       <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
-        <div className="skeleton" style={{ height: '12px', width: '60px' }} />
-        <div className="skeleton" style={{ height: '12px', width: '60px' }} />
-        <div className="skeleton" style={{ height: '12px', width: '60px' }} />
+        <div style={{ height: '12px', width: '60px', background: 'linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', borderRadius: '8px' }} />
+        <div style={{ height: '12px', width: '60px', background: 'linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', borderRadius: '8px' }} />
+        <div style={{ height: '12px', width: '60px', background: 'linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', borderRadius: '8px' }} />
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '14px' }}>
-        <div className="skeleton" style={{ height: '24px', width: '120px' }} />
-        <div className="skeleton" style={{ height: '34px', width: '80px', borderRadius: '20px' }} />
+        <div style={{ height: '24px', width: '120px', background: 'linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', borderRadius: '8px' }} />
+        <div style={{ height: '34px', width: '80px', background: 'linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', borderRadius: '20px' }} />
       </div>
     </div>
   </div>
@@ -178,148 +183,173 @@ const PropertiesPage = () => {
     maintenance: { label: 'Maintenance', cls: 'badge-danger' },
   }[status] || { label: status, cls: 'badge-info' });
 
-  const sel = { padding: '11px 16px', background: '#090d16', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', color: 'white', outline: 'none', cursor: 'pointer', fontSize: '13px' };
+  const selectStyle = {
+    padding: '11px 16px',
+    background: '#090d16',
+    border: '1px solid rgba(255,255,255,0.08)',
+    borderRadius: '10px',
+    color: 'white',
+    outline: 'none',
+    cursor: 'pointer',
+    fontSize: '13px',
+    fontFamily: 'inherit'
+  };
 
   return (
     <div style={{ background: '#080b11', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
 
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }} className="page-enter">
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }}>
         
-        {/* ===== CLEAN ENHANCED HERO SECTION - CENTER ALIGNED ===== */}
+        {/* ===== ESTATEFLOW HERO SECTION ===== */}
         <div style={{ 
           marginBottom: '40px', 
-          padding: '55px 40px', 
+          padding: '60px 40px', 
           borderRadius: '24px',
-          background: 'linear-gradient(145deg, rgba(99,102,241,0.10), rgba(139,92,246,0.04))',
-          border: '1px solid rgba(99,102,241,0.12)',
+          background: 'linear-gradient(145deg, rgba(99,102,241,0.08), rgba(139,92,246,0.03))',
+          border: '1px solid rgba(99,102,241,0.10)',
           position: 'relative',
           overflow: 'hidden',
-          textAlign: 'center',
-          boxShadow: '0 4px 30px rgba(0,0,0,0.1)'
+          textAlign: 'center'
         }}>
-          {/* Decorative background elements */}
           <div style={{ 
             position: 'absolute', 
-            top: '-100px', 
-            right: '-80px', 
-            width: '300px', 
-            height: '300px', 
+            top: '-80px', 
+            right: '-60px', 
+            width: '250px', 
+            height: '250px', 
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.05) 0%, transparent 70%)',
             pointerEvents: 'none'
           }} />
           <div style={{ 
             position: 'absolute', 
-            bottom: '-120px', 
+            bottom: '-80px', 
             left: '-60px', 
-            width: '250px', 
-            height: '250px', 
+            width: '200px', 
+            height: '200px', 
             borderRadius: '50%',
             background: 'radial-gradient(circle, rgba(139,92,246,0.04) 0%, transparent 70%)',
             pointerEvents: 'none'
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* Premium Badge */}
+            {/* EstateFlow Branding */}
             <div style={{ 
               display: 'inline-flex', 
               alignItems: 'center', 
-              gap: '10px',
-              background: 'rgba(99,102,241,0.10)',
-              padding: '6px 18px',
+              gap: '12px',
+              background: 'rgba(99,102,241,0.08)',
+              padding: '8px 20px',
               borderRadius: '50px',
               marginBottom: '20px',
-              border: '1px solid rgba(99,102,241,0.12)'
+              border: '1px solid rgba(99,102,241,0.10)'
             }}>
-              <Sparkles size={14} style={{ color: '#818cf8' }} />
-              <span style={{ color: '#818cf8', fontSize: '11px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
-                Premium Collection
+              <Building2 size={16} style={{ color: '#818cf8' }} />
+              <span style={{ color: '#818cf8', fontSize: '11px', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
+                EstateFlow Properties
               </span>
             </div>
             
-            {/* Main Heading */}
             <h1 style={{ 
-              fontSize: '46px', 
+              fontSize: '48px', 
               fontWeight: '900', 
               color: 'white', 
               margin: '0 0 12px 0', 
               letterSpacing: '-1.5px',
               lineHeight: '1.1'
             }}>
-              Exclusive <span style={{ 
+              Find Your <span style={{ 
                 background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'
-              }}>Properties</span>
+              }}>Dream Property</span>
             </h1>
             
-            {/* Decorative line */}
             <div style={{ 
-              width: '70px', 
+              width: '80px', 
               height: '3px', 
               background: 'linear-gradient(90deg, #6366f1, #8b5cf6)',
               margin: '0 auto 18px auto',
               borderRadius: '10px'
             }} />
             
-            {/* Subtitle */}
             <p style={{ 
               color: '#cbd5e1', 
               fontSize: '17px', 
-              margin: '0 auto 25px auto',
-              maxWidth: '600px',
-              lineHeight: '1.7',
-              letterSpacing: '0.2px'
+              margin: '0 auto 28px auto',
+              maxWidth: '620px',
+              lineHeight: '1.7'
             }}>
-              Curated collection of luxury properties across Pakistan's prime locations —<br />
-              from Karachi's coastline to Islamabad's serene valleys.
+              Explore our curated collection of premium properties across Pakistan's most desirable locations.
             </p>
             
-            {/* Quick Stats */}
+            {/* Stats */}
             <div style={{ 
               display: 'inline-flex', 
-              gap: '30px',
-              padding: '12px 28px',
-              background: 'rgba(255,255,255,0.04)',
+              gap: '40px',
+              padding: '14px 32px',
+              background: 'rgba(255,255,255,0.03)',
               borderRadius: '50px',
               border: '1px solid rgba(255,255,255,0.06)',
               backdropFilter: 'blur(10px)'
             }}>
               <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '18px', fontWeight: '700', margin: 0 }}>{ALL_PROPERTIES.length}+</p>
-                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px' }}>Listings</p>
+                <p style={{ color: 'white', fontSize: '20px', fontWeight: '700', margin: 0 }}>{ALL_PROPERTIES.length}</p>
+                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Properties</p>
               </div>
               <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
               <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '18px', fontWeight: '700', margin: 0 }}>5</p>
-                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px' }}>Cities</p>
+                <p style={{ color: 'white', fontSize: '20px', fontWeight: '700', margin: 0 }}>5</p>
+                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Cities</p>
               </div>
               <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
               <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '18px', fontWeight: '700', margin: 0 }}>4</p>
-                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px' }}>Types</p>
+                <p style={{ color: 'white', fontSize: '20px', fontWeight: '700', margin: 0 }}>4</p>
+                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Types</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Filters Bar */}
-        <div className="glass-panel" style={{ padding: '20px', marginBottom: '24px' }}>
+        <div style={{ 
+          background: 'rgba(255,255,255,0.03)', 
+          backdropFilter: 'blur(10px)', 
+          borderRadius: '20px', 
+          border: '1px solid rgba(255,255,255,0.06)',
+          padding: '20px', 
+          marginBottom: '24px',
+          transition: 'border-color 0.2s ease'
+        }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
             <div style={{ flex: '2 1 220px', position: 'relative', minWidth: '200px' }}>
               <Search size={15} style={{ position: 'absolute', left: '13px', top: '50%', transform: 'translateY(-50%)', color: '#6b7280' }} />
-              <input type="text" placeholder="Search by title or city..." value={searchTerm}
+              <input 
+                type="text" 
+                placeholder="Search properties..." 
+                value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
-                style={{ width: '100%', padding: '11px 16px 11px 38px', background: '#090d16', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '10px', color: 'white', outline: 'none', fontSize: '13px' }} />
+                style={{ 
+                  width: '100%', 
+                  padding: '11px 16px 11px 38px', 
+                  background: '#090d16', 
+                  border: '1px solid rgba(255,255,255,0.08)', 
+                  borderRadius: '10px', 
+                  color: 'white', 
+                  outline: 'none', 
+                  fontSize: '13px',
+                  fontFamily: 'inherit'
+                }} 
+              />
             </div>
 
-            <select value={filterCity} onChange={e => setFilterCity(e.target.value)} style={sel}>
+            <select value={filterCity} onChange={e => setFilterCity(e.target.value)} style={selectStyle}>
               {cities.map(c => <option key={c} value={c}>{c === 'all' ? 'All Cities' : c}</option>)}
             </select>
 
-            <select value={filterType} onChange={e => setFilterType(e.target.value)} style={sel}>
+            <select value={filterType} onChange={e => setFilterType(e.target.value)} style={selectStyle}>
               <option value="all">All Types</option>
               <option value="villa">🏡 Villa</option>
               <option value="penthouse">🏢 Penthouse</option>
@@ -327,7 +357,7 @@ const PropertiesPage = () => {
               <option value="commercial">🏪 Commercial</option>
             </select>
 
-            <select value={filterPrice} onChange={e => setFilterPrice(e.target.value)} style={sel}>
+            <select value={filterPrice} onChange={e => setFilterPrice(e.target.value)} style={selectStyle}>
               <option value="all">Any Price</option>
               <option value="under50k">Under PKR 50k</option>
               <option value="50k-100k">PKR 50k – 100k</option>
@@ -335,7 +365,7 @@ const PropertiesPage = () => {
               <option value="above200k">Above PKR 200k</option>
             </select>
 
-            <select value={filterBeds} onChange={e => setFilterBeds(e.target.value)} style={sel}>
+            <select value={filterBeds} onChange={e => setFilterBeds(e.target.value)} style={selectStyle}>
               <option value="all">Any Beds</option>
               <option value="1">1+ Bed</option>
               <option value="2">2+ Beds</option>
@@ -343,7 +373,7 @@ const PropertiesPage = () => {
               <option value="4">4+ Beds</option>
             </select>
 
-            <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={sel}>
+            <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={selectStyle}>
               <option value="newest">Newest First</option>
               <option value="price-asc">Price ↑</option>
               <option value="price-desc">Price ↓</option>
@@ -351,15 +381,66 @@ const PropertiesPage = () => {
             </select>
 
             <div style={{ display: 'flex', gap: '6px' }}>
-              <button className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`} onClick={() => setViewMode('grid')} title="Grid view"><LayoutGrid size={16} /></button>
-              <button className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')} title="List view"><List size={16} /></button>
+              <button 
+                className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`} 
+                onClick={() => setViewMode('grid')} 
+                title="Grid view"
+                style={{
+                  background: viewMode === 'grid' ? '#6366f1' : '#090d16',
+                  border: viewMode === 'grid' ? '1px solid #6366f1' : '1px solid rgba(255,255,255,0.08)',
+                  padding: '8px 10px',
+                  borderRadius: '8px',
+                  color: viewMode === 'grid' ? 'white' : '#9ca3af',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <LayoutGrid size={16} />
+              </button>
+              <button 
+                className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} 
+                onClick={() => setViewMode('list')} 
+                title="List view"
+                style={{
+                  background: viewMode === 'list' ? '#6366f1' : '#090d16',
+                  border: viewMode === 'list' ? '1px solid #6366f1' : '1px solid rgba(255,255,255,0.08)',
+                  padding: '8px 10px',
+                  borderRadius: '8px',
+                  color: viewMode === 'list' ? 'white' : '#9ca3af',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <List size={16} />
+              </button>
             </div>
           </div>
 
           {activeFilterCount > 0 && (
             <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ color: '#6b7280', fontSize: '12px' }}>{activeFilterCount} filter{activeFilterCount > 1 ? 's' : ''} active</span>
-              <button onClick={clearFilters} style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '3px 10px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: '20px', color: '#f87171', fontSize: '12px', cursor: 'pointer' }}>
+              <button 
+                onClick={clearFilters} 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '4px', 
+                  padding: '3px 10px', 
+                  background: 'rgba(239,68,68,0.1)', 
+                  border: '1px solid rgba(239,68,68,0.25)', 
+                  borderRadius: '20px', 
+                  color: '#f87171', 
+                  fontSize: '12px', 
+                  cursor: 'pointer',
+                  fontFamily: 'inherit'
+                }}
+              >
                 <X size={11} /> Clear all
               </button>
             </div>
@@ -374,17 +455,39 @@ const PropertiesPage = () => {
           </p>
         </div>
 
-        {/* Properties */}
+        {/* Properties Grid/List */}
         {loading ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px' }}>
             {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
           </div>
         ) : filteredAndSorted.length === 0 ? (
-          <div className="glass-panel" style={{ textAlign: 'center', padding: '80px 40px' }}>
+          <div style={{ 
+            background: 'rgba(255,255,255,0.03)', 
+            backdropFilter: 'blur(10px)', 
+            borderRadius: '20px', 
+            border: '1px solid rgba(255,255,255,0.06)',
+            textAlign: 'center', 
+            padding: '80px 40px' 
+          }}>
             <span style={{ fontSize: '64px' }}>🏘️</span>
             <h3 style={{ color: 'white', fontSize: '22px', fontWeight: '700', margin: '20px 0 8px' }}>No properties found</h3>
             <p style={{ color: '#9ca3af' }}>Try adjusting your filters or search term.</p>
-            <button onClick={clearFilters} style={{ marginTop: '20px', padding: '10px 28px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', border: 'none', borderRadius: '30px', color: 'white', fontWeight: '600', cursor: 'pointer' }}>Clear Filters</button>
+            <button 
+              onClick={clearFilters} 
+              style={{ 
+                marginTop: '20px', 
+                padding: '10px 28px', 
+                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', 
+                border: 'none', 
+                borderRadius: '30px', 
+                color: 'white', 
+                fontWeight: '600', 
+                cursor: 'pointer',
+                fontFamily: 'inherit'
+              }}
+            >
+              Clear Filters
+            </button>
           </div>
         ) : viewMode === 'grid' ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px' }}>
@@ -394,15 +497,84 @@ const PropertiesPage = () => {
               const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : '🏪';
               const priceDisplay = p.priceDisplay || `PKR ${p.rent?.toLocaleString()}/month`;
               return (
-                <div key={p.id} className="glass-panel" style={{ overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => navigate(`/property/${p.id}`)}>
+                <div 
+                  key={p.id} 
+                  style={{ 
+                    background: 'rgba(255,255,255,0.03)', 
+                    backdropFilter: 'blur(10px)', 
+                    borderRadius: '20px', 
+                    border: '1px solid rgba(255,255,255,0.06)', 
+                    overflow: 'hidden', 
+                    cursor: 'pointer', 
+                    display: 'flex', 
+                    flexDirection: 'column',
+                    transition: 'border-color 0.2s ease'
+                  }} 
+                  onClick={() => navigate(`/property/${p.id}`)}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}
+                >
                   <div style={{ height: '210px', position: 'relative', overflow: 'hidden', background: '#090d16' }}>
-                    <img src={p.image} alt={p.title} className="property-card-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    <span className={`badge ${cls} fav-badge`} style={{ position: 'absolute', top: '12px', right: '12px' }}>{label}</span>
-                    <button className={`fav-btn ${isFav ? 'active' : ''}`} onClick={e => toggleFav(p.id, e)} title={isFav ? 'Remove from favourites' : 'Save'}>
+                    <img 
+                      src={p.image} 
+                      alt={p.title} 
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover',
+                        transition: 'transform 0.4s ease'
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                    />
+                    <span className={`badge ${cls}`} style={{ 
+                      position: 'absolute', 
+                      top: '12px', 
+                      right: '12px',
+                      padding: '4px 12px',
+                      borderRadius: '20px',
+                      fontSize: '11px',
+                      fontWeight: '600'
+                    }}>
+                      {label}
+                    </span>
+                    <button 
+                      className={`fav-btn ${isFav ? 'active' : ''}`} 
+                      onClick={e => toggleFav(p.id, e)} 
+                      title={isFav ? 'Remove from favourites' : 'Save'}
+                      style={{
+                        position: 'absolute',
+                        top: '12px',
+                        left: '12px',
+                        background: 'rgba(0,0,0,0.6)',
+                        backdropFilter: 'blur(4px)',
+                        border: 'none',
+                        width: '30px',
+                        height: '30px',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        zIndex: 2,
+                        transition: 'all 0.2s'
+                      }}
+                    >
                       <Heart size={15} fill={isFav ? 'white' : 'none'} stroke={isFav ? 'white' : '#9ca3af'} />
                     </button>
                     <div style={{ position: 'absolute', bottom: '10px', left: '10px' }}>
-                      <span className="badge badge-purple" style={{ fontSize: '10px', textTransform: 'capitalize' }}>{typeIcon} {p.type}</span>
+                      <span style={{ 
+                        padding: '4px 12px',
+                        borderRadius: '20px',
+                        fontSize: '10px',
+                        fontWeight: '600',
+                        textTransform: 'capitalize',
+                        background: 'rgba(99,102,241,0.15)',
+                        color: '#818cf8',
+                        border: '1px solid rgba(99,102,241,0.3)'
+                      }}>
+                        {typeIcon} {p.type}
+                      </span>
                     </div>
                   </div>
                   <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -421,8 +593,21 @@ const PropertiesPage = () => {
                       <div>
                         <p style={{ color: '#6366f1', fontSize: '20px', fontWeight: '800', margin: 0 }}>{priceDisplay}</p>
                       </div>
-                      <button onClick={e => { e.stopPropagation(); navigate(`/property/${p.id}`); }}
-                        style={{ padding: '8px 18px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', border: 'none', borderRadius: '30px', color: 'white', fontSize: '12px', fontWeight: '600', cursor: 'pointer', boxShadow: '0 4px 12px rgba(99,102,241,0.3)' }}>
+                      <button 
+                        onClick={e => { e.stopPropagation(); navigate(`/property/${p.id}`); }}
+                        style={{ 
+                          padding: '8px 18px', 
+                          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', 
+                          border: 'none', 
+                          borderRadius: '30px', 
+                          color: 'white', 
+                          fontSize: '12px', 
+                          fontWeight: '600', 
+                          cursor: 'pointer', 
+                          boxShadow: '0 4px 12px rgba(99,102,241,0.3)',
+                          fontFamily: 'inherit'
+                        }}
+                      >
                         View Details
                       </button>
                     </div>
@@ -439,18 +624,67 @@ const PropertiesPage = () => {
               const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : '🏪';
               const priceDisplay = p.priceDisplay || `PKR ${p.rent?.toLocaleString()}/month`;
               return (
-                <div key={p.id} className="glass-panel" style={{ display: 'flex', overflow: 'hidden', cursor: 'pointer' }} onClick={() => navigate(`/property/${p.id}`)}>
+                <div 
+                  key={p.id} 
+                  style={{ 
+                    background: 'rgba(255,255,255,0.03)', 
+                    backdropFilter: 'blur(10px)', 
+                    borderRadius: '20px', 
+                    border: '1px solid rgba(255,255,255,0.06)', 
+                    display: 'flex', 
+                    overflow: 'hidden', 
+                    cursor: 'pointer',
+                    transition: 'border-color 0.2s ease'
+                  }} 
+                  onClick={() => navigate(`/property/${p.id}`)}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'}
+                >
                   <div style={{ width: '220px', minWidth: '220px', position: 'relative', overflow: 'hidden' }}>
-                    <img src={p.image} alt={p.title} className="property-card-img" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    <span className={`badge ${cls}`} style={{ position: 'absolute', top: '10px', right: '10px' }}>{label}</span>
+                    <img 
+                      src={p.image} 
+                      alt={p.title} 
+                      style={{ 
+                        width: '100%', 
+                        height: '100%', 
+                        objectFit: 'cover',
+                        transition: 'transform 0.4s ease'
+                      }}
+                      onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                    />
+                    <span className={`badge ${cls}`} style={{ 
+                      position: 'absolute', 
+                      top: '10px', 
+                      right: '10px',
+                      padding: '4px 12px',
+                      borderRadius: '20px',
+                      fontSize: '11px',
+                      fontWeight: '600'
+                    }}>
+                      {label}
+                    </span>
                   </div>
                   <div style={{ flex: 1, padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                        <span className="badge badge-purple" style={{ fontSize: '10px', textTransform: 'capitalize' }}>{typeIcon} {p.type}</span>
+                        <span style={{ 
+                          padding: '4px 12px',
+                          borderRadius: '20px',
+                          fontSize: '10px',
+                          fontWeight: '600',
+                          textTransform: 'capitalize',
+                          background: 'rgba(99,102,241,0.15)',
+                          color: '#818cf8',
+                          border: '1px solid rgba(99,102,241,0.3)'
+                        }}>
+                          {typeIcon} {p.type}
+                        </span>
                       </div>
                       <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'white', margin: '0 0 6px' }}>{p.title}</h3>
-                      <p style={{ color: '#9ca3af', fontSize: '13px', margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: '4px' }}><MapPin size={12} /> {p.city}, {p.state}</p>
+                      <p style={{ color: '#9ca3af', fontSize: '13px', margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <MapPin size={12} /> {p.city}, {p.state}
+                      </p>
                       <div style={{ display: 'flex', gap: '16px', fontSize: '13px', color: '#6b7280' }}>
                         {p.beds > 0 && <span><Bed size={13} style={{ display: 'inline', verticalAlign: 'middle' }} /> {p.beds} Beds</span>}
                         <span><Bath size={13} style={{ display: 'inline', verticalAlign: 'middle' }} /> {p.baths} Baths</span>
@@ -460,11 +694,38 @@ const PropertiesPage = () => {
                     <div style={{ textAlign: 'right' }}>
                       <p style={{ color: '#6366f1', fontSize: '22px', fontWeight: '800', margin: '0 0 14px' }}>{priceDisplay}</p>
                       <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
-                        <button className={`fav-btn`} onClick={e => toggleFav(p.id, e)} style={{ position: 'static', width: '36px', height: '36px', borderRadius: '8px' }} title="Save">
-                          <Heart size={15} fill={isFav ? '#ef4444' : 'none'} stroke={isFav ? '#ef4444' : '#9ca3af'} />
+                        <button 
+                          onClick={e => toggleFav(p.id, e)} 
+                          style={{ 
+                            padding: '8px 10px',
+                            background: 'rgba(0,0,0,0.4)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            borderRadius: '8px',
+                            color: isFav ? '#ef4444' : '#9ca3af',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s'
+                          }} 
+                          title="Save"
+                        >
+                          <Heart size={15} fill={isFav ? '#ef4444' : 'none'} stroke={isFav ? '#ef4444' : 'currentColor'} />
                         </button>
-                        <button onClick={e => { e.stopPropagation(); navigate(`/property/${p.id}`); }}
-                          style={{ padding: '8px 18px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', border: 'none', borderRadius: '8px', color: 'white', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                        <button 
+                          onClick={e => { e.stopPropagation(); navigate(`/property/${p.id}`); }}
+                          style={{ 
+                            padding: '8px 18px', 
+                            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', 
+                            border: 'none', 
+                            borderRadius: '8px', 
+                            color: 'white', 
+                            fontSize: '13px', 
+                            fontWeight: '600', 
+                            cursor: 'pointer',
+                            fontFamily: 'inherit'
+                          }}
+                        >
                           Details
                         </button>
                       </div>
@@ -480,21 +741,21 @@ const PropertiesPage = () => {
       <Footer />
 
       <style>{`
-        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.2s ease; }
-        .glass-panel:hover { border-color: rgba(99,102,241,0.3); }
-        .badge { padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
         .badge-success { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
         .badge-warning { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
         .badge-danger { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
-        .badge-purple { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
-        .fav-btn { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); border: none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: all 0.2s; }
-        .fav-btn:hover { background: rgba(239,68,68,0.8); transform: scale(1.05); }
-        .view-btn { background: #090d16; border: 1px solid rgba(255,255,255,0.08); padding: 8px 10px; border-radius: 8px; color: #9ca3af; cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s; }
-        .view-btn.active { background: #6366f1; color: white; border-color: #6366f1; }
-        .skeleton { background: linear-gradient(90deg, #1a1f2e 25%, #252b3d 50%, #1a1f2e 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        .property-card-img { transition: transform 0.4s ease; }
-        .glass-panel:hover .property-card-img { transform: scale(1.05); }
+        .badge-info { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+        
+        @keyframes shimmer {
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #080b11; }
+        ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #818cf8; }
       `}</style>
     </div>
   );
