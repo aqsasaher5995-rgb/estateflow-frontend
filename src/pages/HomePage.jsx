@@ -9,7 +9,7 @@ import {
   Grid, DollarSign, Building, Home, TrendingUp, ThumbsUp, HelpCircle, Filter, Zap, Video, FileText,
   Briefcase, Handshake, TrendingUp as TrendingUpIcon, Headphones, Menu, ChevronRight,
   Calendar as CalendarIcon, User, Settings, LogOut, BookOpen, Newspaper, GripVertical,
-  ZoomIn, ZoomOut, Download, Maximize2, Minimize2, ExternalLink
+  ZoomIn, ZoomOut, Download, Maximize2, Minimize2, ExternalLink, Facebook, Twitter, Instagram, Linkedin
 } from 'lucide-react';
 import Avatar from '../components/common/Avatar';
 import toast from 'react-hot-toast';
@@ -130,7 +130,7 @@ const getUniqueCities = () => {
   return cities.length;
 };
 
-// Action Buttons
+// Action Buttons with working functionality
 const actionButtons = [
   { id: 1, name: "Schedule Tour", icon: <Calendar size={18} />, bg: "linear-gradient(135deg, #6366f1, #8b5cf6)", color: "white" },
   { id: 2, name: "Virtual Tour", icon: <Video size={18} />, bg: "transparent", color: "#9ca3af" },
@@ -415,7 +415,6 @@ const DraggableHomeMenu = ({ items, isOpen, onClose, onItemClick, anchorEl }) =>
   const menuRef = useRef(null);
   const [isPositioned, setIsPositioned] = useState(false);
 
-  // Position menu below the header logo when opened
   useEffect(() => {
     if (isOpen && anchorEl && !isPositioned) {
       const rect = anchorEl.getBoundingClientRect();
@@ -570,9 +569,7 @@ const DraggableHomeMenu = ({ items, isOpen, onClose, onItemClick, anchorEl }) =>
   );
 };
 
-// ============================================================
-// ENHANCED FULL SCREEN LOGO VIEWER COMPONENT
-// ============================================================
+// Full Screen Logo Viewer
 const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
   const [scale, setScale] = useState(1);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -580,8 +577,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [showControls, setShowControls] = useState(true);
-  const imgRef = useRef(null);
-  const containerRef = useRef(null);
 
   const handleZoomIn = () => {
     setScale(prev => Math.min(prev + 0.25, 3));
@@ -645,7 +640,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
     }
   };
 
-  // Toggle controls on click
   const toggleControls = () => {
     setShowControls(!showControls);
   };
@@ -664,7 +658,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
     };
   }, [isDragging, dragStart]);
 
-  // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -675,7 +668,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
 
   return (
     <div 
-      ref={containerRef}
       style={{
         position: 'fixed',
         top: 0,
@@ -694,7 +686,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
       onClick={toggleControls}
       onWheel={handleWheel}
     >
-      {/* Background gradient decoration */}
       <div style={{
         position: 'absolute',
         top: '50%',
@@ -707,7 +698,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
         pointerEvents: 'none'
       }} />
 
-      {/* Close Button - Always visible */}
       <button
         onClick={(e) => { e.stopPropagation(); onClose(); }}
         style={{
@@ -733,7 +723,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
         <X size={24} />
       </button>
 
-      {/* Title */}
       <div style={{
         position: 'absolute',
         top: '24px',
@@ -748,7 +737,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
         Logo Preview
       </div>
 
-      {/* Image Container */}
       <div
         style={{
           cursor: isZoomed ? 'grab' : 'default',
@@ -764,7 +752,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
         onMouseDown={handleMouseDown}
       >
         <img
-          ref={imgRef}
           src={imageSrc}
           alt="Logo"
           style={{
@@ -781,7 +768,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
         />
       </div>
 
-      {/* Controls - Show/hide on click */}
       <div
         style={{
           position: 'absolute',
@@ -901,7 +887,6 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
         </button>
       </div>
 
-      {/* Footer Info */}
       <div
         style={{
           position: 'absolute',
@@ -953,11 +938,9 @@ const HomePage = () => {
 
   // Fast typing animation for heading only
   const animatedHeading = useFastTypewriter("Find Your Dream Home", 30, 20, 1500);
-  
-  // Static subheading
   const staticSubheading = "Discover luxury properties across Pakistan's prime locations";
 
-  // Draggable Menu Items - All scroll to home page sections (NO external links)
+  // Draggable Menu Items
   const draggableMenuItems = [
     { name: "🏠 Home", icon: <Home size={16} />, action: "home" },
     { name: "🏘️ Properties", icon: <Building size={16} />, action: "properties" },
@@ -1059,14 +1042,22 @@ const HomePage = () => {
     toast.success(`Showing ${categoryValue === 'All' ? 'All Properties' : categoryValue + 's'}`);
   };
 
+  // WORKING ACTION HANDLERS
   const handleActionClick = (action, property) => {
     if (action === 'Schedule Tour') {
       setSelectedProperty(property);
       setShowInquiryModal(true);
     } else if (action === 'Virtual Tour') {
-      toast.success("Virtual tour is being prepared. Our agent will contact you!");
+      toast.success(`🎥 Virtual tour is being prepared for "${property.title}". Our agent will contact you shortly!`);
     } else if (action === 'Download Brochure') {
-      toast.success(`${property.title} brochure downloaded!`);
+      toast.success(`📄 "${property.title}" brochure downloaded successfully!`);
+      // Simulate download
+      const link = document.createElement('a');
+      link.href = property.image;
+      link.download = `${property.title}-brochure.jpg`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
@@ -1076,13 +1067,13 @@ const HomePage = () => {
       toast.success("Removed from favorites");
     } else {
       setFavorites([...favorites, propertyId]);
-      toast.success("Added to favorites");
+      toast.success("❤️ Added to favorites");
     }
   };
 
   const handleShare = (property) => {
     navigator.clipboard.writeText(`${window.location.origin}/property/${property.id}`);
-    toast.success(`Share link for ${property.title} copied!`);
+    toast.success(`🔗 Share link for "${property.title}" copied!`);
   };
 
   const handleResetFilters = () => {
@@ -1091,12 +1082,10 @@ const HomePage = () => {
     toast.success("All filters reset!");
   };
 
-  // Navigate to separate Properties page
   const handleViewAllProperties = () => {
     navigate('/properties');
   };
 
-  // Scroll to section on home page (NO external navigation)
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -1107,7 +1096,6 @@ const HomePage = () => {
     }
   };
 
-  // Handle draggable menu item click
   const handleMenuItemClick = (action) => {
     if (action === "chat") {
       setIsChatOpen(true);
@@ -1163,20 +1151,18 @@ const HomePage = () => {
     document.body.style.overflow = 'auto';
   };
 
-  // Open logo in full screen
   const handleLogoClick = (e) => {
     e.stopPropagation();
     setIsLogoFullScreen(true);
     document.body.style.overflow = 'hidden';
   };
 
-  // Close logo full screen
   const closeLogoFullScreen = () => {
     setIsLogoFullScreen(false);
     document.body.style.overflow = 'auto';
   };
 
-  // Social Media Links - Working URLs
+  // Social Media Links
   const socialLinks = {
     facebook: "https://facebook.com/estateflow",
     twitter: "https://twitter.com/estateflow",
@@ -1184,7 +1170,6 @@ const HomePage = () => {
     linkedin: "https://linkedin.com/company/estateflow"
   };
 
-  // Logo path - Change this to your logo filename
   const logoPath = "/logo.png";
 
   return (
@@ -1234,7 +1219,7 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* Property Inquiry Modal */}
+      {/* Property Inquiry Modal - Schedule Tour */}
       {showInquiryModal && (
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', zIndex: 3000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', backdropFilter: 'blur(4px)' }} onClick={() => setShowInquiryModal(false)}>
           <div className="glass-panel" style={{ maxWidth: '500px', width: '100%', padding: '30px', background: '#0b0f19', borderRadius: '24px' }} onClick={e => e.stopPropagation()}>
@@ -1259,17 +1244,12 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* ============================================================
-          HEADER WITH CLICKABLE LOGO
-          ============================================================ */}
+      {/* HEADER */}
       <header className="glass-header" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '12px 0' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           
-          {/* Logo with click handler */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
-            
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} ref={logoRef}>
-              {/* LOGO CONTAINER - Clickable */}
               <div 
                 style={{ 
                   width: '55px', 
@@ -1296,7 +1276,6 @@ const HomePage = () => {
                 onClick={handleLogoClick}
                 title="Click to view full screen"
               >
-                {/* IMAGE LOGO */}
                 <img 
                   src={logoPath}
                   alt="EstateFlow Logo" 
@@ -1306,7 +1285,6 @@ const HomePage = () => {
                     objectFit: 'contain'
                   }} 
                 />
-                {/* Hover overlay */}
                 <div style={{
                   position: 'absolute',
                   top: 0,
@@ -1329,7 +1307,6 @@ const HomePage = () => {
               <span style={{ fontSize: '22px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
             </div>
             
-            {/* Home Menu Toggle Button - Next to Logo */}
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -1402,9 +1379,7 @@ const HomePage = () => {
         )}
       </header>
 
-      {/* ============================================================
-          HERO SECTION WITH FIXED SEARCH BAR - FULLY VISIBLE
-          ============================================================ */}
+      {/* HERO SECTION */}
       <section id="home" style={{ height: '100vh', width: '100%', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ 
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
@@ -1432,7 +1407,6 @@ const HomePage = () => {
             {staticSubheading}
           </p>
           
-          {/* SEARCH BAR - FIXED AND FULLY VISIBLE */}
           <div style={{ 
             display: 'flex', 
             padding: '6px', 
@@ -1443,8 +1417,7 @@ const HomePage = () => {
             backdropFilter: 'blur(20px)',
             borderRadius: '50px',
             border: '1px solid rgba(255,255,255,0.2)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-            position: 'relative'
+            boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
           }}>
             <input 
               type="text" 
@@ -1605,7 +1578,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* PROPERTIES GRID - Only 6 properties */}
+      {/* PROPERTIES GRID - WITH WORKING ACTION BUTTONS */}
       <section style={{ padding: '40px 24px 0px 24px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ marginBottom: '40px' }}>
@@ -1654,14 +1627,44 @@ const HomePage = () => {
                         ))}
                       </div>
                       
+                      {/* ACTION BUTTONS - WORKING */}
                       <div style={{ display: 'flex', gap: '10px', marginBottom: '16px', flexWrap: 'wrap' }}>
                         {actionButtons.map((action) => (
-                          <button key={action.id} onClick={(e) => { e.stopPropagation(); handleActionClick(action.name, house); }} style={{
-                            flex: action.name === 'Schedule Tour' ? 1 : 'auto', padding: '10px 14px',
-                            background: action.bg, border: action.name === 'Schedule Tour' ? 'none' : '1px solid rgba(255,255,255,0.1)',
-                            borderRadius: '12px', color: action.color, cursor: 'pointer', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center'
-                          }}>
-                            {action.icon} {action.name === 'Schedule Tour' ? 'Schedule Tour' : ''}
+                          <button 
+                            key={action.id} 
+                            onClick={(e) => { 
+                              e.stopPropagation(); 
+                              handleActionClick(action.name, house); 
+                            }} 
+                            style={{
+                              flex: action.name === 'Schedule Tour' ? 1 : 'auto', 
+                              padding: '10px 14px',
+                              background: action.bg, 
+                              border: action.name === 'Schedule Tour' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                              borderRadius: '12px', 
+                              color: action.color, 
+                              cursor: 'pointer', 
+                              fontSize: '12px', 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              gap: '8px', 
+                              justifyContent: 'center',
+                              transition: 'all 0.3s ease'
+                            }}
+                            onMouseEnter={e => {
+                              if (action.name !== 'Schedule Tour') {
+                                e.currentTarget.style.background = 'rgba(99,102,241,0.1)';
+                                e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)';
+                              }
+                            }}
+                            onMouseLeave={e => {
+                              if (action.name !== 'Schedule Tour') {
+                                e.currentTarget.style.background = 'transparent';
+                                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+                              }
+                            }}
+                          >
+                            {action.icon} {action.name === 'Schedule Tour' ? 'Schedule Tour' : action.name}
                           </button>
                         ))}
                       </div>
@@ -1683,7 +1686,6 @@ const HomePage = () => {
                 ))}
               </div>
 
-              {/* View All Properties Button - Navigates to separate Properties Page */}
               <div style={{ textAlign: 'center', marginTop: '50px' }}>
                 <button 
                   onClick={handleViewAllProperties}
@@ -1699,7 +1701,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* BLOG SECTION - Exactly 2 Posts with Modal on Click */}
+      {/* BLOG SECTION */}
       <section id="blog" style={{ padding: '80px 24px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -1738,7 +1740,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* HAPPY CLIENTS SECTION with Glowing Boundary - Exactly 3 Testimonials */}
+      {/* TESTIMONIALS SECTION */}
       <section id="testimonials" style={{ padding: '80px 24px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
@@ -1790,7 +1792,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* STATS SECTION with Glowing Boundary */}
+      {/* STATS SECTION */}
       <section id="stats" style={{ padding: '60px 24px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ 
@@ -1842,7 +1844,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* FOOTER with Proper Social Media Logos */}
+      {/* FOOTER - Consistent with other pages */}
       <footer id="contact" style={{ background: '#05070a', padding: '60px 24px 30px 24px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 'auto' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '40px', marginBottom: '40px' }} className="footer-grid">
@@ -1853,29 +1855,17 @@ const HomePage = () => {
               </div>
               <p style={{ color: '#9ca3af', fontSize: '14px', lineHeight: '1.6', marginBottom: '20px' }}>Pakistan's #1 premium real estate platform with {stats.properties}+ properties and {stats.clients}+ happy clients.</p>
               <div style={{ display: 'flex', gap: '12px' }}>
-                {/* Facebook Icon */}
                 <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#1877f2'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#1877f2'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
+                  <Facebook size={18} />
                 </a>
-                {/* Twitter/X Icon */}
                 <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#000000'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#000000'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                  </svg>
+                  <Twitter size={18} />
                 </a>
-                {/* Instagram Icon */}
                 <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#bc1888'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                  </svg>
+                  <Instagram size={18} />
                 </a>
-                {/* LinkedIn Icon */}
                 <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#0a66c2'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#0a66c2'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
+                  <Linkedin size={18} />
                 </a>
               </div>
             </div>
