@@ -201,7 +201,7 @@ const PropertiesPage = () => {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }}>
         
-        {/* ===== ESTATEFLOW HERO SECTION ===== */}
+        {/* ===== ESTATEFLOW HERO SECTION WITH LOGO.PNG ===== */}
         <div style={{ 
           marginBottom: '40px', 
           padding: '60px 40px', 
@@ -212,6 +212,7 @@ const PropertiesPage = () => {
           overflow: 'hidden',
           textAlign: 'center'
         }}>
+          {/* Background Decorations */}
           <div style={{ 
             position: 'absolute', 
             top: '-80px', 
@@ -234,23 +235,54 @@ const PropertiesPage = () => {
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* EstateFlow Branding */}
+            {/* ===== ESTATEFLOW LOGO WITH IMAGE ===== */}
             <div style={{ 
               display: 'inline-flex', 
               alignItems: 'center', 
-              gap: '12px',
+              gap: '14px',
               background: 'rgba(99,102,241,0.08)',
-              padding: '8px 20px',
+              padding: '8px 24px 8px 12px',
               borderRadius: '50px',
-              marginBottom: '20px',
-              border: '1px solid rgba(99,102,241,0.10)'
+              marginBottom: '22px',
+              border: '1px solid rgba(99,102,241,0.12)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 4px 20px rgba(99,102,241,0.08)'
             }}>
-              <Building2 size={16} style={{ color: '#818cf8' }} />
-              <span style={{ color: '#818cf8', fontSize: '11px', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase' }}>
-                EstateFlow Properties
+              {/* ===== ACTUAL LOGO.PNG IMAGE ===== */}
+              <img 
+                src="/logo.png" 
+                alt="EstateFlow Logo" 
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '10px',
+                  objectFit: 'contain',
+                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                  padding: '4px'
+                }}
+              />
+              <span style={{ 
+                color: 'white', 
+                fontSize: '18px', 
+                fontWeight: '800', 
+                letterSpacing: '0.5px'
+              }}>
+                EstateFlow
+              </span>
+              <span style={{ 
+                color: '#a78bfa', 
+                fontSize: '10px', 
+                fontWeight: '600',
+                background: 'rgba(99,102,241,0.15)',
+                padding: '2px 12px',
+                borderRadius: '20px',
+                letterSpacing: '0.5px'
+              }}>
+                Properties
               </span>
             </div>
             
+            {/* Main Heading */}
             <h1 style={{ 
               fontSize: '48px', 
               fontWeight: '900', 
@@ -282,7 +314,8 @@ const PropertiesPage = () => {
               maxWidth: '620px',
               lineHeight: '1.7'
             }}>
-              Explore our curated collection of premium properties across Pakistan's most desirable locations.
+              <span style={{ color: '#818cf8', fontWeight: '600' }}>EstateFlow</span> presents curated collection of premium properties 
+              across Pakistan's most desirable locations.
             </p>
             
             {/* Stats */}
@@ -296,24 +329,24 @@ const PropertiesPage = () => {
               backdropFilter: 'blur(10px)'
             }}>
               <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '20px', fontWeight: '700', margin: 0 }}>{ALL_PROPERTIES.length}</p>
+                <p style={{ color: '#818cf8', fontSize: '20px', fontWeight: '800', margin: 0 }}>{ALL_PROPERTIES.length}</p>
                 <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Properties</p>
               </div>
               <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
               <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '20px', fontWeight: '700', margin: 0 }}>5</p>
+                <p style={{ color: '#818cf8', fontSize: '20px', fontWeight: '800', margin: 0 }}>5</p>
                 <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Cities</p>
               </div>
               <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
               <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '20px', fontWeight: '700', margin: 0 }}>4</p>
+                <p style={{ color: '#818cf8', fontSize: '20px', fontWeight: '800', margin: 0 }}>4</p>
                 <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px', textTransform: 'uppercase' }}>Types</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Filters Bar */}
+        {/* ===== FILTERS BAR ===== */}
         <div style={{ 
           background: 'rgba(255,255,255,0.03)', 
           backdropFilter: 'blur(10px)', 
