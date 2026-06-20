@@ -1325,7 +1325,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* FOOTER with Working Social Media Links */}
+      {/* FOOTER with Working Social Media Links - NO ARROWS */}
       <footer id="contact" style={{ background: '#05070a', padding: '60px 24px 30px 24px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 'auto' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '40px', marginBottom: '40px' }} className="footer-grid">
@@ -1345,20 +1345,20 @@ const HomePage = () => {
             <div>
               <h4 style={{ color: 'white', marginBottom: '20px' }}>Quick Links</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li><a href="/" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ Home</a></li>
-                <li><a href="/properties" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ Properties</a></li>
-                <li><a href="/services" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ Services</a></li>
-                <li><a href="/agents" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ Agents</a></li>
-                <li><a href="/contact" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ Contact</a></li>
+                <li><a href="/" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Home</a></li>
+                <li><a href="/properties" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Properties</a></li>
+                <li><a href="/services" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Services</a></li>
+                <li><a href="/agents" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Agents</a></li>
+                <li><a href="/contact" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Contact</a></li>
               </ul>
             </div>
             <div>
               <h4 style={{ color: 'white', marginBottom: '20px' }}>Resources</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li><a href="/privacy" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ Privacy Policy</a></li>
-                <li><a href="/terms" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ Terms of Service</a></li>
-                <li><a href="/faq" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ FAQ</a></li>
-                <li><a href="/blog" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>→ Blog</a></li>
+                <li><a href="/privacy" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Privacy Policy</a></li>
+                <li><a href="/terms" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Terms of Service</a></li>
+                <li><a href="/faq" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>FAQ</a></li>
+                <li><a href="/blog" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Blog</a></li>
               </ul>
             </div>
             <div>
