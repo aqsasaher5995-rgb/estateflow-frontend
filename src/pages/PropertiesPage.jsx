@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X } from 'lucide-react';
+import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X, Sparkles, Building2, Award, TrendingUp } from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
@@ -130,7 +130,6 @@ const PropertiesPage = () => {
   });
 
   useEffect(() => { 
-    // Always use ALL_PROPERTIES directly - this ensures all 31 properties show
     setProperties(ALL_PROPERTIES);
     setLoading(false);
   }, []);
@@ -183,11 +182,171 @@ const PropertiesPage = () => {
       <Navbar />
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }} className="page-enter">
-        {/* Hero */}
-        <div style={{ marginBottom: '36px' }}>
-          <span style={{ color: '#818cf8', fontSize: '13px', fontWeight: '700', letterSpacing: '1px' }}>🏘️ BROWSE LISTINGS</span>
-          <h1 style={{ fontSize: '38px', fontWeight: '900', color: 'white', margin: '8px 0 10px', letterSpacing: '-1px' }}>Exclusive Properties</h1>
-          <p style={{ color: '#9ca3af', fontSize: '15px' }}>Curated collection of luxury properties across Pakistan's prime locations.</p>
+        
+        {/* ===== ENHANCED HERO SECTION ===== */}
+        <div style={{ 
+          marginBottom: '40px', 
+          padding: '50px 40px', 
+          borderRadius: '24px',
+          background: 'linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.05))',
+          border: '1px solid rgba(99,102,241,0.15)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          {/* Decorative background elements */}
+          <div style={{ 
+            position: 'absolute', 
+            top: '-100px', 
+            right: '-80px', 
+            width: '300px', 
+            height: '300px', 
+            borderRadius: '50%',
+            background: 'rgba(99,102,241,0.05)',
+            pointerEvents: 'none'
+          }} />
+          <div style={{ 
+            position: 'absolute', 
+            bottom: '-120px', 
+            left: '-60px', 
+            width: '250px', 
+            height: '250px', 
+            borderRadius: '50%',
+            background: 'rgba(139,92,246,0.04)',
+            pointerEvents: 'none'
+          }} />
+          
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            {/* Badge */}
+            <div style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              background: 'rgba(99,102,241,0.15)',
+              padding: '6px 16px',
+              borderRadius: '30px',
+              marginBottom: '16px',
+              border: '1px solid rgba(99,102,241,0.2)'
+            }}>
+              <Sparkles size={14} style={{ color: '#818cf8' }} />
+              <span style={{ color: '#818cf8', fontSize: '12px', fontWeight: '600', letterSpacing: '1px' }}>
+                PREMIUM COLLECTION
+              </span>
+            </div>
+            
+            {/* Main Heading */}
+            <h1 style={{ 
+              fontSize: '44px', 
+              fontWeight: '900', 
+              color: 'white', 
+              margin: '0 0 8px 0', 
+              letterSpacing: '-1.5px',
+              lineHeight: '1.1'
+            }}>
+              Exclusive <span style={{ color: '#6366f1' }}>Properties</span>
+            </h1>
+            
+            {/* Subtitle with icons */}
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '20px', 
+              flexWrap: 'wrap',
+              marginTop: '12px'
+            }}>
+              <p style={{ 
+                color: '#cbd5e1', 
+                fontSize: '16px', 
+                margin: 0,
+                maxWidth: '550px',
+                lineHeight: '1.6'
+              }}>
+                Curated collection of luxury properties across Pakistan's prime locations — from Karachi's coastline to Islamabad's serene valleys.
+              </p>
+              
+              {/* Quick stats */}
+              <div style={{ 
+                display: 'flex', 
+                gap: '24px',
+                marginLeft: 'auto',
+                paddingLeft: '24px',
+                borderLeft: '1px solid rgba(255,255,255,0.08)'
+              }}>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ color: 'white', fontSize: '20px', fontWeight: '800', margin: 0 }}>{ALL_PROPERTIES.length}+</p>
+                  <p style={{ color: '#9ca3af', fontSize: '11px', margin: 0 }}>Listings</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ color: 'white', fontSize: '20px', fontWeight: '800', margin: 0 }}>5</p>
+                  <p style={{ color: '#9ca3af', fontSize: '11px', margin: 0 }}>Cities</p>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ color: 'white', fontSize: '20px', fontWeight: '800', margin: 0 }}>4</p>
+                  <p style={{ color: '#9ca3af', fontSize: '11px', margin: 0 }}>Types</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Tags */}
+            <div style={{ 
+              display: 'flex', 
+              gap: '10px', 
+              flexWrap: 'wrap', 
+              marginTop: '16px'
+            }}>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                gap: '4px',
+                background: 'rgba(255,255,255,0.05)', 
+                padding: '4px 14px', 
+                borderRadius: '20px', 
+                fontSize: '12px', 
+                color: '#9ca3af',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}>
+                <Building2 size={12} style={{ color: '#6366f1' }} /> Villas
+              </span>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                gap: '4px',
+                background: 'rgba(255,255,255,0.05)', 
+                padding: '4px 14px', 
+                borderRadius: '20px', 
+                fontSize: '12px', 
+                color: '#9ca3af',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}>
+                <TrendingUp size={12} style={{ color: '#6366f1' }} /> Penthouses
+              </span>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                gap: '4px',
+                background: 'rgba(255,255,255,0.05)', 
+                padding: '4px 14px', 
+                borderRadius: '20px', 
+                fontSize: '12px', 
+                color: '#9ca3af',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}>
+                <Award size={12} style={{ color: '#6366f1' }} /> Farmhouses
+              </span>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                gap: '4px',
+                background: 'rgba(255,255,255,0.05)', 
+                padding: '4px 14px', 
+                borderRadius: '20px', 
+                fontSize: '12px', 
+                color: '#9ca3af',
+                border: '1px solid rgba(255,255,255,0.06)'
+              }}>
+                <Building size={12} style={{ color: '#6366f1' }} /> Commercial
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Filters Bar */}
