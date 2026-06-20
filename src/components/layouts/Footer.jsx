@@ -1,7 +1,15 @@
 import React from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
+  // Social Media Links - Working URLs
+  const socialLinks = {
+    facebook: "https://facebook.com/estateflow",
+    twitter: "https://twitter.com/estateflow",
+    instagram: "https://instagram.com/estateflow",
+    linkedin: "https://linkedin.com/company/estateflow"
+  };
+
   return (
     <footer
       style={{
@@ -22,18 +30,113 @@ const Footer = () => {
               <span style={{ color: 'white', fontWeight: '800', fontSize: '18px' }}>EstateFlow</span>
             </div>
             <p style={{ color: '#9ca3af', fontSize: '14px', lineHeight: '1.7', marginBottom: '20px' }}>
-              Pakistan's premium real estate platform. Vetted rentals, transparent workflows, and trusted property management in Karachi, Lahore & Islamabad.
+              Pakistan's #1 premium real estate platform with 31+ properties and 1250+ happy clients.
             </p>
             <div style={{ display: 'flex', gap: '10px' }}>
-              {/* Social links without icons - just text */}
-              <a href="#" style={{ color: '#9ca3af', fontSize: '12px', textDecoration: 'none' }}>FB</a>
-              <a href="#" style={{ color: '#9ca3af', fontSize: '12px', textDecoration: 'none' }}>TW</a>
-              <a href="#" style={{ color: '#9ca3af', fontSize: '12px', textDecoration: 'none' }}>IG</a>
-              <a href="#" style={{ color: '#9ca3af', fontSize: '12px', textDecoration: 'none' }}>LI</a>
+              {/* Facebook */}
+              <a 
+                href={socialLinks.facebook} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  width: '34px', 
+                  height: '34px', 
+                  borderRadius: '8px', 
+                  background: 'rgba(255,255,255,0.05)', 
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: '#9ca3af', 
+                  textDecoration: 'none', 
+                  transition: 'all 0.3s',
+                  fontSize: '12px',
+                  fontWeight: '600'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#1877f2'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#1877f2'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}
+              >
+                <Facebook size={14} />
+              </a>
+              {/* Twitter/X */}
+              <a 
+                href={socialLinks.twitter} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  width: '34px', 
+                  height: '34px', 
+                  borderRadius: '8px', 
+                  background: 'rgba(255,255,255,0.05)', 
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: '#9ca3af', 
+                  textDecoration: 'none', 
+                  transition: 'all 0.3s',
+                  fontSize: '12px',
+                  fontWeight: '600'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#000000'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#000000'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}
+              >
+                <Twitter size={14} />
+              </a>
+              {/* Instagram */}
+              <a 
+                href={socialLinks.instagram} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  width: '34px', 
+                  height: '34px', 
+                  borderRadius: '8px', 
+                  background: 'rgba(255,255,255,0.05)', 
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: '#9ca3af', 
+                  textDecoration: 'none', 
+                  transition: 'all 0.3s',
+                  fontSize: '12px',
+                  fontWeight: '600'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#bc1888'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}
+              >
+                <Instagram size={14} />
+              </a>
+              {/* LinkedIn */}
+              <a 
+                href={socialLinks.linkedin} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  width: '34px', 
+                  height: '34px', 
+                  borderRadius: '8px', 
+                  background: 'rgba(255,255,255,0.05)', 
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  color: '#9ca3af', 
+                  textDecoration: 'none', 
+                  transition: 'all 0.3s',
+                  fontSize: '12px',
+                  fontWeight: '600'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#0a66c2'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#0a66c2'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}
+              >
+                <Linkedin size={14} />
+              </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links - No Arrows */}
           <div>
             <h4 style={{ color: 'white', marginBottom: '20px', fontWeight: '700', fontSize: '15px' }}>Quick Links</h4>
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -42,14 +145,14 @@ const Footer = () => {
                   <a href={path} style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', transition: 'color 0.2s' }}
                     onMouseEnter={e => { e.target.style.color = '#818cf8'; }}
                     onMouseLeave={e => { e.target.style.color = '#9ca3af'; }}>
-                    → {label}
+                    {label}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Resources - No Arrows */}
           <div>
             <h4 style={{ color: 'white', marginBottom: '20px', fontWeight: '700', fontSize: '15px' }}>Resources</h4>
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -58,7 +161,7 @@ const Footer = () => {
                   <a href="#" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', transition: 'color 0.2s' }}
                     onMouseEnter={e => { e.target.style.color = '#818cf8'; }}
                     onMouseLeave={e => { e.target.style.color = '#9ca3af'; }}>
-                    → {item}
+                    {item}
                   </a>
                 </li>
               ))}
