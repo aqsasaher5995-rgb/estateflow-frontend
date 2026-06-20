@@ -824,14 +824,8 @@ const HomePage = () => {
     linkedin: "https://linkedin.com/company/estateflow"
   };
 
-  // ============================================================
-  // YOUR LOGO - REPLACE THIS SECTION WITH YOUR OWN LOGO
-  // ============================================================
-  // Option 1: If your logo is in public folder (public/logo.png)
-  const logoPath = "/logo.png";  // Change this to your logo path
-  
-  // Option 2: If you imported logo from src/assets
-  // const logoPath = logo;  // Uncomment if using import
+  // Logo path - Change this to your logo filename
+  const logoPath = "/logo.png";
 
   return (
     <div style={{ background: '#080b11', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -898,7 +892,7 @@ const HomePage = () => {
       )}
 
       {/* ============================================================
-          HEADER - CUSTOM LOGO SECTION
+          HEADER WITH LARGER LOGO
           ============================================================ */}
       <header className="glass-header" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '12px 0' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -906,57 +900,36 @@ const HomePage = () => {
           {/* Logo with menu toggle button */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             
-            {/* ============================================================
-                YOUR LOGO GOES HERE - REPLACE THIS SECTION
-                ============================================================ */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} ref={logoRef}>
-              {/* LOGO CONTAINER - Replace the content inside this div with your logo */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} ref={logoRef}>
+              {/* LOGO CONTAINER - LARGER SIZE */}
               <div style={{ 
-                width: '38px', 
-                height: '38px', 
+                width: '55px', 
+                height: '55px', 
                 background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                borderRadius: '10px', 
+                borderRadius: '14px', 
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                boxShadow: '0 4px 15px rgba(99,102,241,0.35)',
+                boxShadow: '0 4px 20px rgba(99,102,241,0.4)',
                 overflow: 'hidden',
-                transition: 'transform 0.3s'
+                transition: 'transform 0.3s ease'
               }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.08)'}
               onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
                 
-                {/* ============================================================
-                    OPTION 1: IMAGE LOGO (Recommended)
-                    Uncomment the line below and replace "logo.png" with your image name
-                    ============================================================ */}
+                {/* IMAGE LOGO - LARGER SIZE */}
                 <img 
-                  src="/logo.png" 
+                  src={logoPath}
                   alt="EstateFlow Logo" 
                   style={{ 
-                    width: '28px', 
-                    height: '28px', 
+                    width: '42px', 
+                    height: '42px', 
                     objectFit: 'contain'
                   }} 
                 />
                 
-                {/* ============================================================
-                    OPTION 2: SVG LOGO (If you want to use SVG directly)
-                    Uncomment the SVG below and comment out the img tag above
-                    ============================================================ */}
-                {/*
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-                */}
-                
-                {/* ============================================================
-                    OPTION 3: EMOJI (Default - Remove this if using image or SVG)
-                    ============================================================ */}
-                {/* <span>🏠</span> */}
-                
               </div>
-              <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
+              <span style={{ fontSize: '22px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
             </div>
             
             {/* Home Menu Toggle Button - Next to Logo */}
@@ -969,14 +942,14 @@ const HomePage = () => {
                 background: 'rgba(99,102,241,0.12)',
                 border: '1px solid rgba(99,102,241,0.2)',
                 borderRadius: '8px',
-                padding: '6px 8px',
+                padding: '8px 12px',
                 cursor: 'pointer',
                 color: '#818cf8',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '4px',
                 transition: 'all 0.3s',
-                fontSize: '11px',
+                fontSize: '12px',
                 fontWeight: '500'
               }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.2)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.4)'; }}
