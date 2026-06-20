@@ -24,6 +24,7 @@ const PropertyDetailPage = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [galleryImages, setGalleryImages] = useState([]);
   const [galleryActiveIndex, setGalleryActiveIndex] = useState(0);
+  const [galleryCategory, setGalleryCategory] = useState('all');
 
   const [homeValue, setHomeValue] = useState(8500000);
   const [downPaymentPct, setDownPaymentPct] = useState(20);
@@ -352,6 +353,7 @@ const PropertyDetailPage = () => {
 
   const calc = property ? getMortgageCalculation() : null;
 
+  // Function to open gallery with specific category
   const openGallery = (category, startIndex = 0) => {
     let images = [];
     if (category === 'bedrooms') images = property.bedroomImgs.map((img, idx) => ({ src: img, title: `Bedroom ${idx + 1}` }));
@@ -364,6 +366,7 @@ const PropertyDetailPage = () => {
     }
     setGalleryImages(images);
     setGalleryActiveIndex(Math.min(startIndex, images.length - 1));
+    setGalleryCategory(category);
     setIsGalleryOpen(true);
   };
 
@@ -378,17 +381,6 @@ const PropertyDetailPage = () => {
       </div>
     );
   }
-
-  const getAllImages = () => {
-    const images = [{ src: property.image, title: "Front View" }];
-    if (property.bedroomImgs) property.bedroomImgs.forEach((img, idx) => images.push({ src: img, title: `Bedroom ${idx + 1}` }));
-    if (property.bathroomImgs) property.bathroomImgs.forEach((img, idx) => images.push({ src: img, title: `Bathroom ${idx + 1}` }));
-    images.push({ src: property.kitchenImg, title: "Kitchen" });
-    if (property.diningImg) images.push({ src: property.diningImg, title: "Dining Area" });
-    return images;
-  };
-
-  const propertyImages = getAllImages();
 
   return (
     <div style={{ background: '#080b11', minHeight: '100vh', color: 'white' }}>
@@ -448,15 +440,86 @@ const PropertyDetailPage = () => {
           </div>
         </div>
 
-        {/* GALLERY - Only Main Image (no thumbnails below) */}
+        {/* GALLERY - Main Image with Thumbnails Below */}
         <div style={{ marginBottom: '40px' }}>
           <div style={{ height: '480px', background: '#090d16', borderRadius: '24px', overflow: 'hidden', marginBottom: '16px', position: 'relative', cursor: 'pointer', border: '1px solid rgba(255,255,255,0.06)' }}
-            onMouseEnter={() => setZoomImage(true)} onMouseLeave={() => setZoomImage(false)} onClick={() => openGallery('all', activeImage)}>
+            onMouseEnter={() => setZoomImage(true)} onMouseLeave={() => setZoomImage(false)} onClick={() => openGallery('all', 0)}>
             <img src={property.image} alt={property.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease', transform: zoomImage ? 'scale(1.04)' : 'scale(1)' }} />
             <div style={{ position: 'absolute', bottom: '20px', left: '20px', background: 'rgba(0,0,0,0.7)', padding: '6px 14px', borderRadius: '20px', fontSize: '13px', border: '1px solid rgba(255,255,255,0.1)' }}>Front View</div>
             <div style={{ position: 'absolute', bottom: '20px', right: '20px', background: 'rgba(0,0,0,0.7)', padding: '6px 14px', borderRadius: '20px', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Grid size={14} /> View Gallery
+              <Grid size={14} /> View All Gallery
             </div>
+          </div>
+          
+          {/* THUMBNAILS SECTION - Bedrooms, Bathrooms, Kitchen, Dining */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '12px' }}>
+            {/* Bedrooms Thumbnails */}
+            {property.bedroomImgs && property.bedroomImgs.slice(0, 3).map((img, idx) => (
+              <div key={`bedroom-${idx}`} onClick={() => openGallery('bedrooms', idx)} 
+                style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', position: 'relative' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'} 
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+                <img src={img} alt={`Bedroom ${idx + 1}`} style={{ width: '100%', height: '80px', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.6)', padding: '4px 8px' }}>
+                  <span style={{ fontSize: '10px', color: 'white' }}>🛏️ Bedroom {idx + 1}</span>
+                </div>
+              </div>
+            ))}
+            {property.bedroomImgs && property.bedroomImgs.length > 3 && (
+              <div onClick={() => openGallery('bedrooms', 0)} 
+                style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(99,102,241,0.3)', background: 'rgba(99,102,241,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.2)'} 
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(99,102,241,0.1)'}>
+                <span style={{ fontSize: '20px', color: '#6366f1' }}>+{property.bedroomImgs.length - 3}</span>
+                <span style={{ fontSize: '9px', color: '#9ca3af' }}>More Bedrooms</span>
+              </div>
+            )}
+            
+            {/* Bathrooms Thumbnails */}
+            {property.bathroomImgs && property.bathroomImgs.slice(0, 2).map((img, idx) => (
+              <div key={`bathroom-${idx}`} onClick={() => openGallery('bathrooms', idx)} 
+                style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', position: 'relative' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'} 
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+                <img src={img} alt={`Bathroom ${idx + 1}`} style={{ width: '100%', height: '80px', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.6)', padding: '4px 8px' }}>
+                  <span style={{ fontSize: '10px', color: 'white' }}>🛁 Bathroom {idx + 1}</span>
+                </div>
+              </div>
+            ))}
+            {property.bathroomImgs && property.bathroomImgs.length > 2 && (
+              <div onClick={() => openGallery('bathrooms', 0)} 
+                style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(99,102,241,0.3)', background: 'rgba(99,102,241,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.2)'} 
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(99,102,241,0.1)'}>
+                <span style={{ fontSize: '20px', color: '#6366f1' }}>+{property.bathroomImgs.length - 2}</span>
+                <span style={{ fontSize: '9px', color: '#9ca3af' }}>More Bathrooms</span>
+              </div>
+            )}
+            
+            {/* Kitchen Thumbnail */}
+            <div onClick={() => openGallery('kitchen', 0)} 
+              style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', position: 'relative' }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'} 
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+              <img src={property.kitchenImg} alt="Kitchen" style={{ width: '100%', height: '80px', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.6)', padding: '4px 8px' }}>
+                <span style={{ fontSize: '10px', color: 'white' }}>🍳 Kitchen</span>
+              </div>
+            </div>
+            
+            {/* Dining Thumbnail */}
+            {property.diningImg && (
+              <div onClick={() => openGallery('dining', 0)} 
+                style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', position: 'relative' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'} 
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+                <img src={property.diningImg} alt="Dining Area" style={{ width: '100%', height: '80px', objectFit: 'cover' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.6)', padding: '4px 8px' }}>
+                  <span style={{ fontSize: '10px', color: 'white' }}>🍽️ Dining</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
