@@ -6,7 +6,7 @@ import {
   Phone, Mail, User, Star, Heart, Share2, 
   Calculator, MessageSquare, Send, CheckCircle2, ShieldAlert,
   X, ChevronLeft, ChevronRight, Grid, Home as HomeIcon,
-  Building, Eye
+  Building, Eye, Facebook, Twitter, Instagram, Linkedin, Trophy
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -41,6 +41,14 @@ const PropertyDetailPage = () => {
   const [showInquiryForm, setShowInquiryForm] = useState(false);
   const [inquirySubmitted, setInquirySubmitted] = useState(false);
   const [inquiryForm, setInquiryForm] = useState({ name: '', email: '', phone: '', message: '' });
+
+  // Social Media Links
+  const socialLinks = {
+    facebook: "https://facebook.com/estateflow",
+    twitter: "https://twitter.com/estateflow",
+    instagram: "https://instagram.com/estateflow",
+    linkedin: "https://linkedin.com/company/estateflow"
+  };
 
   // ========== VILLAS (ID 1-12) IMAGES ==========
   const propertyCustomImages = {
@@ -353,7 +361,6 @@ const PropertyDetailPage = () => {
 
   const calc = property ? getMortgageCalculation() : null;
 
-  // Function to open gallery with specific category
   const openGallery = (category, startIndex = 0) => {
     let images = [];
     if (category === 'bedrooms') images = property.bedroomImgs.map((img, idx) => ({ src: img, title: `Bedroom ${idx + 1}` }));
@@ -451,9 +458,8 @@ const PropertyDetailPage = () => {
             </div>
           </div>
           
-          {/* THUMBNAILS SECTION - Bedrooms, Bathrooms, Kitchen, Dining */}
+          {/* THUMBNAILS SECTION */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '12px' }}>
-            {/* Bedrooms Thumbnails */}
             {property.bedroomImgs && property.bedroomImgs.slice(0, 3).map((img, idx) => (
               <div key={`bedroom-${idx}`} onClick={() => openGallery('bedrooms', idx)} 
                 style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', position: 'relative' }}
@@ -475,7 +481,6 @@ const PropertyDetailPage = () => {
               </div>
             )}
             
-            {/* Bathrooms Thumbnails */}
             {property.bathroomImgs && property.bathroomImgs.slice(0, 2).map((img, idx) => (
               <div key={`bathroom-${idx}`} onClick={() => openGallery('bathrooms', idx)} 
                 style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', position: 'relative' }}
@@ -497,7 +502,6 @@ const PropertyDetailPage = () => {
               </div>
             )}
             
-            {/* Kitchen Thumbnail */}
             <div onClick={() => openGallery('kitchen', 0)} 
               style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', position: 'relative' }}
               onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.03)'} 
@@ -508,7 +512,6 @@ const PropertyDetailPage = () => {
               </div>
             </div>
             
-            {/* Dining Thumbnail */}
             {property.diningImg && (
               <div onClick={() => openGallery('dining', 0)} 
                 style={{ cursor: 'pointer', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', transition: 'transform 0.2s', position: 'relative' }}
@@ -529,8 +532,17 @@ const PropertyDetailPage = () => {
           {/* LEFT COLUMN */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
             
-            {/* Features Row */}
-            <div className="glass-panel" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', padding: '24px', textAlign: 'center', gap: '10px' }}>
+            {/* Features Row - WITH GLOWING BOUNDARY */}
+            <div className="glass-panel" style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(4, 1fr)', 
+              padding: '24px', 
+              textAlign: 'center', 
+              gap: '10px',
+              border: '1px solid rgba(99,102,241,0.3)',
+              boxShadow: '0 0 20px rgba(99,102,241,0.15), 0 0 40px rgba(99,102,241,0.05)',
+              animation: 'glowPulse 2s ease-in-out infinite'
+            }}>
               <div style={{ cursor: 'pointer' }} onClick={() => openGallery('bedrooms', 0)}>
                 <span style={{ fontSize: '24px' }}>🛏️</span>
                 <p style={{ fontWeight: '800', color: 'white', fontSize: '18px', margin: '4px 0 0 0' }}>{property.beds}</p>
@@ -685,8 +697,13 @@ const PropertyDetailPage = () => {
               )}
             </div>
 
-            {/* Financial Planner */}
-            <div className="glass-panel" style={{ padding: '24px' }}>
+            {/* Financial Planner - WITH GLOWING BOUNDARY */}
+            <div className="glass-panel" style={{ 
+              padding: '24px',
+              border: '1px solid rgba(99,102,241,0.3)',
+              boxShadow: '0 0 20px rgba(99,102,241,0.15), 0 0 40px rgba(99,102,241,0.05)',
+              animation: 'glowPulse 2s ease-in-out infinite'
+            }}>
               <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'white', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}><Calculator size={18} style={{ color: '#6366f1' }} /> Financial Planner</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
                 <div><div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '6px' }}><span style={{ color: '#9ca3af' }}>Property Value</span><strong style={{ color: 'white' }}>PKR {homeValue.toLocaleString()}</strong></div><input type="range" min={property.rent * 50} max={property.rent * 500} step="100000" value={homeValue} onChange={(e) => setHomeValue(parseInt(e.target.value))} className="calc-slider" /></div>
@@ -712,9 +729,65 @@ const PropertyDetailPage = () => {
         </div>
       </div>
 
-      {/* FOOTER */}
-      <footer style={{ background: '#05070a', padding: '40px 32px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: '40px', textAlign: 'center' }}>
-        <p style={{ color: '#6b7280', fontSize: '13px', margin: 0 }}>© 2026 EstateFlow. All rights reserved.</p>
+      {/* ENHANCED FOOTER - Matching other pages */}
+      <footer style={{ background: '#05070a', padding: '60px 24px 30px 24px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: '40px' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '40px', marginBottom: '40px' }} className="footer-grid">
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                <div style={{ width: '40px', height: '40px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span>🏠</span></div>
+                <span style={{ color: 'white', fontWeight: '800', fontSize: '20px' }}>EstateFlow</span>
+              </div>
+              <p style={{ color: '#9ca3af', fontSize: '14px', lineHeight: '1.6', marginBottom: '20px' }}>Pakistan's #1 premium real estate platform with 31+ properties and 1250+ happy clients.</p>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#1877f2'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#1877f2'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}>
+                  <Facebook size={18} />
+                </a>
+                <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#000000'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#000000'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}>
+                  <Twitter size={18} />
+                </a>
+                <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#bc1888'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}>
+                  <Instagram size={18} />
+                </a>
+                <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" style={{ width: '38px', height: '38px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#0a66c2'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#0a66c2'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}>
+                  <Linkedin size={18} />
+                </a>
+              </div>
+            </div>
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '20px' }}>Quick Links</h4>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                <li><a href="/" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Home</a></li>
+                <li><a href="/properties" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Properties</a></li>
+                <li><a href="/services" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Services</a></li>
+                <li><a href="/agents" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Agents</a></li>
+                <li><a href="/contact" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '20px' }}>Resources</h4>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                <li><a href="/privacy" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Privacy Policy</a></li>
+                <li><a href="/terms" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Terms of Service</a></li>
+                <li><a href="/faq" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>FAQ</a></li>
+                <li><a href="/blog" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Blog</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '20px' }}>Contact</h4>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                <li style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}><MapPin size={18} style={{ color: '#6366f1' }} /><span style={{ color: '#9ca3af' }}>DHA Phase 6, Karachi</span></li>
+                <li style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}><Phone size={18} style={{ color: '#6366f1' }} /><a href="tel:+923001234567" style={{ color: '#9ca3af', textDecoration: 'none' }}>+92-300-1234567</a></li>
+                <li style={{ display: 'flex', gap: '10px' }}><Mail size={18} style={{ color: '#6366f1' }} /><a href="mailto:info@estateflow.com" style={{ color: '#9ca3af', textDecoration: 'none' }}>info@estateflow.com</a></li>
+              </ul>
+              <div style={{ marginTop: '20px', padding: '12px', background: 'rgba(99,102,241,0.08)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Trophy size={20} style={{ color: '#fbbf24' }} />
+                <div><p style={{ color: '#818cf8', fontSize: '10px', fontWeight: '700', margin: 0 }}>AWARD WINNER</p><p style={{ color: '#9ca3af', fontSize: '9px', margin: 0 }}>Best Real Estate Platform 2025</p></div>
+              </div>
+            </div>
+          </div>
+          <div style={{ textAlign: 'center', paddingTop: '28px', borderTop: '1px solid rgba(255,255,255,0.06)', color: '#6b7280', fontSize: '13px' }}>© 2026 EstateFlow. All rights reserved. Made with ❤️ in Pakistan</div>
+        </div>
       </footer>
 
       <style>{`
@@ -722,7 +795,20 @@ const PropertyDetailPage = () => {
         .glass-header { background: rgba(8, 11, 23, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
         .calc-slider { width: 100%; height: 4px; -webkit-appearance: none; background: rgba(255,255,255,0.1); border-radius: 5px; outline: none; }
         .calc-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #6366f1; cursor: pointer; }
-        @media (max-width: 768px) { .mobile-col { display: flex !important; flex-direction: column !important; gap: 30px !important; } }
+        
+        @keyframes glowPulse {
+          0% { box-shadow: 0 0 20px rgba(99,102,241,0.15), 0 0 40px rgba(99,102,241,0.05); border-color: rgba(99,102,241,0.3); }
+          50% { box-shadow: 0 0 30px rgba(99,102,241,0.3), 0 0 60px rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.5); }
+          100% { box-shadow: 0 0 20px rgba(99,102,241,0.15), 0 0 40px rgba(99,102,241,0.05); border-color: rgba(99,102,241,0.3); }
+        }
+        
+        @media (max-width: 768px) { 
+          .mobile-col { display: flex !important; flex-direction: column !important; gap: 30px !important; }
+          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+        }
+        @media (max-width: 560px) { 
+          .footer-grid { grid-template-columns: 1fr !important; }
+        }
       `}</style>
     </div>
   );
