@@ -204,7 +204,7 @@ const PropertiesPage = () => {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }}>
         
-        {/* ===== ESTATEFLOW HERO SECTION WITH HOME PAGE STYLE LOGO ===== */}
+        {/* ===== ESTATEFLOW HERO SECTION WITH LUXURY HOUSE + REAL ESTATE LOGO ===== */}
         <div style={{ 
           marginBottom: '40px', 
           padding: '60px 40px', 
@@ -238,7 +238,7 @@ const PropertiesPage = () => {
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* ===== ESTATEFLOW LOGO - HOME PAGE STYLE ===== */}
+            {/* ===== ESTATEFLOW LOGO WITH LUXURY HOUSE + REAL ESTATE ===== */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', justifyContent: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div 
@@ -280,7 +280,10 @@ const PropertiesPage = () => {
                   <span style={{ fontSize: '10px', color: '#818cf8', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase' }}>
                     LUXURY HOUSE
                   </span>
-                  <span style={{ fontSize: '22px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px', lineHeight: '1.2' }}>
+                  <span style={{ fontSize: '11px', color: '#6b7280', fontWeight: '500', letterSpacing: '2px', textTransform: 'uppercase', marginTop: '-2px' }}>
+                    REAL ESTATE
+                  </span>
+                  <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px', lineHeight: '1.2' }}>
                     EstateFlow
                   </span>
                 </div>
