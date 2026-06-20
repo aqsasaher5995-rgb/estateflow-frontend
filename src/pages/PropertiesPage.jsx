@@ -8,7 +8,7 @@ import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
 
-// ===== IMPORT LOGO FROM src/public =====
+// ===== IMPORT LOGO FROM ROOT public FOLDER =====
 import Logo from '/logo.png';
 
 // ========== VILLAS (ID 1-12) - 12 properties ==========
@@ -204,7 +204,7 @@ const PropertiesPage = () => {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }}>
         
-        {/* ===== ESTATEFLOW HERO SECTION WITH LOGO ===== */}
+        {/* ===== ESTATEFLOW HERO SECTION ===== */}
         <div style={{ 
           marginBottom: '40px', 
           padding: '60px 40px', 
@@ -238,50 +238,25 @@ const PropertiesPage = () => {
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* ===== ESTATEFLOW LOGO WITH IMPORTED IMAGE ===== */}
-            <div style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              gap: '14px',
-              background: 'rgba(99,102,241,0.08)',
-              padding: '8px 24px 8px 12px',
-              borderRadius: '50px',
-              marginBottom: '22px',
-              border: '1px solid rgba(99,102,241,0.12)',
-              backdropFilter: 'blur(10px)',
-              boxShadow: '0 4px 20px rgba(99,102,241,0.08)'
-            }}>
-              {/* ===== LOGO USING IMPORT ===== */}
+            {/* ===== ESTATEFLOW LOGO - NAVBAR STYLE ===== */}
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', justifyContent: 'center' }}
+              onClick={() => navigate('/')}
+            >
               <img 
                 src={Logo} 
                 alt="EstateFlow Logo" 
                 style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '10px',
                   objectFit: 'contain',
                   background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
                   padding: '4px'
                 }}
               />
-              <span style={{ 
-                color: 'white', 
-                fontSize: '18px', 
-                fontWeight: '800', 
-                letterSpacing: '0.5px'
-              }}>
+              <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>
                 EstateFlow
-              </span>
-              <span style={{ 
-                color: '#a78bfa', 
-                fontSize: '10px', 
-                fontWeight: '600',
-                background: 'rgba(99,102,241,0.15)',
-                padding: '2px 12px',
-                borderRadius: '20px',
-                letterSpacing: '0.5px'
-              }}>
-                Properties
               </span>
             </div>
             
@@ -290,7 +265,7 @@ const PropertiesPage = () => {
               fontSize: '48px', 
               fontWeight: '900', 
               color: 'white', 
-              margin: '0 0 12px 0', 
+              margin: '12px 0 12px 0', 
               letterSpacing: '-1.5px',
               lineHeight: '1.1'
             }}>
