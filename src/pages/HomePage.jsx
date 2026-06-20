@@ -8,7 +8,8 @@ import {
   Trophy, Award, Globe, Quote, Send, MessageSquare, X, ChevronDown, CheckCircle,
   Grid, DollarSign, Building, Home, TrendingUp, ThumbsUp, HelpCircle, Filter, Zap, Video, FileText,
   Briefcase, Handshake, TrendingUp as TrendingUpIcon, Headphones, Menu, ChevronRight,
-  Calendar as CalendarIcon, User, Settings, LogOut, BookOpen, Newspaper, GripVertical
+  Calendar as CalendarIcon, User, Settings, LogOut, BookOpen, Newspaper, GripVertical,
+  ZoomIn, ZoomOut, Download, Maximize2, Minimize2
 } from 'lucide-react';
 import Avatar from '../components/common/Avatar';
 import toast from 'react-hot-toast';
@@ -576,6 +577,301 @@ const DraggableHomeMenu = ({ items, isOpen, onClose, onItemClick, anchorEl }) =>
   );
 };
 
+// ============================================================
+// FULL SCREEN LOGO VIEWER COMPONENT
+// ============================================================
+const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
+  const [scale, setScale] = useState(1);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const imgRef = useRef(null);
+
+  const handleZoomIn = () => {
+    setScale(prev => Math.min(prev + 0.25, 3));
+    setIsZoomed(true);
+  };
+
+  const handleZoomOut = () => {
+    setScale(prev => {
+      const newScale = Math.max(prev - 0.25, 0.5);
+      if (newScale === 0.5) setIsZoomed(false);
+      return newScale;
+    });
+  };
+
+  const handleReset = () => {
+    setScale(1);
+    setIsZoomed(false);
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = imageSrc;
+    link.download = 'logo.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success('Logo downloaded!');
+  };
+
+  const handleMouseDown = (e) => {
+    if (isZoomed) {
+      setIsDragging(true);
+      setDragStart({
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      });
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging && isZoomed) {
+      setPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    if (e.deltaY < 0) {
+      handleZoomIn();
+    } else {
+      handleZoomOut();
+    }
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    } else {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, dragStart]);
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
+  return (
+    <div 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(0,0,0,0.92)',
+        zIndex: 10000,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backdropFilter: 'blur(10px)'
+      }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+      onWheel={handleWheel}
+    >
+      {/* Close Button */}
+      <button
+        onClick={onClose}
+        style={{
+          position: 'absolute',
+          top: '24px',
+          right: '24px',
+          background: 'rgba(255,255,255,0.1)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          borderRadius: '50%',
+          width: '48px',
+          height: '48px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          color: 'white',
+          transition: 'all 0.3s'
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
+      >
+        <X size={24} />
+      </button>
+
+      {/* Controls */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '12px',
+          background: 'rgba(0,0,0,0.7)',
+          padding: '12px 20px',
+          borderRadius: '50px',
+          border: '1px solid rgba(255,255,255,0.1)',
+          backdropFilter: 'blur(10px)'
+        }}
+      >
+        <button
+          onClick={handleZoomOut}
+          style={{
+            background: 'rgba(255,255,255,0.1)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            transition: 'all 0.3s'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
+        >
+          <ZoomOut size={20} />
+        </button>
+        
+        <button
+          onClick={handleReset}
+          style={{
+            background: 'rgba(99,102,241,0.2)',
+            border: '1px solid rgba(99,102,241,0.3)',
+            borderRadius: '30px',
+            padding: '0 20px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: '#818cf8',
+            transition: 'all 0.3s',
+            fontSize: '13px',
+            fontWeight: '500'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.3)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.2)'; }}
+        >
+          {scale * 100}% Reset
+        </button>
+        
+        <button
+          onClick={handleZoomIn}
+          style={{
+            background: 'rgba(255,255,255,0.1)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            transition: 'all 0.3s'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
+        >
+          <ZoomIn size={20} />
+        </button>
+        
+        <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }} />
+        
+        <button
+          onClick={handleDownload}
+          style={{
+            background: 'rgba(255,255,255,0.1)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            transition: 'all 0.3s'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
+        >
+          <Download size={20} />
+        </button>
+      </div>
+
+      {/* Image */}
+      <div
+        style={{
+          cursor: isZoomed ? 'grab' : 'default',
+          touchAction: 'none',
+          overflow: 'hidden',
+          maxWidth: '90vw',
+          maxHeight: '80vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        onMouseDown={handleMouseDown}
+      >
+        <img
+          ref={imgRef}
+          src={imageSrc}
+          alt="Logo"
+          style={{
+            maxWidth: '80vw',
+            maxHeight: '70vh',
+            objectFit: 'contain',
+            transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
+            transition: isDragging ? 'none' : 'transform 0.3s ease',
+            cursor: isZoomed ? 'grab' : 'default',
+            borderRadius: '12px'
+          }}
+          draggable={false}
+        />
+      </div>
+
+      {/* Info */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '100px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          color: 'rgba(255,255,255,0.4)',
+          fontSize: '12px',
+          textAlign: 'center'
+        }}
+      >
+        🖱️ Click outside to close • Scroll to zoom • Drag to pan
+      </div>
+    </div>
+  );
+};
+
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -601,6 +897,7 @@ const HomePage = () => {
     { sender: 'bot', text: "Hi! I am your EstateFlow AI Assistant. How can I help you find your dream home?" }
   ]);
   const [selectedBlog, setSelectedBlog] = useState(null);
+  const [isLogoFullScreen, setIsLogoFullScreen] = useState(false);
   const chatEndRef = useRef(null);
   const logoRef = useRef(null);
 
@@ -816,6 +1113,19 @@ const HomePage = () => {
     document.body.style.overflow = 'auto';
   };
 
+  // Open logo in full screen
+  const handleLogoClick = (e) => {
+    e.stopPropagation();
+    setIsLogoFullScreen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  // Close logo full screen
+  const closeLogoFullScreen = () => {
+    setIsLogoFullScreen(false);
+    document.body.style.overflow = 'auto';
+  };
+
   // Social Media Links - Working URLs
   const socialLinks = {
     facebook: "https://facebook.com/estateflow",
@@ -829,6 +1139,14 @@ const HomePage = () => {
 
   return (
     <div style={{ background: '#080b11', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      
+      {/* Logo Full Screen Viewer */}
+      {isLogoFullScreen && (
+        <LogoFullScreenViewer 
+          imageSrc={logoPath} 
+          onClose={closeLogoFullScreen} 
+        />
+      )}
       
       {/* Draggable Home Menu */}
       <DraggableHomeMenu
@@ -892,32 +1210,42 @@ const HomePage = () => {
       )}
 
       {/* ============================================================
-          HEADER WITH LARGER LOGO
+          HEADER WITH CLICKABLE LOGO
           ============================================================ */}
       <header className="glass-header" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '12px 0' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           
-          {/* Logo with menu toggle button */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          {/* Logo with click handler */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
             
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} ref={logoRef}>
-              {/* LOGO CONTAINER - LARGER SIZE */}
-              <div style={{ 
-                width: '55px', 
-                height: '55px', 
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-                borderRadius: '14px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                boxShadow: '0 4px 20px rgba(99,102,241,0.4)',
-                overflow: 'hidden',
-                transition: 'transform 0.3s ease'
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.08)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
-                
-                {/* IMAGE LOGO - LARGER SIZE */}
+              {/* LOGO CONTAINER - Clickable */}
+              <div 
+                style={{ 
+                  width: '55px', 
+                  height: '55px', 
+                  background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                  borderRadius: '14px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  boxShadow: '0 4px 20px rgba(99,102,241,0.4)',
+                  overflow: 'hidden',
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={e => { 
+                  e.currentTarget.style.transform = 'scale(1.08)'; 
+                  e.currentTarget.style.boxShadow = '0 4px 30px rgba(99,102,241,0.6)';
+                }}
+                onMouseLeave={e => { 
+                  e.currentTarget.style.transform = 'scale(1)'; 
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(99,102,241,0.4)';
+                }}
+                onClick={handleLogoClick}
+                title="Click to view full screen"
+              >
+                {/* IMAGE LOGO */}
                 <img 
                   src={logoPath}
                   alt="EstateFlow Logo" 
@@ -927,7 +1255,6 @@ const HomePage = () => {
                     objectFit: 'contain'
                   }} 
                 />
-                
               </div>
               <span style={{ fontSize: '22px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
             </div>
