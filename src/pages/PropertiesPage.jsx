@@ -186,43 +186,61 @@ const PropertiesPage = () => {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }} className="page-enter">
         
-        {/* ===== CLEAN HERO SECTION - CENTER ALIGNED ===== */}
+        {/* ===== CLEAN ENHANCED HERO SECTION - CENTER ALIGNED ===== */}
         <div style={{ 
           marginBottom: '40px', 
-          padding: '50px 40px', 
+          padding: '55px 40px', 
           borderRadius: '24px',
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.03))',
-          border: '1px solid rgba(99,102,241,0.08)',
+          background: 'linear-gradient(145deg, rgba(99,102,241,0.10), rgba(139,92,246,0.04))',
+          border: '1px solid rgba(99,102,241,0.12)',
           position: 'relative',
           overflow: 'hidden',
-          textAlign: 'center'
+          textAlign: 'center',
+          boxShadow: '0 4px 30px rgba(0,0,0,0.1)'
         }}>
-          {/* Decorative background element */}
+          {/* Decorative background elements */}
           <div style={{ 
             position: 'absolute', 
-            top: '-80px', 
-            right: '-60px', 
-            width: '250px', 
-            height: '250px', 
+            top: '-100px', 
+            right: '-80px', 
+            width: '300px', 
+            height: '300px', 
             borderRadius: '50%',
             background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)',
             pointerEvents: 'none'
           }} />
           <div style={{ 
             position: 'absolute', 
-            bottom: '-80px', 
+            bottom: '-120px', 
             left: '-60px', 
-            width: '200px', 
-            height: '200px', 
+            width: '250px', 
+            height: '250px', 
             borderRadius: '50%',
             background: 'radial-gradient(circle, rgba(139,92,246,0.04) 0%, transparent 70%)',
             pointerEvents: 'none'
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
+            {/* Premium Badge */}
+            <div style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '10px',
+              background: 'rgba(99,102,241,0.10)',
+              padding: '6px 18px',
+              borderRadius: '50px',
+              marginBottom: '20px',
+              border: '1px solid rgba(99,102,241,0.12)'
+            }}>
+              <Sparkles size={14} style={{ color: '#818cf8' }} />
+              <span style={{ color: '#818cf8', fontSize: '11px', fontWeight: '600', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                Premium Collection
+              </span>
+            </div>
+            
             {/* Main Heading */}
             <h1 style={{ 
-              fontSize: '44px', 
+              fontSize: '46px', 
               fontWeight: '900', 
               color: 'white', 
               margin: '0 0 12px 0', 
@@ -230,7 +248,7 @@ const PropertiesPage = () => {
               lineHeight: '1.1'
             }}>
               Exclusive <span style={{ 
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'
@@ -239,25 +257,51 @@ const PropertiesPage = () => {
             
             {/* Decorative line */}
             <div style={{ 
-              width: '60px', 
+              width: '70px', 
               height: '3px', 
               background: 'linear-gradient(90deg, #6366f1, #8b5cf6)',
-              margin: '0 auto 16px auto',
+              margin: '0 auto 18px auto',
               borderRadius: '10px'
             }} />
             
             {/* Subtitle */}
             <p style={{ 
               color: '#cbd5e1', 
-              fontSize: '16px', 
-              margin: '0 auto',
-              maxWidth: '580px',
+              fontSize: '17px', 
+              margin: '0 auto 25px auto',
+              maxWidth: '600px',
               lineHeight: '1.7',
               letterSpacing: '0.2px'
             }}>
               Curated collection of luxury properties across Pakistan's prime locations —<br />
               from Karachi's coastline to Islamabad's serene valleys.
             </p>
+            
+            {/* Quick Stats */}
+            <div style={{ 
+              display: 'inline-flex', 
+              gap: '30px',
+              padding: '12px 28px',
+              background: 'rgba(255,255,255,0.04)',
+              borderRadius: '50px',
+              border: '1px solid rgba(255,255,255,0.06)',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ color: 'white', fontSize: '18px', fontWeight: '700', margin: 0 }}>{ALL_PROPERTIES.length}+</p>
+                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px' }}>Listings</p>
+              </div>
+              <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ color: 'white', fontSize: '18px', fontWeight: '700', margin: 0 }}>5</p>
+                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px' }}>Cities</p>
+              </div>
+              <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ color: 'white', fontSize: '18px', fontWeight: '700', margin: 0 }}>4</p>
+                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, letterSpacing: '0.5px' }}>Types</p>
+              </div>
+            </div>
           </div>
         </div>
 
