@@ -407,11 +407,27 @@ const BlogDetailModal = ({ blog, onClose }) => {
 };
 
 // Draggable Home Menu Component
-const DraggableHomeMenu = ({ items, isOpen, onClose, onItemClick }) => {
-  const [position, setPosition] = useState({ x: 20, y: 100 });
+const DraggableHomeMenu = ({ items, isOpen, onClose, onItemClick, anchorEl }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const menuRef = useRef(null);
+  const [isPositioned, setIsPositioned] = useState(false);
+
+  // Position menu below the header logo when opened
+  useEffect(() => {
+    if (isOpen && anchorEl && !isPositioned) {
+      const rect = anchorEl.getBoundingClientRect();
+      setPosition({
+        x: rect.left,
+        y: rect.bottom + 8
+      });
+      setIsPositioned(true);
+    }
+    if (!isOpen) {
+      setIsPositioned(false);
+    }
+  }, [isOpen, anchorEl, isPositioned]);
 
   const handleMouseDown = (e) => {
     if (e.target.closest('.menu-header')) {
@@ -428,7 +444,7 @@ const DraggableHomeMenu = ({ items, isOpen, onClose, onItemClick }) => {
       let newX = e.clientX - dragStart.x;
       let newY = e.clientY - dragStart.y;
       
-      newX = Math.max(10, Math.min(window.innerWidth - (menuRef.current?.offsetWidth || 280) - 10, newX));
+      newX = Math.max(10, Math.min(window.innerWidth - (menuRef.current?.offsetWidth || 260) - 10, newX));
       newY = Math.max(60, Math.min(window.innerHeight - (menuRef.current?.offsetHeight || 400) - 10, newY));
       
       setPosition({ x: newX, y: newY });
@@ -579,6 +595,7 @@ const HomePage = () => {
   ]);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const chatEndRef = useRef(null);
+  const logoRef = useRef(null);
 
   // Fast typing animation for heading only
   const animatedHeading = useFastTypewriter("Find Your Dream Home", 30, 20, 1500);
@@ -720,7 +737,7 @@ const HomePage = () => {
     toast.success("All filters reset!");
   };
 
-  // Navigate to separate Properties page (shows ALL 31 properties)
+  // Navigate to separate Properties page
   const handleViewAllProperties = () => {
     navigate('/properties');
   };
@@ -803,36 +820,13 @@ const HomePage = () => {
   return (
     <div style={{ background: '#080b11', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
-      {/* Draggable Home Menu Button */}
-      <button
-        onClick={() => setIsDraggableMenuOpen(!isDraggableMenuOpen)}
-        style={{
-          position: 'fixed',
-          bottom: '100px',
-          right: '24px',
-          width: '48px',
-          height: '48px',
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-          border: 'none',
-          color: 'white',
-          cursor: 'pointer',
-          zIndex: 1001,
-          boxShadow: '0 4px 15px rgba(99,102,241,0.4)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <Menu size={24} />
-      </button>
-
       {/* Draggable Home Menu */}
       <DraggableHomeMenu
         items={draggableMenuItems}
         isOpen={isDraggableMenuOpen}
         onClose={() => setIsDraggableMenuOpen(false)}
         onItemClick={handleMenuItemClick}
+        anchorEl={logoRef.current}
       />
       
       {/* Blog Detail Modal */}
@@ -890,9 +884,39 @@ const HomePage = () => {
       {/* HEADER */}
       <header className="glass-header" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '12px 0' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <div style={{ width: '36px', height: '36px', background: '#6366f1', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span>🏠</span></div>
-            <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
+          {/* Logo with menu toggle button */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} ref={logoRef}>
+              <div style={{ width: '36px', height: '36px', background: '#6366f1', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span>🏠</span></div>
+              <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
+            </div>
+            {/* Home Menu Toggle Button - Next to Logo */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsDraggableMenuOpen(!isDraggableMenuOpen);
+              }}
+              style={{
+                background: 'rgba(99,102,241,0.12)',
+                border: '1px solid rgba(99,102,241,0.2)',
+                borderRadius: '8px',
+                padding: '6px 8px',
+                cursor: 'pointer',
+                color: '#818cf8',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                transition: 'all 0.3s',
+                fontSize: '11px',
+                fontWeight: '500'
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.2)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.4)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.12)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.2)'; }}
+              title="Home Menu"
+            >
+              <Menu size={16} />
+              <span style={{ display: 'inline-block' }}>Menu</span>
+            </button>
           </div>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }} className="desktop-nav">
@@ -1166,7 +1190,7 @@ const HomePage = () => {
                 ))}
               </div>
 
-              {/* View All Properties Button - Navigates to separate Properties Page (ALL 31 properties) */}
+              {/* View All Properties Button - Navigates to separate Properties Page */}
               <div style={{ textAlign: 'center', marginTop: '50px' }}>
                 <button 
                   onClick={handleViewAllProperties}
@@ -1325,7 +1349,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* FOOTER with Proper Social Media Logos - NO TEXT, ONLY ICONS */}
+      {/* FOOTER with Proper Social Media Logos */}
       <footer id="contact" style={{ background: '#05070a', padding: '60px 24px 30px 24px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 'auto' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '40px', marginBottom: '40px' }} className="footer-grid">
