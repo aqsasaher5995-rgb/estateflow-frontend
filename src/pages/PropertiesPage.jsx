@@ -3,14 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { 
   Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, X, 
   Sparkles, Building2, Award, TrendingUp, Building as BuildingIcon,
-  ChevronDown, HelpCircle
+  ChevronDown, HelpCircle, Phone, Mail, MapPin as MapPinIcon, Facebook, Twitter, Instagram, Linkedin, Trophy
 } from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
-import Footer from '../components/layouts/Footer';
+import CookiePolicy from '../components/common/CookiePolicy';
+import FAQ from '../components/common/FAQ';
 import toast from 'react-hot-toast';
 
 // ===== IMPORT LOGO FROM ROOT public FOLDER =====
 import Logo from '/logo.png';
+
+// ========== SOCIAL LINKS ==========
+const socialLinks = {
+  facebook: "https://facebook.com/estateflow",
+  twitter: "https://twitter.com/estateflow",
+  instagram: "https://instagram.com/estateflow",
+  linkedin: "https://linkedin.com/company/estateflow"
+};
 
 // ========== VILLAS (ID 1-12) - 12 properties ==========
 const villaImages = [
@@ -58,14 +67,6 @@ const commercialImages = [
   "https://images.unsplash.com/photo-1508385082359-f38ae991e8f2?w=600&h=400&fit=crop",
   "https://media.istockphoto.com/id/2241825793/photo/aerial-drone-view-of-standing-seam-metal-roof-on-modern-commercial-buildings.jpg?s=612x612&w=0&k=20&c=L56By6JNcFIUe2HgTxvIxsq07em3sMPb-Yc975xhBZk="
 ];
-
-// ========== SOCIAL LINKS ==========
-const socialLinks = {
-  facebook: "https://facebook.com/estateflow",
-  twitter: "https://twitter.com/estateflow",
-  instagram: "https://instagram.com/estateflow",
-  linkedin: "https://linkedin.com/company/estateflow"
-};
 
 // ========== ALL 31 PROPERTIES (Pakistan) ==========
 const ALL_PROPERTIES = [
@@ -134,244 +135,6 @@ const SkeletonCard = () => (
   </div>
 );
 
-// ===== COOKIE MODAL COMPONENT =====
-const CookieModal = ({ isOpen, onClose, onAccept }) => {
-  if (!isOpen) return null;
-  
-  return (
-    <div style={{ 
-      position: 'fixed', 
-      top: 0, 
-      left: 0, 
-      right: 0, 
-      bottom: 0, 
-      background: 'rgba(0,0,0,0.85)', 
-      zIndex: 9999, 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center', 
-      padding: '20px',
-      backdropFilter: 'blur(8px)'
-    }}>
-      <div style={{ 
-        maxWidth: '600px', 
-        width: '100%', 
-        background: '#0b0f19', 
-        borderRadius: '24px', 
-        padding: '40px',
-        border: '1px solid rgba(99,102,241,0.2)',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: '700', color: 'white' }}>🍪 Cookie Policy</h2>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer' }}>
-            <X size={24} />
-          </button>
-        </div>
-        
-        <p style={{ color: '#cbd5e1', fontSize: '14px', lineHeight: '1.7', marginBottom: '20px' }}>
-          At EstateFlow, we use cookies to enhance your browsing experience, analyze site traffic, 
-          and personalize content. By continuing to use our site, you consent to our use of cookies.
-        </p>
-        
-        <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '12px', padding: '16px', marginBottom: '24px' }}>
-          <h4 style={{ color: 'white', fontSize: '14px', marginBottom: '8px' }}>What cookies we use:</h4>
-          <ul style={{ color: '#9ca3af', fontSize: '13px', lineHeight: '2', paddingLeft: '20px' }}>
-            <li><span style={{ color: '#10b981' }}>✓</span> Essential cookies (required for site functionality)</li>
-            <li><span style={{ color: '#10b981' }}>✓</span> Analytics cookies (to understand user behavior)</li>
-            <li><span style={{ color: '#10b981' }}>✓</span> Performance cookies (to improve site speed)</li>
-            <li><span style={{ color: '#10b981' }}>✓</span> Marketing cookies (to show relevant ads)</li>
-          </ul>
-        </div>
-        
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <button 
-            onClick={() => { onAccept(); onClose(); }}
-            style={{ 
-              flex: 1, 
-              padding: '14px', 
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', 
-              border: 'none', 
-              borderRadius: '12px', 
-              color: 'white', 
-              fontWeight: '600', 
-              cursor: 'pointer',
-              fontSize: '14px'
-            }}
-          >
-            Accept All Cookies
-          </button>
-          <button 
-            onClick={onClose}
-            style={{ 
-              padding: '14px 24px', 
-              background: 'transparent', 
-              border: '1px solid rgba(255,255,255,0.1)', 
-              borderRadius: '12px', 
-              color: '#9ca3af', 
-              cursor: 'pointer',
-              fontSize: '14px'
-            }}
-          >
-            Reject Optional
-          </button>
-        </div>
-        
-        <p style={{ color: '#6b7280', fontSize: '11px', marginTop: '16px', textAlign: 'center' }}>
-          You can change your preferences anytime from the cookie settings.
-        </p>
-      </div>
-    </div>
-  );
-};
-
-// ===== FAQ MODAL COMPONENT =====
-const FAQModal = ({ isOpen, onClose }) => {
-  const faqData = [
-    { 
-      q: "What is EstateFlow?", 
-      a: "EstateFlow is Pakistan's leading real estate platform connecting property buyers, sellers, and investors with verified listings and expert guidance." 
-    },
-    { 
-      q: "How do I search for properties?", 
-      a: "Use the search bar on our homepage or properties page. You can filter by city, property type, price range, and number of bedrooms." 
-    },
-    { 
-      q: "How can I contact an agent?", 
-      a: "Each property listing has a 'Contact Agent' button. You can also reach us at 0300-1234567 or email info@estateflow.com." 
-    },
-    { 
-      q: "Are the property listings verified?", 
-      a: "Yes, all properties on EstateFlow are verified by our team to ensure authenticity and accuracy." 
-    },
-    { 
-      q: "Can I schedule a property tour?", 
-      a: "Absolutely! Click the 'Schedule Tour' button on any property listing to book a viewing with our team." 
-    },
-    { 
-      q: "Is EstateFlow free to use?", 
-      a: "Yes, EstateFlow is completely free for property seekers. We charge a commission only from sellers upon successful transactions." 
-    },
-    { 
-      q: "How do I list my property?", 
-      a: "Contact our team at 0300-1234567 or visit our office to list your property. We'll guide you through the entire process." 
-    },
-    { 
-      q: "What payment methods are accepted?", 
-      a: "We accept bank transfers, online payments, and installment plans. Contact us for more details." 
-    }
-  ];
-  
-  const [openIndex, setOpenIndex] = useState(null);
-  
-  if (!isOpen) return null;
-  
-  return (
-    <div style={{ 
-      position: 'fixed', 
-      top: 0, 
-      left: 0, 
-      right: 0, 
-      bottom: 0, 
-      background: 'rgba(0,0,0,0.85)', 
-      zIndex: 9999, 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center', 
-      padding: '20px',
-      backdropFilter: 'blur(8px)',
-      overflowY: 'auto'
-    }}>
-      <div style={{ 
-        maxWidth: '700px', 
-        width: '100%', 
-        maxHeight: '85vh', 
-        overflowY: 'auto',
-        background: '#0b0f19', 
-        borderRadius: '24px', 
-        padding: '40px',
-        border: '1px solid rgba(99,102,241,0.2)',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.5)'
-      }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-          <h2 style={{ fontSize: '24px', fontWeight: '700', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <HelpCircle size={24} style={{ color: '#6366f1' }} /> Frequently Asked Questions
-          </h2>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer' }}>
-            <X size={24} />
-          </button>
-        </div>
-        
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {faqData.map((item, index) => (
-            <div key={index} style={{ 
-              border: '1px solid rgba(255,255,255,0.06)',
-              borderRadius: '12px',
-              overflow: 'hidden',
-              transition: 'all 0.2s'
-            }}>
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  width: '100%',
-                  padding: '16px 20px',
-                  background: 'transparent',
-                  border: 'none',
-                  color: 'white',
-                  cursor: 'pointer',
-                  textAlign: 'left',
-                  fontSize: '15px',
-                  fontWeight: '600',
-                  transition: 'background 0.2s'
-                }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.02)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-              >
-                <span>{item.q}</span>
-                <ChevronDown 
-                  size={18} 
-                  style={{ 
-                    color: '#6366f1',
-                    transform: openIndex === index ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s',
-                    flexShrink: 0,
-                    marginLeft: '12px'
-                  }} 
-                />
-              </button>
-              <div style={{
-                maxHeight: openIndex === index ? '200px' : '0px',
-                overflow: 'hidden',
-                transition: 'max-height 0.3s ease'
-              }}>
-                <div style={{
-                  padding: '0 20px 16px 20px',
-                  color: '#9ca3af',
-                  fontSize: '14px',
-                  lineHeight: '1.7',
-                  borderTop: '1px solid rgba(255,255,255,0.04)',
-                  paddingTop: '12px'
-                }}>
-                  {item.a}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        <div style={{ marginTop: '24px', textAlign: 'center', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-          <p style={{ color: '#6b7280', fontSize: '13px' }}>
-            Still have questions? <a href="/contact" style={{ color: '#818cf8', textDecoration: 'none' }}>Contact Us</a>
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const PropertiesPage = () => {
   const navigate = useNavigate();
   const [properties, setProperties] = useState([]);
@@ -390,10 +153,6 @@ const PropertiesPage = () => {
   // ===== FOOTER MODALS STATES =====
   const [showCookieModal, setShowCookieModal] = useState(false);
   const [showFAQModal, setShowFAQModal] = useState(false);
-  const [cookieAccepted, setCookieAccepted] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('ef_cookies_accepted') || 'false'); } 
-    catch { return false; }
-  });
 
   useEffect(() => { 
     setProperties(ALL_PROPERTIES);
@@ -458,22 +217,17 @@ const PropertiesPage = () => {
       <Navbar />
 
       {/* ===== COOKIE MODAL ===== */}
-      <CookieModal 
+      <CookiePolicy 
         isOpen={showCookieModal} 
         onClose={() => setShowCookieModal(false)}
-        onAccept={() => {
-          setCookieAccepted(true);
-          localStorage.setItem('ef_cookies_accepted', 'true');
-          toast.success('🍪 Cookies accepted!');
-        }}
       />
       
       {/* ===== FAQ MODAL ===== */}
-      <FAQModal isOpen={showFAQModal} onClose={() => setShowFAQModal(false)} />
+      <FAQ isOpen={showFAQModal} onClose={() => setShowFAQModal(false)} />
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }}>
         
-        {/* ===== ESTATEFLOW HERO SECTION WITH HOME PAGE STYLE LOGO ===== */}
+        {/* ===== ESTATEFLOW HERO SECTION ===== */}
         <div style={{ 
           marginBottom: '40px', 
           padding: '60px 40px', 
@@ -484,7 +238,6 @@ const PropertiesPage = () => {
           overflow: 'hidden',
           textAlign: 'center'
         }}>
-          {/* Background Decorations */}
           <div style={{ 
             position: 'absolute', 
             top: '-80px', 
@@ -507,7 +260,7 @@ const PropertiesPage = () => {
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* ===== ESTATEFLOW LOGO WITH LUXURY HOUSE + REAL ESTATE ===== */}
+            {/* ===== LOGO - LUXURY HOUSE + REAL ESTATE ===== */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', justifyContent: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div 
@@ -559,7 +312,6 @@ const PropertiesPage = () => {
               </div>
             </div>
             
-            {/* Main Heading */}
             <h1 style={{ 
               fontSize: '48px', 
               fontWeight: '900', 
@@ -595,7 +347,6 @@ const PropertiesPage = () => {
               across Pakistan's most desirable locations.
             </p>
             
-            {/* Stats */}
             <div style={{ 
               display: 'inline-flex', 
               gap: '40px',
@@ -1048,10 +799,12 @@ const PropertiesPage = () => {
         )}
       </div>
 
-      {/* ===== FOOTER WITH WORKING COOKIES & FAQ ===== */}
+      {/* ===== FOOTER WITH COOKIE & FAQ BUTTONS ===== */}
       <footer style={{ background: '#05070a', padding: '60px 24px 30px 24px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 'auto' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '40px', marginBottom: '40px' }} className="footer-grid">
+            
+            {/* Column 1 - Brand */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
                 <img 
@@ -1084,16 +837,20 @@ const PropertiesPage = () => {
                 </a>
               </div>
             </div>
+
+            {/* Column 2 - Quick Links */}
             <div>
               <h4 style={{ color: 'white', marginBottom: '20px' }}>Quick Links</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
-                <li><a href="/" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Home</a></li>
-                <li><a href="/properties" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Properties</a></li>
-                <li><a href="/services" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Services</a></li>
-                <li><a href="/agents" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Agents</a></li>
-                <li><a href="/contact" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Contact</a></li>
+                <li><a href="/" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Home</a></li>
+                <li><a href="/properties" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Properties</a></li>
+                <li><a href="/services" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Services</a></li>
+                <li><a href="/agents" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Agents</a></li>
+                <li><a href="/contact" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Contact</a></li>
               </ul>
             </div>
+
+            {/* Column 3 - Resources with Cookie & FAQ Buttons */}
             <div>
               <h4 style={{ color: 'white', marginBottom: '20px' }}>Resources</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
@@ -1109,7 +866,9 @@ const PropertiesPage = () => {
                       cursor: 'pointer',
                       padding: '4px 0',
                       textAlign: 'left',
-                      transition: 'color 0.2s'
+                      transition: 'color 0.2s',
+                      display: 'block',
+                      width: '100%'
                     }}
                     onMouseEnter={e => e.currentTarget.style.color = 'white'}
                     onMouseLeave={e => e.currentTarget.style.color = '#9ca3af'}
@@ -1129,7 +888,9 @@ const PropertiesPage = () => {
                       cursor: 'pointer',
                       padding: '4px 0',
                       textAlign: 'left',
-                      transition: 'color 0.2s'
+                      transition: 'color 0.2s',
+                      display: 'block',
+                      width: '100%'
                     }}
                     onMouseEnter={e => e.currentTarget.style.color = 'white'}
                     onMouseLeave={e => e.currentTarget.style.color = '#9ca3af'}
@@ -1137,16 +898,18 @@ const PropertiesPage = () => {
                     ❓ FAQ
                   </button>
                 </li>
-                <li><a href="/privacy" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Privacy Policy</a></li>
-                <li><a href="/terms" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Terms of Service</a></li>
-                <li><a href="/blog" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Blog</a></li>
+                <li><a href="/privacy" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Privacy Policy</a></li>
+                <li><a href="/terms" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Terms of Service</a></li>
+                <li><a href="/blog" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Blog</a></li>
               </ul>
             </div>
+
+            {/* Column 4 - Contact */}
             <div>
               <h4 style={{ color: 'white', marginBottom: '20px' }}>Contact</h4>
               <ul style={{ listStyle: 'none', padding: 0 }}>
                 <li style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
-                  <MapPin size={18} style={{ color: '#6366f1' }} />
+                  <MapPinIcon size={18} style={{ color: '#6366f1' }} />
                   <span style={{ color: '#9ca3af' }}>DHA Phase 6, Karachi</span>
                 </li>
                 <li style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
