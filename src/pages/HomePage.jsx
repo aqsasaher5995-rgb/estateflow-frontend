@@ -13,6 +13,13 @@ import {
 import Avatar from '../components/common/Avatar';
 import toast from 'react-hot-toast';
 
+// ============================================================
+// IMPORT YOUR LOGO HERE (Option 1 - If logo is in src/assets)
+// ============================================================
+// import logo from '../assets/logo.png';  // Uncomment this line
+// OR if you have SVG logo:
+// import { ReactComponent as Logo } from '../assets/logo.svg';
+
 // Hero Background Images
 const heroBackgroundImages = [
   "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1920&h=1080&fit=crop",
@@ -817,6 +824,15 @@ const HomePage = () => {
     linkedin: "https://linkedin.com/company/estateflow"
   };
 
+  // ============================================================
+  // YOUR LOGO - REPLACE THIS SECTION WITH YOUR OWN LOGO
+  // ============================================================
+  // Option 1: If your logo is in public folder (public/logo.png)
+  const logoPath = "/logo.png";  // Change this to your logo path
+  
+  // Option 2: If you imported logo from src/assets
+  // const logoPath = logo;  // Uncomment if using import
+
   return (
     <div style={{ background: '#080b11', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       
@@ -881,15 +897,68 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* HEADER */}
+      {/* ============================================================
+          HEADER - CUSTOM LOGO SECTION
+          ============================================================ */}
       <header className="glass-header" style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '12px 0' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          
           {/* Logo with menu toggle button */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            
+            {/* ============================================================
+                YOUR LOGO GOES HERE - REPLACE THIS SECTION
+                ============================================================ */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} ref={logoRef}>
-              <div style={{ width: '36px', height: '36px', background: '#6366f1', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span>🏠</span></div>
+              {/* LOGO CONTAINER - Replace the content inside this div with your logo */}
+              <div style={{ 
+                width: '38px', 
+                height: '38px', 
+                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                borderRadius: '10px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                boxShadow: '0 4px 15px rgba(99,102,241,0.35)',
+                overflow: 'hidden',
+                transition: 'transform 0.3s'
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}>
+                
+                {/* ============================================================
+                    OPTION 1: IMAGE LOGO (Recommended)
+                    Uncomment the line below and replace "logo.png" with your image name
+                    ============================================================ */}
+                <img 
+                  src="/logo.png" 
+                  alt="EstateFlow Logo" 
+                  style={{ 
+                    width: '28px', 
+                    height: '28px', 
+                    objectFit: 'contain'
+                  }} 
+                />
+                
+                {/* ============================================================
+                    OPTION 2: SVG LOGO (If you want to use SVG directly)
+                    Uncomment the SVG below and comment out the img tag above
+                    ============================================================ */}
+                {/*
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                */}
+                
+                {/* ============================================================
+                    OPTION 3: EMOJI (Default - Remove this if using image or SVG)
+                    ============================================================ */}
+                {/* <span>🏠</span> */}
+                
+              </div>
               <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
             </div>
+            
             {/* Home Menu Toggle Button - Next to Logo */}
             <button
               onClick={(e) => {
@@ -963,6 +1032,10 @@ const HomePage = () => {
         )}
       </header>
 
+      {/* ============================================================
+          REST OF THE PAGE - HERO, SERVICES, PROPERTIES, ETC.
+          ============================================================ */}
+      
       {/* HERO SECTION */}
       <section id="home" style={{ height: '100vh', width: '100%', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ 
