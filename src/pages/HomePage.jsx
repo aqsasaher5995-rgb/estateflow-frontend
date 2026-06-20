@@ -9,17 +9,10 @@ import {
   Grid, DollarSign, Building, Home, TrendingUp, ThumbsUp, HelpCircle, Filter, Zap, Video, FileText,
   Briefcase, Handshake, TrendingUp as TrendingUpIcon, Headphones, Menu, ChevronRight,
   Calendar as CalendarIcon, User, Settings, LogOut, BookOpen, Newspaper, GripVertical,
-  ZoomIn, ZoomOut, Download, Maximize2, Minimize2
+  ZoomIn, ZoomOut, Download, Maximize2, Minimize2, ExternalLink
 } from 'lucide-react';
 import Avatar from '../components/common/Avatar';
 import toast from 'react-hot-toast';
-
-// ============================================================
-// IMPORT YOUR LOGO HERE (Option 1 - If logo is in src/assets)
-// ============================================================
-// import logo from '../assets/logo.png';  // Uncomment this line
-// OR if you have SVG logo:
-// import { ReactComponent as Logo } from '../assets/logo.svg';
 
 // Hero Background Images
 const heroBackgroundImages = [
@@ -578,7 +571,7 @@ const DraggableHomeMenu = ({ items, isOpen, onClose, onItemClick, anchorEl }) =>
 };
 
 // ============================================================
-// FULL SCREEN LOGO VIEWER COMPONENT
+// ENHANCED FULL SCREEN LOGO VIEWER COMPONENT
 // ============================================================
 const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
   const [scale, setScale] = useState(1);
@@ -586,7 +579,9 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [showControls, setShowControls] = useState(true);
   const imgRef = useRef(null);
+  const containerRef = useRef(null);
 
   const handleZoomIn = () => {
     setScale(prev => Math.min(prev + 0.25, 3));
@@ -605,6 +600,7 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
     setScale(1);
     setIsZoomed(false);
     setPosition({ x: 0, y: 0 });
+    toast.success('View reset');
   };
 
   const handleDownload = () => {
@@ -614,7 +610,7 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    toast.success('Logo downloaded!');
+    toast.success('Logo downloaded successfully!');
   };
 
   const handleMouseDown = (e) => {
@@ -649,6 +645,11 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
     }
   };
 
+  // Toggle controls on click
+  const toggleControls = () => {
+    setShowControls(!showControls);
+  };
+
   useEffect(() => {
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove);
@@ -674,6 +675,7 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
 
   return (
     <div 
+      ref={containerRef}
       style={{
         position: 'fixed',
         top: 0,
@@ -686,144 +688,67 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backdropFilter: 'blur(10px)'
+        backdropFilter: 'blur(15px)',
+        cursor: isZoomed ? 'grab' : 'default'
       }}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
+      onClick={toggleControls}
       onWheel={handleWheel}
     >
-      {/* Close Button */}
+      {/* Background gradient decoration */}
+      <div style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '600px',
+        height: '600px',
+        background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none'
+      }} />
+
+      {/* Close Button - Always visible */}
       <button
-        onClick={onClose}
+        onClick={(e) => { e.stopPropagation(); onClose(); }}
         style={{
           position: 'absolute',
           top: '24px',
           right: '24px',
-          background: 'rgba(255,255,255,0.1)',
-          border: '1px solid rgba(255,255,255,0.2)',
+          background: 'rgba(255,255,255,0.08)',
+          border: '1px solid rgba(255,255,255,0.15)',
           borderRadius: '50%',
-          width: '48px',
-          height: '48px',
+          width: '50px',
+          height: '50px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
           color: 'white',
-          transition: 'all 0.3s'
+          transition: 'all 0.3s ease',
+          backdropFilter: 'blur(10px)'
         }}
-        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'scale(1)'; }}
       >
         <X size={24} />
       </button>
 
-      {/* Controls */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '40px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          gap: '12px',
-          background: 'rgba(0,0,0,0.7)',
-          padding: '12px 20px',
-          borderRadius: '50px',
-          border: '1px solid rgba(255,255,255,0.1)',
-          backdropFilter: 'blur(10px)'
-        }}
-      >
-        <button
-          onClick={handleZoomOut}
-          style={{
-            background: 'rgba(255,255,255,0.1)',
-            border: 'none',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: 'white',
-            transition: 'all 0.3s'
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
-        >
-          <ZoomOut size={20} />
-        </button>
-        
-        <button
-          onClick={handleReset}
-          style={{
-            background: 'rgba(99,102,241,0.2)',
-            border: '1px solid rgba(99,102,241,0.3)',
-            borderRadius: '30px',
-            padding: '0 20px',
-            height: '40px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: '#818cf8',
-            transition: 'all 0.3s',
-            fontSize: '13px',
-            fontWeight: '500'
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.3)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.2)'; }}
-        >
-          {scale * 100}% Reset
-        </button>
-        
-        <button
-          onClick={handleZoomIn}
-          style={{
-            background: 'rgba(255,255,255,0.1)',
-            border: 'none',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: 'white',
-            transition: 'all 0.3s'
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
-        >
-          <ZoomIn size={20} />
-        </button>
-        
-        <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }} />
-        
-        <button
-          onClick={handleDownload}
-          style={{
-            background: 'rgba(255,255,255,0.1)',
-            border: 'none',
-            borderRadius: '50%',
-            width: '40px',
-            height: '40px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            color: 'white',
-            transition: 'all 0.3s'
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.2)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
-        >
-          <Download size={20} />
-        </button>
+      {/* Title */}
+      <div style={{
+        position: 'absolute',
+        top: '24px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        color: 'rgba(255,255,255,0.3)',
+        fontSize: '14px',
+        fontWeight: '500',
+        letterSpacing: '2px',
+        textTransform: 'uppercase'
+      }}>
+        Logo Preview
       </div>
 
-      {/* Image */}
+      {/* Image Container */}
       <div
         style={{
           cursor: isZoomed ? 'grab' : 'default',
@@ -833,7 +758,8 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
           maxHeight: '80vh',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          position: 'relative'
         }}
         onMouseDown={handleMouseDown}
       >
@@ -846,27 +772,151 @@ const LogoFullScreenViewer = ({ imageSrc, onClose }) => {
             maxHeight: '70vh',
             objectFit: 'contain',
             transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
-            transition: isDragging ? 'none' : 'transform 0.3s ease',
+            transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
             cursor: isZoomed ? 'grab' : 'default',
-            borderRadius: '12px'
+            borderRadius: '12px',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.3)'
           }}
           draggable={false}
         />
       </div>
 
-      {/* Info */}
+      {/* Controls - Show/hide on click */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '10px',
+          background: 'rgba(0,0,0,0.7)',
+          padding: '10px 16px',
+          borderRadius: '50px',
+          border: '1px solid rgba(255,255,255,0.08)',
+          backdropFilter: 'blur(15px)',
+          transition: 'all 0.4s ease',
+          opacity: showControls ? 1 : 0,
+          transform: showControls ? 'translateX(-50%) scale(1)' : 'translateX(-50%) scale(0.9)'
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        <button
+          onClick={handleZoomOut}
+          style={{
+            background: 'rgba(255,255,255,0.06)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '42px',
+            height: '42px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'scale(1)'; }}
+          title="Zoom Out"
+        >
+          <ZoomOut size={18} />
+        </button>
+        
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '0 8px'
+        }}>
+          <button
+            onClick={handleReset}
+            style={{
+              background: 'rgba(99,102,241,0.2)',
+              border: '1px solid rgba(99,102,241,0.3)',
+              borderRadius: '30px',
+              padding: '0 18px',
+              height: '38px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              color: '#818cf8',
+              transition: 'all 0.3s ease',
+              fontSize: '12px',
+              fontWeight: '600',
+              letterSpacing: '0.5px'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.3)'; e.currentTarget.style.transform = 'scale(1.02)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.2)'; e.currentTarget.style.transform = 'scale(1)'; }}
+          >
+            {Math.round(scale * 100)}%
+          </button>
+        </div>
+        
+        <button
+          onClick={handleZoomIn}
+          style={{
+            background: 'rgba(255,255,255,0.06)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '42px',
+            height: '42px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'scale(1)'; }}
+          title="Zoom In"
+        >
+          <ZoomIn size={18} />
+        </button>
+        
+        <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)', margin: '0 4px' }} />
+        
+        <button
+          onClick={handleDownload}
+          style={{
+            background: 'rgba(255,255,255,0.06)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '42px',
+            height: '42px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            transition: 'all 0.3s ease'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'scale(1)'; }}
+          title="Download Logo"
+        >
+          <Download size={18} />
+        </button>
+      </div>
+
+      {/* Footer Info */}
       <div
         style={{
           position: 'absolute',
           bottom: '100px',
           left: '50%',
           transform: 'translateX(-50%)',
-          color: 'rgba(255,255,255,0.4)',
-          fontSize: '12px',
-          textAlign: 'center'
+          color: 'rgba(255,255,255,0.25)',
+          fontSize: '11px',
+          textAlign: 'center',
+          letterSpacing: '1px',
+          transition: 'all 0.4s ease',
+          opacity: showControls ? 1 : 0
         }}
       >
-        🖱️ Click outside to close • Scroll to zoom • Drag to pan
+        🖱️ Click to toggle controls • Scroll to zoom • Drag to pan
       </div>
     </div>
   );
@@ -1232,7 +1282,8 @@ const HomePage = () => {
                   boxShadow: '0 4px 20px rgba(99,102,241,0.4)',
                   overflow: 'hidden',
                   transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  position: 'relative'
                 }}
                 onMouseEnter={e => { 
                   e.currentTarget.style.transform = 'scale(1.08)'; 
@@ -1255,6 +1306,25 @@ const HomePage = () => {
                     objectFit: 'contain'
                   }} 
                 />
+                {/* Hover overlay */}
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'rgba(0,0,0,0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  opacity: 0,
+                  transition: 'opacity 0.3s ease',
+                  borderRadius: '14px'
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity = 1}
+                onMouseLeave={e => e.currentTarget.style.opacity = 0}>
+                  <ExternalLink size={18} style={{ color: 'white' }} />
+                </div>
               </div>
               <span style={{ fontSize: '22px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
             </div>
@@ -1333,10 +1403,8 @@ const HomePage = () => {
       </header>
 
       {/* ============================================================
-          REST OF THE PAGE - HERO, SERVICES, PROPERTIES, ETC.
+          HERO SECTION WITH FIXED SEARCH BAR
           ============================================================ */}
-      
-      {/* HERO SECTION */}
       <section id="home" style={{ height: '100vh', width: '100%', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ 
           position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
@@ -1344,10 +1412,10 @@ const HomePage = () => {
           backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat',
           transition: 'background-image 1s ease-in-out', zIndex: 0 
         }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(8,11,17,0.5) 0%, rgba(8,11,17,0.3) 100%)', zIndex: 1 }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(135deg, rgba(8,11,17,0.6) 0%, rgba(8,11,17,0.4) 100%)', zIndex: 1 }} />
         
         <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: '800px' }}>
-          <h1 style={{ fontSize: '64px', fontWeight: '900', color: 'white', letterSpacing: '-2px', lineHeight: '1.1', marginBottom: '20px', textShadow: '0 2px 10px rgba(0,0,0,0.3)', minHeight: '140px' }}>
+          <h1 style={{ fontSize: '64px', fontWeight: '900', color: 'white', letterSpacing: '-2px', lineHeight: '1.1', marginBottom: '20px', textShadow: '0 2px 10px rgba(0,0,0,0.3)', minHeight: '100px' }}>
             {animatedHeading}
             <span style={{
               display: 'inline-block',
@@ -1364,15 +1432,67 @@ const HomePage = () => {
             {staticSubheading}
           </p>
           
-          <div className="glass-panel" style={{ display: 'flex', padding: '8px', gap: '8px', maxWidth: '550px', margin: '0 auto', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)' }}>
+          {/* SEARCH BAR - Fixed and Visible */}
+          <div style={{ 
+            display: 'flex', 
+            padding: '6px', 
+            gap: '6px', 
+            maxWidth: '580px', 
+            margin: '0 auto', 
+            background: 'rgba(255,255,255,0.12)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '50px',
+            border: '1px solid rgba(255,255,255,0.15)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.2)'
+          }}>
             <input 
               type="text" 
               placeholder="Search by city, title, or location..." 
               value={searchTerm} 
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ flex: 1, background: 'transparent', border: 'none', color: 'white', paddingLeft: '16px', outline: 'none', fontSize: '16px' }} 
+              onKeyPress={(e) => e.key === 'Enter' && handleViewAllProperties()}
+              style={{ 
+                flex: 1, 
+                background: 'transparent', 
+                border: 'none', 
+                color: 'white', 
+                paddingLeft: '20px', 
+                outline: 'none', 
+                fontSize: '16px',
+                height: '52px',
+                '::placeholder': {
+                  color: 'rgba(255,255,255,0.5)'
+                }
+              }} 
+              placeholder="Search by city, title, or location..."
             />
-            <button onClick={handleViewAllProperties} style={{ padding: '12px 32px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', border: 'none', color: 'white', borderRadius: '40px', cursor: 'pointer', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button 
+              onClick={handleViewAllProperties} 
+              style={{ 
+                padding: '0 28px', 
+                height: '52px',
+                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', 
+                border: 'none', 
+                color: 'white', 
+                borderRadius: '40px', 
+                cursor: 'pointer', 
+                fontWeight: '600', 
+                fontSize: '15px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '8px',
+                boxShadow: '0 4px 15px rgba(99,102,241,0.4)',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'scale(1.02)';
+                e.currentTarget.style.boxShadow = '0 6px 25px rgba(99,102,241,0.5)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(99,102,241,0.4)';
+              }}
+            >
               <Search size={18} /> Search
             </button>
           </div>
@@ -1841,7 +1961,7 @@ const HomePage = () => {
         @media (max-width: 768px) { 
           .mobile-col { display: flex !important; flex-direction: column !important; gap: 20px !important; } 
           .chatbot-container { width: calc(100vw - 48px); right: 24px; bottom: 85px; }
-          h1 { font-size: 36px !important; min-height: 100px !important; }
+          h1 { font-size: 36px !important; min-height: 80px !important; }
           p { font-size: 16px !important; }
         }
         
