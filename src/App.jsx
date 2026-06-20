@@ -14,7 +14,7 @@ import ServicesPage from './pages/ServicesPage';
 import AgentsPage from './pages/AgentsPage';
 import TestimonialsPage from './pages/TestimonialsPage';
 import ContactPage from './pages/ContactPage';
-
+import FAQPage from './pages/FAQPage'; 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   return token ? children : <Navigate to="/login" />;
@@ -38,6 +38,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/dashboard" element={<ProtectedRoute><DashboardRouter /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          <Route path="/faq" element={<FAQPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>
