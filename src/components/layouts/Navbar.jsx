@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Menu, X } from 'lucide-react';
 import Avatar from '../common/Avatar';
 
-// ===== IMPORT LOGO =====
-import Logo from '/logo.png';  // Direct from public folder
+// ===== IMPORT LOGO FROM src/public =====
+import Logo from '../public/logo.png';
 
 const navLinks = [
   { label: 'Home', path: '/' },
@@ -26,7 +26,6 @@ const Navbar = () => {
 
   return (
     <header
-      className="glass-header"
       style={{ 
         position: 'fixed', 
         top: 0, 
