@@ -8,7 +8,7 @@ import {
   Trophy, Award, Globe, Quote, Send, MessageSquare, X, ChevronDown, CheckCircle,
   Grid, DollarSign, Building, Home, TrendingUp, ThumbsUp, HelpCircle, Filter, Zap, Video, FileText,
   Briefcase, Handshake, TrendingUp as TrendingUpIcon, Headphones, Menu, ChevronRight,
-  Calendar as CalendarIcon, User, Settings, LogOut, BookOpen, Newspaper
+  Calendar as CalendarIcon, User, Settings, LogOut, BookOpen, Newspaper, GripVertical
 } from 'lucide-react';
 import Avatar from '../components/common/Avatar';
 import toast from 'react-hot-toast';
@@ -406,6 +406,153 @@ const BlogDetailModal = ({ blog, onClose }) => {
   );
 };
 
+// Draggable Home Menu Component
+const DraggableHomeMenu = ({ items, isOpen, onClose, onItemClick }) => {
+  const [position, setPosition] = useState({ x: 20, y: 100 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const menuRef = useRef(null);
+
+  const handleMouseDown = (e) => {
+    if (e.target.closest('.menu-header')) {
+      setIsDragging(true);
+      setDragStart({
+        x: e.clientX - position.x,
+        y: e.clientY - position.y
+      });
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      let newX = e.clientX - dragStart.x;
+      let newY = e.clientY - dragStart.y;
+      
+      newX = Math.max(10, Math.min(window.innerWidth - (menuRef.current?.offsetWidth || 280) - 10, newX));
+      newY = Math.max(60, Math.min(window.innerHeight - (menuRef.current?.offsetHeight || 400) - 10, newY));
+      
+      setPosition({ x: newX, y: newY });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    } else {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, dragStart]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      ref={menuRef}
+      style={{
+        position: 'fixed',
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        zIndex: 2000,
+        cursor: isDragging ? 'grabbing' : 'default'
+      }}
+    >
+      <div style={{
+        background: '#0b0f19',
+        borderRadius: '16px',
+        border: '1px solid rgba(99,102,241,0.3)',
+        boxShadow: '0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(99,102,241,0.2)',
+        width: '260px',
+        overflow: 'hidden',
+        backdropFilter: 'blur(10px)'
+      }}>
+        <div 
+          className="menu-header"
+          style={{
+            padding: '12px 16px',
+            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'grab',
+            userSelect: 'none'
+          }}
+          onMouseDown={handleMouseDown}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <GripVertical size={16} style={{ color: 'white' }} />
+            <span style={{ color: 'white', fontWeight: '600', fontSize: '13px' }}>🏠 Home Menu</span>
+          </div>
+          <button 
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'white',
+              cursor: 'pointer',
+              padding: '4px',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <X size={16} />
+          </button>
+        </div>
+        
+        <div style={{ padding: '8px 0' }}>
+          {items.map((item, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                onItemClick(item.action);
+                onClose();
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                width: '100%',
+                padding: '10px 16px',
+                background: 'transparent',
+                border: 'none',
+                color: '#e5e7eb',
+                cursor: 'pointer',
+                fontSize: '13px',
+                textAlign: 'left',
+                transition: 'background 0.2s'
+              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(99,102,241,0.15)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </button>
+          ))}
+        </div>
+        
+        <div style={{
+          padding: '10px 16px',
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+          fontSize: '11px',
+          color: '#6b7280',
+          textAlign: 'center'
+        }}>
+          💡 Drag to reposition • Click to navigate
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const HomePage = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -417,6 +564,7 @@ const HomePage = () => {
     agents: 0 
   });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDraggableMenuOpen, setIsDraggableMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [showInquiryModal, setShowInquiryModal] = useState(false);
@@ -437,6 +585,18 @@ const HomePage = () => {
   
   // Static subheading
   const staticSubheading = "Discover luxury properties across Pakistan's prime locations";
+
+  // Draggable Menu Items - All scroll to home page sections (NO external links)
+  const draggableMenuItems = [
+    { name: "🏠 Home", icon: <Home size={16} />, action: "home" },
+    { name: "🏘️ Properties", icon: <Building size={16} />, action: "properties" },
+    { name: "📝 Blog", icon: <Newspaper size={16} />, action: "blog" },
+    { name: "⚙️ Services", icon: <Zap size={16} />, action: "services" },
+    { name: "⭐ Testimonials", icon: <Star size={16} />, action: "testimonials" },
+    { name: "📊 Stats", icon: <TrendingUp size={16} />, action: "stats" },
+    { name: "📞 Contact", icon: <Phone size={16} />, action: "contact" },
+    { name: "💬 AI Assistant", icon: <MessageSquare size={16} />, action: "chat" }
+  ];
 
   // Get filtered properties for home page (only 6 properties)
   const getFilteredHomeProperties = () => {
@@ -565,6 +725,28 @@ const HomePage = () => {
     navigate('/properties');
   };
 
+  // Scroll to section on home page (NO external navigation)
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
+
+  // Handle draggable menu item click
+  const handleMenuItemClick = (action) => {
+    if (action === "chat") {
+      setIsChatOpen(true);
+    } else if (action === "home") {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      scrollToSection(action);
+    }
+  };
+
   const handleChatSubmit = (e) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
@@ -610,8 +792,48 @@ const HomePage = () => {
     document.body.style.overflow = 'auto';
   };
 
+  // Social Media Links - Working URLs
+  const socialLinks = {
+    facebook: "https://facebook.com/estateflow",
+    twitter: "https://twitter.com/estateflow",
+    instagram: "https://instagram.com/estateflow",
+    linkedin: "https://linkedin.com/company/estateflow"
+  };
+
   return (
     <div style={{ background: '#080b11', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      
+      {/* Draggable Home Menu Button */}
+      <button
+        onClick={() => setIsDraggableMenuOpen(!isDraggableMenuOpen)}
+        style={{
+          position: 'fixed',
+          bottom: '100px',
+          right: '24px',
+          width: '48px',
+          height: '48px',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+          border: 'none',
+          color: 'white',
+          cursor: 'pointer',
+          zIndex: 1001,
+          boxShadow: '0 4px 15px rgba(99,102,241,0.4)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <Menu size={24} />
+      </button>
+
+      {/* Draggable Home Menu */}
+      <DraggableHomeMenu
+        items={draggableMenuItems}
+        isOpen={isDraggableMenuOpen}
+        onClose={() => setIsDraggableMenuOpen(false)}
+        onItemClick={handleMenuItemClick}
+      />
       
       {/* Blog Detail Modal */}
       {selectedBlog && (
@@ -673,7 +895,6 @@ const HomePage = () => {
             <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>EstateFlow</span>
           </div>
           
-          {/* Desktop Navigation */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }} className="desktop-nav">
             <a href="/" style={{ color: '#6366f1', textDecoration: 'none', fontSize: '14px', fontWeight: '600' }}>Home</a>
             <a href="/properties" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px' }}>Properties</a>
@@ -1104,7 +1325,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* FOOTER with Working Social Media Links */}
       <footer id="contact" style={{ background: '#05070a', padding: '60px 24px 30px 24px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 'auto' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '40px', marginBottom: '40px' }} className="footer-grid">
@@ -1114,7 +1335,12 @@ const HomePage = () => {
                 <span style={{ color: 'white', fontWeight: '800', fontSize: '20px' }}>EstateFlow</span>
               </div>
               <p style={{ color: '#9ca3af', fontSize: '14px', lineHeight: '1.6', marginBottom: '20px' }}>Pakistan's #1 premium real estate platform with {stats.properties}+ properties and {stats.clients}+ happy clients.</p>
-              <div style={{ display: 'flex', gap: '12px' }}>{['FB', 'TW', 'IG', 'LI'].map((social, idx) => (<a key={idx} href="#" style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontSize: '12px', textDecoration: 'none' }}>{social}</a>))}</div>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontSize: '12px', textDecoration: 'none', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#1877f2'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#1877f2'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}>FB</a>
+                <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer" style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontSize: '12px', textDecoration: 'none', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#000000'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#000000'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}>TW</a>
+                <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontSize: '12px', textDecoration: 'none', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#bc1888'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}>IG</a>
+                <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" style={{ width: '34px', height: '34px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af', fontSize: '12px', textDecoration: 'none', transition: 'all 0.3s' }} onMouseEnter={e => { e.currentTarget.style.background = '#0a66c2'; e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = '#0a66c2'; }} onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}>LI</a>
+              </div>
             </div>
             <div>
               <h4 style={{ color: 'white', marginBottom: '20px' }}>Quick Links</h4>
