@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X, Home, Building2, Warehouse, Store, Crown, Building } from 'lucide-react';
+import { Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, SlidersHorizontal, ArrowUpDown, X } from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
@@ -52,78 +52,49 @@ const commercialImages = [
   "https://media.istockphoto.com/id/2241825793/photo/aerial-drone-view-of-standing-seam-metal-roof-on-modern-commercial-buildings.jpg?s=612x612&w=0&k=20&c=L56By6JNcFIUe2HgTxvIxsq07em3sMPb-Yc975xhBZk="
 ];
 
-// ========== BOWSER PROPERTIES (ID 32-35) - 4 properties ==========
-const bowserImages = [
-  "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop"
-];
-
-// ========== APARTMENTS (ID 36-40) - 5 properties ==========
-const apartmentImages = [
-  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=600&h=400&fit=crop"
-];
-
-// ========== ALL PROPERTIES ==========
+// ========== ALL 31 PROPERTIES (Pakistan) ==========
 const ALL_PROPERTIES = [
   // VILLAS (ID 1-12)
-  { id: 1, title: "Luxury Villa DHA Karachi", city: "Karachi", state: "Sindh", type: "Villa", beds: 4, baths: 3, area: 2800, rent: 180000, status: "available", image: villaImages[0] },
-  { id: 2, title: "Modern Villa Clifton", city: "Karachi", state: "Sindh", type: "Villa", beds: 5, baths: 4, area: 3500, rent: 250000, status: "available", image: villaImages[1] },
-  { id: 3, title: "Executive Villa Islamabad", city: "Islamabad", state: "Capital", type: "Villa", beds: 5, baths: 4, area: 4000, rent: 320000, status: "available", image: villaImages[2] },
-  { id: 4, title: "Beach View Villa DHA", city: "Karachi", state: "Sindh", type: "Villa", beds: 4, baths: 3, area: 3200, rent: 280000, status: "available", image: villaImages[3] },
-  { id: 5, title: "Garden Villa Lahore", city: "Lahore", state: "Punjab", type: "Villa", beds: 4, baths: 3, area: 3000, rent: 200000, status: "available", image: villaImages[4] },
-  { id: 6, title: "Presidential Villa Rawalpindi", city: "Rawalpindi", state: "Punjab", type: "Villa", beds: 6, baths: 5, area: 5000, rent: 350000, status: "available", image: villaImages[5] },
-  { id: 7, title: "Cozy Villa Peshawar", city: "Peshawar", state: "KPK", type: "Villa", beds: 3, baths: 2, area: 2200, rent: 150000, status: "available", image: villaImages[6] },
-  { id: 8, title: "Lake View Villa Islamabad", city: "Islamabad", state: "Capital", type: "Villa", beds: 5, baths: 4, area: 4500, rent: 300000, status: "available", image: villaImages[7] },
-  { id: 9, title: "Tropical Pool Villa Karachi", city: "Karachi", state: "Sindh", type: "Villa", beds: 5, baths: 4, area: 4200, rent: 400000, status: "available", image: villaImages[8] },
-  { id: 10, title: "Sunset View Villa DHA", city: "Karachi", state: "Sindh", type: "Villa", beds: 5, baths: 4, area: 3900, rent: 380000, status: "available", image: villaImages[9] },
-  { id: 11, title: "Lakeside Executive Villa", city: "Islamabad", state: "Capital", type: "Villa", beds: 6, baths: 5, area: 5500, rent: 500000, status: "available", image: villaImages[10] },
-  { id: 12, title: "Modern Cube Villa Lahore", city: "Lahore", state: "Punjab", type: "Villa", beds: 4, baths: 3, area: 3100, rent: 220000, status: "available", image: villaImages[11] },
+  { id: 1, title: "Luxury Villa DHA Karachi", city: "Karachi", state: "Sindh", type: "Villa", beds: 4, baths: 3, area: 2800, rent: 180000, status: "available", image: villaImages[0], priceDisplay: "PKR 180,000/month" },
+  { id: 2, title: "Modern Villa Clifton", city: "Karachi", state: "Sindh", type: "Villa", beds: 5, baths: 4, area: 3500, rent: 250000, status: "available", image: villaImages[1], priceDisplay: "PKR 250,000/month" },
+  { id: 3, title: "Executive Villa Islamabad", city: "Islamabad", state: "Capital", type: "Villa", beds: 5, baths: 4, area: 4000, rent: 320000, status: "available", image: villaImages[2], priceDisplay: "PKR 320,000/month" },
+  { id: 4, title: "Beach View Villa DHA", city: "Karachi", state: "Sindh", type: "Villa", beds: 4, baths: 3, area: 3200, rent: 280000, status: "available", image: villaImages[3], priceDisplay: "PKR 280,000/month" },
+  { id: 5, title: "Garden Villa Lahore", city: "Lahore", state: "Punjab", type: "Villa", beds: 4, baths: 3, area: 3000, rent: 200000, status: "available", image: villaImages[4], priceDisplay: "PKR 200,000/month" },
+  { id: 6, title: "Presidential Villa Rawalpindi", city: "Rawalpindi", state: "Punjab", type: "Villa", beds: 6, baths: 5, area: 5000, rent: 350000, status: "available", image: villaImages[5], priceDisplay: "PKR 350,000/month" },
+  { id: 7, title: "Cozy Villa Peshawar", city: "Peshawar", state: "KPK", type: "Villa", beds: 3, baths: 2, area: 2200, rent: 150000, status: "available", image: villaImages[6], priceDisplay: "PKR 150,000/month" },
+  { id: 8, title: "Lake View Villa Islamabad", city: "Islamabad", state: "Capital", type: "Villa", beds: 5, baths: 4, area: 4500, rent: 300000, status: "available", image: villaImages[7], priceDisplay: "PKR 300,000/month" },
+  { id: 9, title: "Tropical Pool Villa Karachi", city: "Karachi", state: "Sindh", type: "Villa", beds: 5, baths: 4, area: 4200, rent: 400000, status: "available", image: villaImages[8], priceDisplay: "PKR 400,000/month" },
+  { id: 10, title: "Sunset View Villa DHA", city: "Karachi", state: "Sindh", type: "Villa", beds: 5, baths: 4, area: 3900, rent: 380000, status: "available", image: villaImages[9], priceDisplay: "PKR 380,000/month" },
+  { id: 11, title: "Lakeside Executive Villa", city: "Islamabad", state: "Capital", type: "Villa", beds: 6, baths: 5, area: 5500, rent: 500000, status: "available", image: villaImages[10], priceDisplay: "PKR 500,000/month" },
+  { id: 12, title: "Modern Cube Villa Lahore", city: "Lahore", state: "Punjab", type: "Villa", beds: 4, baths: 3, area: 3100, rent: 220000, status: "available", image: villaImages[11], priceDisplay: "PKR 220,000/month" },
 
   // PENTHOUSES (ID 13-21)
-  { id: 13, title: "Royal Penthouse Lahore", city: "Lahore", state: "Punjab", type: "Penthouse", beds: 6, baths: 5, area: 5200, rent: 450000, status: "available", image: penthouseImages[0] },
-  { id: 14, title: "Sky Penthouse Mall Road", city: "Lahore", state: "Punjab", type: "Penthouse", beds: 7, baths: 6, area: 6500, rent: 550000, status: "available", image: penthouseImages[1] },
-  { id: 15, title: "Ocean View Penthouse Karachi", city: "Karachi", state: "Sindh", type: "Penthouse", beds: 5, baths: 4, area: 4800, rent: 480000, status: "available", image: penthouseImages[2] },
-  { id: 16, title: "Presidential Penthouse Islamabad", city: "Islamabad", state: "Capital", type: "Penthouse", beds: 8, baths: 7, area: 7500, rent: 600000, status: "available", image: penthouseImages[3] },
-  { id: 17, title: "Sunset View Penthouse Karachi", city: "Karachi", state: "Sindh", type: "Penthouse", beds: 6, baths: 5, area: 6000, rent: 650000, status: "available", image: penthouseImages[4] },
-  { id: 18, title: "Ultimate Luxury Penthouse", city: "Islamabad", state: "Capital", type: "Penthouse", beds: 7, baths: 6, area: 8000, rent: 700000, status: "available", image: penthouseImages[5] },
-  { id: 19, title: "Modern Loft Penthouse", city: "Lahore", state: "Punjab", type: "Penthouse", beds: 5, baths: 4, area: 5500, rent: 500000, status: "available", image: penthouseImages[6] },
-  { id: 20, title: "Black Master Penthouse", city: "Karachi", state: "Sindh", type: "Penthouse", beds: 6, baths: 5, area: 6200, rent: 580000, status: "available", image: penthouseImages[7] },
-  { id: 21, title: "Terrace Jacuzzi Penthouse", city: "Islamabad", state: "Capital", type: "Penthouse", beds: 6, baths: 5, area: 6800, rent: 620000, status: "available", image: penthouseImages[8] },
+  { id: 13, title: "Royal Penthouse Lahore", city: "Lahore", state: "Punjab", type: "Penthouse", beds: 6, baths: 5, area: 5200, rent: 450000, status: "available", image: penthouseImages[0], priceDisplay: "PKR 450,000/month" },
+  { id: 14, title: "Sky Penthouse Mall Road", city: "Lahore", state: "Punjab", type: "Penthouse", beds: 7, baths: 6, area: 6500, rent: 550000, status: "available", image: penthouseImages[1], priceDisplay: "PKR 550,000/month" },
+  { id: 15, title: "Ocean View Penthouse Karachi", city: "Karachi", state: "Sindh", type: "Penthouse", beds: 5, baths: 4, area: 4800, rent: 480000, status: "available", image: penthouseImages[2], priceDisplay: "PKR 480,000/month" },
+  { id: 16, title: "Presidential Penthouse Islamabad", city: "Islamabad", state: "Capital", type: "Penthouse", beds: 8, baths: 7, area: 7500, rent: 600000, status: "available", image: penthouseImages[3], priceDisplay: "PKR 600,000/month" },
+  { id: 17, title: "Sunset View Penthouse Karachi", city: "Karachi", state: "Sindh", type: "Penthouse", beds: 6, baths: 5, area: 6000, rent: 650000, status: "available", image: penthouseImages[4], priceDisplay: "PKR 650,000/month" },
+  { id: 18, title: "Ultimate Luxury Penthouse", city: "Islamabad", state: "Capital", type: "Penthouse", beds: 7, baths: 6, area: 8000, rent: 700000, status: "available", image: penthouseImages[5], priceDisplay: "PKR 700,000/month" },
+  { id: 19, title: "Modern Loft Penthouse", city: "Lahore", state: "Punjab", type: "Penthouse", beds: 5, baths: 4, area: 5500, rent: 500000, status: "available", image: penthouseImages[6], priceDisplay: "PKR 500,000/month" },
+  { id: 20, title: "Black Master Penthouse", city: "Karachi", state: "Sindh", type: "Penthouse", beds: 6, baths: 5, area: 6200, rent: 580000, status: "available", image: penthouseImages[7], priceDisplay: "PKR 580,000/month" },
+  { id: 21, title: "Terrace Jacuzzi Penthouse", city: "Islamabad", state: "Capital", type: "Penthouse", beds: 6, baths: 5, area: 6800, rent: 620000, status: "available", image: penthouseImages[8], priceDisplay: "PKR 620,000/month" },
 
   // FARMHOUSES (ID 22-28)
-  { id: 22, title: "Modern Farmhouse Bahria", city: "Rawalpindi", state: "Punjab", type: "Farmhouse", beds: 8, baths: 6, area: 8000, rent: 320000, status: "available", image: farmhouseImages[0] },
-  { id: 23, title: "Weekend Farmhouse Islamabad", city: "Islamabad", state: "Capital", type: "Farmhouse", beds: 5, baths: 4, area: 5000, rent: 250000, status: "available", image: farmhouseImages[1] },
-  { id: 24, title: "Luxury Farmhouse Lahore", city: "Lahore", state: "Punjab", type: "Farmhouse", beds: 10, baths: 8, area: 12000, rent: 400000, status: "available", image: farmhouseImages[2] },
-  { id: 25, title: "Countryside Farmhouse", city: "Rawalpindi", state: "Punjab", type: "Farmhouse", beds: 6, baths: 5, area: 7000, rent: 280000, status: "available", image: farmhouseImages[3] },
-  { id: 26, title: "Cumbrian Country Farm", city: "Islamabad", state: "Capital", type: "Farmhouse", beds: 5, baths: 4, area: 6000, rent: 220000, status: "available", image: farmhouseImages[4] },
-  { id: 27, title: "Alpine Chalet Farmhouse", city: "Murree", state: "Punjab", type: "Farmhouse", beds: 6, baths: 5, area: 6500, rent: 350000, status: "available", image: farmhouseImages[5] },
-  { id: 28, title: "Tuscan Villa Farmhouse", city: "Lahore", state: "Punjab", type: "Farmhouse", beds: 7, baths: 6, area: 9000, rent: 300000, status: "available", image: farmhouseImages[6] },
+  { id: 22, title: "Modern Farmhouse Bahria", city: "Rawalpindi", state: "Punjab", type: "Farmhouse", beds: 8, baths: 6, area: 8000, rent: 320000, status: "available", image: farmhouseImages[0], priceDisplay: "PKR 320,000/month" },
+  { id: 23, title: "Weekend Farmhouse Islamabad", city: "Islamabad", state: "Capital", type: "Farmhouse", beds: 5, baths: 4, area: 5000, rent: 250000, status: "available", image: farmhouseImages[1], priceDisplay: "PKR 250,000/month" },
+  { id: 24, title: "Luxury Farmhouse Lahore", city: "Lahore", state: "Punjab", type: "Farmhouse", beds: 10, baths: 8, area: 12000, rent: 400000, status: "available", image: farmhouseImages[2], priceDisplay: "PKR 400,000/month" },
+  { id: 25, title: "Countryside Farmhouse", city: "Rawalpindi", state: "Punjab", type: "Farmhouse", beds: 6, baths: 5, area: 7000, rent: 280000, status: "available", image: farmhouseImages[3], priceDisplay: "PKR 280,000/month" },
+  { id: 26, title: "Cumbrian Country Farm", city: "Islamabad", state: "Capital", type: "Farmhouse", beds: 5, baths: 4, area: 6000, rent: 220000, status: "available", image: farmhouseImages[4], priceDisplay: "PKR 220,000/month" },
+  { id: 27, title: "Alpine Chalet Farmhouse", city: "Murree", state: "Punjab", type: "Farmhouse", beds: 6, baths: 5, area: 6500, rent: 350000, status: "available", image: farmhouseImages[5], priceDisplay: "PKR 350,000/month" },
+  { id: 28, title: "Tuscan Villa Farmhouse", city: "Lahore", state: "Punjab", type: "Farmhouse", beds: 7, baths: 6, area: 9000, rent: 300000, status: "available", image: farmhouseImages[6], priceDisplay: "PKR 300,000/month" },
 
   // COMMERCIAL (ID 29-31)
-  { id: 29, title: "Commercial Plaza DHA", city: "Karachi", state: "Sindh", type: "Commercial", beds: 0, baths: 4, area: 3000, rent: 180000, status: "available", image: commercialImages[0] },
-  { id: 30, title: "Office Space IT Tower", city: "Karachi", state: "Sindh", type: "Commercial", beds: 0, baths: 3, area: 2500, rent: 220000, status: "available", image: commercialImages[1] },
-  { id: 31, title: "Commercial Building with Roof", city: "Lahore", state: "Punjab", type: "Commercial", beds: 0, baths: 5, area: 4000, rent: 300000, status: "available", image: commercialImages[2] },
-
-  // BOWSER PROPERTIES (ID 32-35)
-  { id: 32, title: "Bowser Luxury Castle", city: "Islamabad", state: "Capital", type: "Bowser", beds: 8, baths: 6, area: 10000, rent: 800000, status: "available", image: bowserImages[0] },
-  { id: 33, title: "Bowser Mega Mansion", city: "Lahore", state: "Punjab", type: "Bowser", beds: 10, baths: 8, area: 15000, rent: 1000000, status: "available", image: bowserImages[1] },
-  { id: 34, title: "Bowser Royal Estate", city: "Karachi", state: "Sindh", type: "Bowser", beds: 7, baths: 5, area: 8500, rent: 700000, status: "available", image: bowserImages[2] },
-  { id: 35, title: "Bowser Grand Palace", city: "Rawalpindi", state: "Punjab", type: "Bowser", beds: 9, baths: 7, area: 12000, rent: 900000, status: "available", image: bowserImages[3] },
-
-  // APARTMENTS (ID 36-40)
-  { id: 36, title: "Luxury Apartment Clifton", city: "Karachi", state: "Sindh", type: "Apartment", beds: 3, baths: 2, area: 1800, rent: 120000, status: "available", image: apartmentImages[0] },
-  { id: 37, title: "Modern Apartment DHA", city: "Lahore", state: "Punjab", type: "Apartment", beds: 2, baths: 2, area: 1500, rent: 90000, status: "available", image: apartmentImages[1] },
-  { id: 38, title: "Studio Apartment Islamabad", city: "Islamabad", state: "Capital", type: "Apartment", beds: 1, baths: 1, area: 800, rent: 50000, status: "available", image: apartmentImages[2] },
-  { id: 39, title: "Premium Apartment Gulshan", city: "Karachi", state: "Sindh", type: "Apartment", beds: 4, baths: 3, area: 2200, rent: 160000, status: "available", image: apartmentImages[3] },
-  { id: 40, title: "Executive Apartment Johar", city: "Lahore", state: "Punjab", type: "Apartment", beds: 3, baths: 2, area: 2000, rent: 130000, status: "available", image: apartmentImages[4] }
+  { id: 29, title: "Commercial Plaza DHA", city: "Karachi", state: "Sindh", type: "Commercial", beds: 0, baths: 4, area: 3000, rent: 180000, status: "available", image: commercialImages[0], priceDisplay: "PKR 180,000/month" },
+  { id: 30, title: "Office Space IT Tower", city: "Karachi", state: "Sindh", type: "Commercial", beds: 0, baths: 3, area: 2500, rent: 220000, status: "available", image: commercialImages[1], priceDisplay: "PKR 220,000/month" },
+  { id: 31, title: "Commercial Building with Roof", city: "Lahore", state: "Punjab", type: "Commercial", beds: 0, baths: 5, area: 4000, rent: 300000, status: "available", image: commercialImages[2], priceDisplay: "PKR 300,000/month" }
 ];
 
+// Skeleton Card Component
 const SkeletonCard = () => (
   <div className="skeleton-card" style={{ overflow: 'hidden' }}>
     <div className="skeleton" style={{ height: '200px', borderRadius: 0 }} />
@@ -157,34 +128,12 @@ const PropertiesPage = () => {
   const [favourites, setFavourites] = useState(() => {
     try { return JSON.parse(localStorage.getItem('ef_favourites') || '[]'); } catch { return []; }
   });
-  const [activeCategory, setActiveCategory] = useState('all');
 
-  useEffect(() => { fetchProperties(); }, []);
-
-  const fetchProperties = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch('https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app/api/properties');
-      const data = await res.json();
-      if (data.success && data.data.properties.length > 0) {
-        const normalized = data.data.properties.map(p => ({
-          id: p._id, title: p.title,
-          city: p.address?.city || 'Unknown', state: p.address?.state || 'Unknown',
-          type: p.type || 'villa',
-          beds: p.details?.bedrooms || 0, baths: p.details?.bathrooms || 0, area: p.details?.area || 0,
-          rent: p.rent?.amount || 0, status: p.status || 'available',
-          image: p.images?.[0] || ALL_PROPERTIES.find(ap => ap.id === parseInt(p._id))?.image || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop',
-          createdAt: p.createdAt,
-        }));
-        setProperties(normalized);
-      } else {
-        setProperties(ALL_PROPERTIES);
-      }
-    } catch { 
-      setProperties(ALL_PROPERTIES);
-    }
-    finally { setLoading(false); }
-  };
+  useEffect(() => { 
+    // Always use ALL_PROPERTIES directly - this ensures all 31 properties show
+    setProperties(ALL_PROPERTIES);
+    setLoading(false);
+  }, []);
 
   const toggleFav = (id, e) => {
     e.stopPropagation();
@@ -196,42 +145,19 @@ const PropertiesPage = () => {
 
   const cities = ['all', ...new Set(properties.map(p => p.city))];
 
-  // Get category counts
-  const getCategoryCount = (type) => {
-    if (type === 'all') return properties.length;
-    return properties.filter(p => p.type.toLowerCase() === type.toLowerCase()).length;
-  };
-
-  // Filter by category
-  const getFilteredByCategory = () => {
-    if (activeCategory === 'all') return properties;
-    return properties.filter(p => p.type.toLowerCase() === activeCategory.toLowerCase());
-  };
-
-  const categoryData = [
-    { id: 'all', label: 'All Properties', icon: <Home size={16} /> },
-    { id: 'villa', label: 'Villas', icon: <Building2 size={16} /> },
-    { id: 'penthouse', label: 'Penthouses', icon: <Building2 size={16} /> },
-    { id: 'farmhouse', label: 'Farmhouses', icon: <Warehouse size={16} /> },
-    { id: 'commercial', label: 'Commercials', icon: <Store size={16} /> },
-    { id: 'bowser', label: 'Bowser', icon: <Crown size={16} /> },
-    { id: 'apartment', label: 'Apartments', icon: <Building size={16} /> },
-  ];
-
-  const categoryProperties = getFilteredByCategory();
-
-  const filteredAndSorted = [...categoryProperties]
+  const filteredAndSorted = [...properties]
     .filter(p => {
       const s = searchTerm.toLowerCase();
       const matchSearch = p.title.toLowerCase().includes(s) || p.city.toLowerCase().includes(s);
       const matchCity = filterCity === 'all' || p.city === filterCity;
+      const matchType = filterType === 'all' || p.type.toLowerCase() === filterType.toLowerCase();
       const matchBeds = filterBeds === 'all' || p.beds >= parseInt(filterBeds);
       let matchPrice = true;
       if (filterPrice === 'under50k') matchPrice = p.rent < 50000;
       else if (filterPrice === '50k-100k') matchPrice = p.rent >= 50000 && p.rent <= 100000;
       else if (filterPrice === '100k-200k') matchPrice = p.rent > 100000 && p.rent <= 200000;
       else if (filterPrice === 'above200k') matchPrice = p.rent > 200000;
-      return matchSearch && matchCity && matchBeds && matchPrice;
+      return matchSearch && matchCity && matchType && matchBeds && matchPrice;
     })
     .sort((a, b) => {
       if (sortBy === 'price-asc') return a.rent - b.rent;
@@ -240,9 +166,9 @@ const PropertiesPage = () => {
       return 0;
     });
 
-  const activeFilterCount = [filterCity !== 'all', filterPrice !== 'all', filterBeds !== 'all'].filter(Boolean).length;
+  const activeFilterCount = [filterCity !== 'all', filterType !== 'all', filterPrice !== 'all', filterBeds !== 'all'].filter(Boolean).length;
 
-  const clearFilters = () => { setFilterCity('all'); setFilterPrice('all'); setFilterBeds('all'); setSearchTerm(''); setActiveCategory('all'); };
+  const clearFilters = () => { setFilterCity('all'); setFilterType('all'); setFilterPrice('all'); setFilterBeds('all'); setSearchTerm(''); };
 
   const statusBadge = (status) => ({
     available: { label: 'Available', cls: 'badge-success' },
@@ -264,61 +190,6 @@ const PropertiesPage = () => {
           <p style={{ color: '#9ca3af', fontSize: '15px' }}>Curated collection of luxury properties across Pakistan's prime locations.</p>
         </div>
 
-        {/* Category Buttons */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '24px' }}>
-          {categoryData.map(cat => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '10px 20px',
-                background: activeCategory === cat.id ? 'linear-gradient(135deg, #6366f1, #8b5cf6)' : 'rgba(255,255,255,0.05)',
-                border: activeCategory === cat.id ? '1px solid #6366f1' : '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '30px',
-                color: activeCategory === cat.id ? 'white' : '#9ca3af',
-                fontSize: '14px',
-                fontWeight: activeCategory === cat.id ? '600' : '500',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              {cat.icon}
-              {cat.label}
-              <span style={{
-                background: activeCategory === cat.id ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.05)',
-                padding: '2px 8px',
-                borderRadius: '12px',
-                fontSize: '11px',
-                fontWeight: '600'
-              }}>
-                {getCategoryCount(cat.id)}
-              </span>
-            </button>
-          ))}
-          <button
-            onClick={clearFilters}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '10px 18px',
-              background: 'rgba(239,68,68,0.1)',
-              border: '1px solid rgba(239,68,68,0.25)',
-              borderRadius: '30px',
-              color: '#f87171',
-              fontSize: '13px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            <X size={15} /> Reset Filters
-          </button>
-        </div>
-
         {/* Filters Bar */}
         <div className="glass-panel" style={{ padding: '20px', marginBottom: '24px' }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
@@ -331,6 +202,14 @@ const PropertiesPage = () => {
 
             <select value={filterCity} onChange={e => setFilterCity(e.target.value)} style={sel}>
               {cities.map(c => <option key={c} value={c}>{c === 'all' ? 'All Cities' : c}</option>)}
+            </select>
+
+            <select value={filterType} onChange={e => setFilterType(e.target.value)} style={sel}>
+              <option value="all">All Types</option>
+              <option value="villa">🏡 Villa</option>
+              <option value="penthouse">🏢 Penthouse</option>
+              <option value="farmhouse">🌾 Farmhouse</option>
+              <option value="commercial">🏪 Commercial</option>
             </select>
 
             <select value={filterPrice} onChange={e => setFilterPrice(e.target.value)} style={sel}>
@@ -397,7 +276,8 @@ const PropertiesPage = () => {
             {filteredAndSorted.map(p => {
               const { label, cls } = statusBadge(p.status);
               const isFav = favourites.includes(p.id);
-              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : p.type === 'Commercial' ? '🏪' : p.type === 'Apartment' ? '🏢' : '👑';
+              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : '🏪';
+              const priceDisplay = p.priceDisplay || `PKR ${p.rent?.toLocaleString()}/month`;
               return (
                 <div key={p.id} className="glass-panel" style={{ overflow: 'hidden', cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => navigate(`/property/${p.id}`)}>
                   <div style={{ height: '210px', position: 'relative', overflow: 'hidden', background: '#090d16' }}>
@@ -424,8 +304,7 @@ const PropertiesPage = () => {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '14px', marginTop: '14px' }}>
                       <div>
-                        <p style={{ color: '#6366f1', fontSize: '20px', fontWeight: '800', margin: 0 }}>PKR {p.rent.toLocaleString()}</p>
-                        <p style={{ color: '#6b7280', fontSize: '11px', margin: 0 }}>/month</p>
+                        <p style={{ color: '#6366f1', fontSize: '20px', fontWeight: '800', margin: 0 }}>{priceDisplay}</p>
                       </div>
                       <button onClick={e => { e.stopPropagation(); navigate(`/property/${p.id}`); }}
                         style={{ padding: '8px 18px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', border: 'none', borderRadius: '30px', color: 'white', fontSize: '12px', fontWeight: '600', cursor: 'pointer', boxShadow: '0 4px 12px rgba(99,102,241,0.3)' }}>
@@ -442,7 +321,8 @@ const PropertiesPage = () => {
             {filteredAndSorted.map(p => {
               const { label, cls } = statusBadge(p.status);
               const isFav = favourites.includes(p.id);
-              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : p.type === 'Commercial' ? '🏪' : p.type === 'Apartment' ? '🏢' : '👑';
+              const typeIcon = p.type === 'Villa' ? '🏡' : p.type === 'Penthouse' ? '🏢' : p.type === 'Farmhouse' ? '🌾' : '🏪';
+              const priceDisplay = p.priceDisplay || `PKR ${p.rent?.toLocaleString()}/month`;
               return (
                 <div key={p.id} className="glass-panel" style={{ display: 'flex', overflow: 'hidden', cursor: 'pointer' }} onClick={() => navigate(`/property/${p.id}`)}>
                   <div style={{ width: '220px', minWidth: '220px', position: 'relative', overflow: 'hidden' }}>
@@ -463,8 +343,7 @@ const PropertiesPage = () => {
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <p style={{ color: '#6366f1', fontSize: '22px', fontWeight: '800', margin: '0 0 4px' }}>PKR {p.rent.toLocaleString()}</p>
-                      <p style={{ color: '#6b7280', fontSize: '11px', margin: '0 0 14px' }}>/month</p>
+                      <p style={{ color: '#6366f1', fontSize: '22px', fontWeight: '800', margin: '0 0 14px' }}>{priceDisplay}</p>
                       <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
                         <button className={`fav-btn`} onClick={e => toggleFav(p.id, e)} style={{ position: 'static', width: '36px', height: '36px', borderRadius: '8px' }} title="Save">
                           <Heart size={15} fill={isFav ? '#ef4444' : 'none'} stroke={isFav ? '#ef4444' : '#9ca3af'} />
