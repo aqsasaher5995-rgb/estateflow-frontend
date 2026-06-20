@@ -9,7 +9,7 @@ import Footer from '../components/layouts/Footer';
 import toast from 'react-hot-toast';
 
 // ===== IMPORT LOGO FROM src/public =====
-import Logo from '../public/logo.png';
+import Logo from '/logo.png';
 
 // ========== VILLAS (ID 1-12) - 12 properties ==========
 const villaImages = [

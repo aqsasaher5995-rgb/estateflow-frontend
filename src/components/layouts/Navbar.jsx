@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Menu, X } from 'lucide-react';
 import Avatar from '../common/Avatar';
 
-// ===== IMPORT LOGO FROM src/public =====
-import Logo from '../public/logo.png';
+// ===== IMPORT LOGO FROM ROOT public FOLDER =====
+import Logo from '/logo.png';  // ✅ Fixed path
 
 const navLinks = [
   { label: 'Home', path: '/' },

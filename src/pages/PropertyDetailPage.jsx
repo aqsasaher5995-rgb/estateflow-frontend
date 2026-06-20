@@ -11,7 +11,7 @@ import {
 import toast from 'react-hot-toast';
 
 // ===== IMPORT LOGO =====
-import Logo from '../public/logo.png';
+import Logo from '/logo.png';
 
 // ========== VILLAS (ID 1-12) IMAGES ==========
 const propertyCustomImages = {
