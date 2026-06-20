@@ -1403,7 +1403,7 @@ const HomePage = () => {
       </header>
 
       {/* ============================================================
-          HERO SECTION WITH FIXED SEARCH BAR
+          HERO SECTION WITH FIXED SEARCH BAR - FULLY VISIBLE
           ============================================================ */}
       <section id="home" style={{ height: '100vh', width: '100%', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ 
@@ -1432,18 +1432,19 @@ const HomePage = () => {
             {staticSubheading}
           </p>
           
-          {/* SEARCH BAR - Fixed and Visible */}
+          {/* SEARCH BAR - FIXED AND FULLY VISIBLE */}
           <div style={{ 
             display: 'flex', 
             padding: '6px', 
             gap: '6px', 
             maxWidth: '580px', 
             margin: '0 auto', 
-            background: 'rgba(255,255,255,0.12)',
+            background: 'rgba(255,255,255,0.15)',
             backdropFilter: 'blur(20px)',
             borderRadius: '50px',
-            border: '1px solid rgba(255,255,255,0.15)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.2)'
+            border: '1px solid rgba(255,255,255,0.2)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+            position: 'relative'
           }}>
             <input 
               type="text" 
@@ -1457,14 +1458,12 @@ const HomePage = () => {
                 border: 'none', 
                 color: 'white', 
                 paddingLeft: '20px', 
+                paddingRight: '10px',
                 outline: 'none', 
-                fontSize: '16px',
+                fontSize: '15px',
                 height: '52px',
-                '::placeholder': {
-                  color: 'rgba(255,255,255,0.5)'
-                }
+                minWidth: '150px'
               }} 
-              placeholder="Search by city, title, or location..."
             />
             <button 
               onClick={handleViewAllProperties} 
@@ -1482,7 +1481,8 @@ const HomePage = () => {
                 alignItems: 'center', 
                 gap: '8px',
                 boxShadow: '0 4px 15px rgba(99,102,241,0.4)',
-                transition: 'all 0.3s ease'
+                transition: 'all 0.3s ease',
+                whiteSpace: 'nowrap'
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.transform = 'scale(1.02)';
