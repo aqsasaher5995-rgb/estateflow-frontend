@@ -4,6 +4,11 @@ import { useSelector } from 'react-redux';
 import { Menu, X } from 'lucide-react';
 import Avatar from '../common/Avatar';
 
+// ===== IMPORT LOGO =====
+import Logo from '../../public/logo.png';  // Try this first
+// OR
+// import Logo from '../public/logo.png';  // Try this if above doesn't work
+
 const navLinks = [
   { label: 'Home', path: '/' },
   { label: 'Properties', path: '/properties' },
@@ -24,7 +29,7 @@ const Navbar = () => {
   return (
     <header
       className="glass-header"
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '12px 0' }}
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '12px 0', background: 'rgba(8, 11, 23, 0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
     >
       <div
         style={{
@@ -36,24 +41,24 @@ const Navbar = () => {
           alignItems: 'center',
         }}
       >
-        {/* Logo */}
+        {/* ===== LOGO WITH IMAGE ===== */}
         <div
-          style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
           onClick={() => navigate('/')}
         >
-          <div
+          {/* ===== ACTUAL LOGO.PNG ===== */}
+          <img 
+            src={Logo} 
+            alt="EstateFlow Logo" 
             style={{
-              width: '36px',
-              height: '36px',
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              width: '38px',
+              height: '38px',
               borderRadius: '10px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              objectFit: 'contain',
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              padding: '4px'
             }}
-          >
-            <span>🏠</span>
-          </div>
+          />
           <span style={{ fontSize: '20px', fontWeight: '800', color: 'white', letterSpacing: '-0.3px' }}>
             EstateFlow
           </span>
@@ -132,6 +137,8 @@ const Navbar = () => {
                   fontSize: '13px',
                   transition: 'all 0.2s',
                 }}
+                onMouseEnter={e => { e.target.style.background = 'rgba(255,255,255,0.05)'; }}
+                onMouseLeave={e => { e.target.style.background = 'transparent'; }}
               >
                 Sign In
               </button>
@@ -149,6 +156,8 @@ const Navbar = () => {
                   boxShadow: '0 4px 15px rgba(99,102,241,0.3)',
                   transition: 'all 0.2s',
                 }}
+                onMouseEnter={e => { e.target.style.transform = 'scale(1.03)'; }}
+                onMouseLeave={e => { e.target.style.transform = 'scale(1)'; }}
               >
                 Get Started
               </button>
