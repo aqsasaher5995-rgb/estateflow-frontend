@@ -5,9 +5,7 @@ import { Menu, X } from 'lucide-react';
 import Avatar from '../common/Avatar';
 
 // ===== IMPORT LOGO =====
-import Logo from '../../public/logo.png';  // Try this first
-// OR
-// import Logo from '../public/logo.png';  // Try this if above doesn't work
+import Logo from '/logo.png';  // Direct from public folder
 
 const navLinks = [
   { label: 'Home', path: '/' },
@@ -29,7 +27,17 @@ const Navbar = () => {
   return (
     <header
       className="glass-header"
-      style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, padding: '12px 0', background: 'rgba(8, 11, 23, 0.92)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}
+      style={{ 
+        position: 'fixed', 
+        top: 0, 
+        left: 0, 
+        right: 0, 
+        zIndex: 1000, 
+        padding: '12px 0',
+        background: 'rgba(8, 11, 23, 0.92)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)'
+      }}
     >
       <div
         style={{
@@ -46,7 +54,6 @@ const Navbar = () => {
           style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
           onClick={() => navigate('/')}
         >
-          {/* ===== ACTUAL LOGO.PNG ===== */}
           <img 
             src={Logo} 
             alt="EstateFlow Logo" 
