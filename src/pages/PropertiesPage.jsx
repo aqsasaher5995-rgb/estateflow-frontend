@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Search, MapPin, Bed, Bath, Ruler, Heart, LayoutGrid, List, X, 
-  Sparkles, Building2, Award, TrendingUp, Building as BuildingIcon,
-  ChevronRight, Shield, Crown, Mountain, Waves, TreePine
+  Sparkles, Building2, Award, TrendingUp, Building as BuildingIcon
 } from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
 import Footer from '../components/layouts/Footer';
@@ -187,82 +186,51 @@ const PropertiesPage = () => {
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }} className="page-enter">
         
-        {/* ===== ENHANCED HERO SECTION - CENTER ALIGNED ===== */}
+        {/* ===== CLEAN HERO SECTION - CENTER ALIGNED ===== */}
         <div style={{ 
           marginBottom: '40px', 
-          padding: '60px 50px', 
-          borderRadius: '28px',
-          background: 'linear-gradient(145deg, rgba(99,102,241,0.10), rgba(139,92,246,0.04))',
-          border: '1px solid rgba(99,102,241,0.12)',
+          padding: '50px 40px', 
+          borderRadius: '24px',
+          background: 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.03))',
+          border: '1px solid rgba(99,102,241,0.08)',
           position: 'relative',
           overflow: 'hidden',
           textAlign: 'center'
         }}>
-          {/* Decorative background elements */}
+          {/* Decorative background element */}
           <div style={{ 
             position: 'absolute', 
-            top: '-120px', 
+            top: '-80px', 
             right: '-60px', 
-            width: '350px', 
-            height: '350px', 
+            width: '250px', 
+            height: '250px', 
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)',
             pointerEvents: 'none'
           }} />
           <div style={{ 
             position: 'absolute', 
-            bottom: '-140px', 
-            left: '-80px', 
-            width: '300px', 
-            height: '300px', 
+            bottom: '-80px', 
+            left: '-60px', 
+            width: '200px', 
+            height: '200px', 
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%)',
-            pointerEvents: 'none'
-          }} />
-          <div style={{ 
-            position: 'absolute', 
-            top: '50%', 
-            left: '50%', 
-            transform: 'translate(-50%, -50%)',
-            width: '600px', 
-            height: '600px', 
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(99,102,241,0.03) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(139,92,246,0.04) 0%, transparent 70%)',
             pointerEvents: 'none'
           }} />
           
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* Premium Badge */}
-            <div style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              gap: '10px',
-              background: 'rgba(99,102,241,0.12)',
-              padding: '8px 22px',
-              borderRadius: '50px',
-              marginBottom: '22px',
-              border: '1px solid rgba(99,102,241,0.15)',
-              backdropFilter: 'blur(10px)',
-              boxShadow: '0 4px 20px rgba(99,102,241,0.08)'
-            }}>
-              <Sparkles size={16} style={{ color: '#818cf8' }} />
-              <span style={{ color: '#818cf8', fontSize: '12px', fontWeight: '700', letterSpacing: '2px', textTransform: 'uppercase' }}>
-                Premium Collection
-              </span>
-              <Crown size={14} style={{ color: '#fbbf24' }} />
-            </div>
-            
             {/* Main Heading */}
             <h1 style={{ 
-              fontSize: '52px', 
+              fontSize: '44px', 
               fontWeight: '900', 
               color: 'white', 
               margin: '0 0 12px 0', 
-              letterSpacing: '-2px',
+              letterSpacing: '-1.5px',
               lineHeight: '1.1'
             }}>
               Exclusive <span style={{ 
-                background: 'linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa)',
+                background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'
@@ -271,139 +239,25 @@ const PropertiesPage = () => {
             
             {/* Decorative line */}
             <div style={{ 
-              width: '80px', 
+              width: '60px', 
               height: '3px', 
               background: 'linear-gradient(90deg, #6366f1, #8b5cf6)',
-              margin: '0 auto 18px auto',
+              margin: '0 auto 16px auto',
               borderRadius: '10px'
             }} />
             
             {/* Subtitle */}
             <p style={{ 
               color: '#cbd5e1', 
-              fontSize: '17px', 
-              margin: '0 auto 28px auto',
-              maxWidth: '620px',
+              fontSize: '16px', 
+              margin: '0 auto',
+              maxWidth: '580px',
               lineHeight: '1.7',
               letterSpacing: '0.2px'
             }}>
               Curated collection of luxury properties across Pakistan's prime locations —<br />
               from Karachi's coastline to Islamabad's serene valleys.
             </p>
-            
-            {/* Property Type Tags - Centered */}
-            <div style={{ 
-              display: 'flex', 
-              gap: '12px', 
-              flexWrap: 'wrap', 
-              justifyContent: 'center',
-              marginBottom: '32px'
-            }}>
-              <span style={{ 
-                display: 'inline-flex', 
-                alignItems: 'center', 
-                gap: '7px',
-                background: 'rgba(255,255,255,0.04)', 
-                padding: '8px 20px', 
-                borderRadius: '50px', 
-                fontSize: '13px', 
-                color: '#e5e7eb',
-                border: '1px solid rgba(255,255,255,0.06)',
-                transition: 'all 0.3s ease',
-                cursor: 'default',
-                fontWeight: '500'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.15)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                <Building2 size={14} style={{ color: '#818cf8' }} /> Villas
-              </span>
-              <span style={{ 
-                display: 'inline-flex', 
-                alignItems: 'center', 
-                gap: '7px',
-                background: 'rgba(255,255,255,0.04)', 
-                padding: '8px 20px', 
-                borderRadius: '50px', 
-                fontSize: '13px', 
-                color: '#e5e7eb',
-                border: '1px solid rgba(255,255,255,0.06)',
-                transition: 'all 0.3s ease',
-                cursor: 'default',
-                fontWeight: '500'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.15)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                <TrendingUp size={14} style={{ color: '#818cf8' }} /> Penthouses
-              </span>
-              <span style={{ 
-                display: 'inline-flex', 
-                alignItems: 'center', 
-                gap: '7px',
-                background: 'rgba(255,255,255,0.04)', 
-                padding: '8px 20px', 
-                borderRadius: '50px', 
-                fontSize: '13px', 
-                color: '#e5e7eb',
-                border: '1px solid rgba(255,255,255,0.06)',
-                transition: 'all 0.3s ease',
-                cursor: 'default',
-                fontWeight: '500'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.15)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                <Award size={14} style={{ color: '#818cf8' }} /> Farmhouses
-              </span>
-              <span style={{ 
-                display: 'inline-flex', 
-                alignItems: 'center', 
-                gap: '7px',
-                background: 'rgba(255,255,255,0.04)', 
-                padding: '8px 20px', 
-                borderRadius: '50px', 
-                fontSize: '13px', 
-                color: '#e5e7eb',
-                border: '1px solid rgba(255,255,255,0.06)',
-                transition: 'all 0.3s ease',
-                cursor: 'default',
-                fontWeight: '500'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(99,102,241,0.15)'; e.currentTarget.style.borderColor = 'rgba(99,102,241,0.3)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                <BuildingIcon size={14} style={{ color: '#818cf8' }} /> Commercial
-              </span>
-            </div>
-            
-            {/* Quick Stats - Centered with glass effect */}
-            <div style={{ 
-              display: 'inline-flex', 
-              gap: '40px',
-              padding: '16px 40px',
-              background: 'rgba(255,255,255,0.03)',
-              borderRadius: '60px',
-              border: '1px solid rgba(255,255,255,0.06)',
-              backdropFilter: 'blur(10px)',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-            }}>
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '24px', fontWeight: '800', margin: 0, lineHeight: '1.2' }}>{ALL_PROPERTIES.length}+</p>
-                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, textTransform: 'uppercase', letterSpacing: '0.8px' }}>Listings</p>
-              </div>
-              <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '24px', fontWeight: '800', margin: 0, lineHeight: '1.2' }}>5</p>
-                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, textTransform: 'uppercase', letterSpacing: '0.8px' }}>Cities</p>
-              </div>
-              <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '24px', fontWeight: '800', margin: 0, lineHeight: '1.2' }}>4</p>
-                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, textTransform: 'uppercase', letterSpacing: '0.8px' }}>Types</p>
-              </div>
-              <div style={{ width: '1px', background: 'rgba(255,255,255,0.08)' }} />
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontSize: '24px', fontWeight: '800', margin: 0, lineHeight: '1.2' }}>31</p>
-                <p style={{ color: '#9ca3af', fontSize: '10px', margin: 0, textTransform: 'uppercase', letterSpacing: '0.8px' }}>Total</p>
-              </div>
-            </div>
           </div>
         </div>
 
