@@ -279,6 +279,64 @@ const SocialButton = ({ platform, icon, link }) => (
   </a>
 );
 
+// ============= FAQ SECTION =============
+const FAQItem = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <div style={{ 
+      background: '#0f172a', 
+      borderRadius: '16px', 
+      marginBottom: '12px',
+      overflow: 'hidden'
+    }}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        style={{
+          width: '100%',
+          padding: '16px 20px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          background: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          textAlign: 'left'
+        }}
+      >
+        <span style={{ color: 'white', fontWeight: '600' }}>{question}</span>
+        <span style={{ color: '#3b82f6', fontSize: '20px' }}>{isOpen ? '−' : '+'}</span>
+      </button>
+      {isOpen && (
+        <div style={{ padding: '0 20px 20px 20px', color: '#94a3b8', fontSize: '14px', lineHeight: '1.6' }}>
+          {answer}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const FAQSection = () => {
+  const faqs = [
+    { question: "What are your office hours?", answer: "Our office hours are Monday to Friday 9:00 AM - 9:00 PM, Saturday 10:00 AM - 6:00 PM. We're closed on Sundays, but online support is available via email and WhatsApp." },
+    { question: "How quickly do you respond to inquiries?", answer: "We typically respond to all inquiries within 2-4 hours during business hours. For urgent matters, please call our helpline directly." },
+    { question: "Do you offer property consultations?", answer: "Yes, we offer free initial consultations for buyers and sellers. You can book an appointment through our website or by calling our office." },
+    { question: "What areas do you serve in Pakistan?", answer: "We currently serve Lahore, Karachi, Islamabad, Rawalpindi, and surrounding areas. We're expanding to more cities soon!" }
+  ];
+
+  return (
+    <div style={{ marginTop: '50px' }}>
+      <h3 style={{ fontSize: '24px', fontWeight: '700', color: 'white', marginBottom: '20px', textAlign: 'center' }}>
+        Frequently Asked Questions
+      </h3>
+      <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+        {faqs.map((faq, idx) => (
+          <FAQItem key={idx} question={faq.question} answer={faq.answer} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 // ============= CONTACT FORM =============
 const ContactForm = ({ onSubmit, isSubmitting }) => {
@@ -601,6 +659,8 @@ const ContactPage = () => {
           {/* Map Section */}
           <MapSection />
 
+          {/* FAQ Section */}
+          <FAQSection />
         </div>
 
         <Footer />
