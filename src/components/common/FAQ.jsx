@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, ChevronDown, HelpCircle, MessageCircle, X, ThumbsUp, Filter } from 'lucide-react';
-import Navbar from '../components/layouts/Navbar';
-import Footer from '../components/layouts/Footer';
+import Navbar from '../layouts/Navbar';
+import Footer from '../layouts/Footer';
 import toast from 'react-hot-toast';
 
 const FAQPage = () => {
