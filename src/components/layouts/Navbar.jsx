@@ -13,6 +13,7 @@ const navLinks = [
   { label: 'Services', path: '/services' },
   { label: 'Agents', path: '/agents' },
   { label: 'Testimonials', path: '/testimonials' },
+  { label: 'FAQ', path: '/faq' },
   { label: 'Contact', path: '/contact' },
 ];
 

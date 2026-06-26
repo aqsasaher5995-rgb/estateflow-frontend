@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import Navbar from '../components/layouts/Navbar';
 import CookiePolicy from '../components/common/CookiePolicy';
-import FAQ from '../components/common/FAQ';
 
 // Inline SVG social icons (removed from lucide-react v1.x)
 const Facebook = ({ size = 18 }) => (
@@ -176,9 +175,7 @@ const PropertiesPage = () => {
     try { return JSON.parse(localStorage.getItem('ef_favourites') || '[]'); } catch { return []; }
   });
 
-  // ===== FOOTER MODALS STATES =====
   const [showCookieModal, setShowCookieModal] = useState(false);
-  const [showFAQModal, setShowFAQModal] = useState(false);
 
   useEffect(() => { 
     setProperties(ALL_PROPERTIES);
@@ -247,9 +244,6 @@ const PropertiesPage = () => {
         isOpen={showCookieModal} 
         onClose={() => setShowCookieModal(false)}
       />
-      
-      {/* ===== FAQ MODAL ===== */}
-      <FAQ isOpen={showFAQModal} onClose={() => setShowFAQModal(false)} />
 
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '110px 24px 60px', flex: 1, width: '100%' }}>
         
@@ -902,28 +896,7 @@ const PropertiesPage = () => {
                     🍪 Cookie Policy
                   </button>
                 </li>
-                <li>
-                  <button 
-                    onClick={() => setShowFAQModal(true)}
-                    style={{ 
-                      color: '#9ca3af', 
-                      textDecoration: 'none', 
-                      fontSize: '14px', 
-                      background: 'none', 
-                      border: 'none', 
-                      cursor: 'pointer',
-                      padding: '4px 0',
-                      textAlign: 'left',
-                      transition: 'color 0.2s',
-                      display: 'block',
-                      width: '100%'
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.color = 'white'}
-                    onMouseLeave={e => e.currentTarget.style.color = '#9ca3af'}
-                  >
-                    ❓ FAQ
-                  </button>
-                </li>
+                <li><a href="/faq" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>❓ FAQ</a></li>
                 <li><a href="/privacy" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Privacy Policy</a></li>
                 <li><a href="/terms" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Terms of Service</a></li>
                 <li><a href="/blog" style={{ color: '#9ca3af', textDecoration: 'none', fontSize: '14px', display: 'block', padding: '4px 0' }}>Blog</a></li>
