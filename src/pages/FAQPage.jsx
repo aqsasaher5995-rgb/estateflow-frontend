@@ -1,507 +1,626 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Search, ChevronDown, HelpCircle, MessageCircle, X, ThumbsUp, Filter } from 'lucide-react';
+import Navbar from '../components/layouts/Navbar';
+import Footer from '../components/layouts/Footer';
+import toast from 'react-hot-toast';
 
-const faqs = [
-  {
-    category: 'Getting Started',
-    items: [
-      {
-        q: 'What is EstateFlow?',
-        a: 'EstateFlow is a modern real estate property management platform that connects property owners, agents, and tenants. It allows owners to list and manage properties, agents to assist with transactions, and tenants to discover and apply for rentals — all in one place.',
-      },
-      {
-        q: 'How do I create an account?',
-        a: "Click the \"Get Started\" button on the homepage and fill in your name, email, and password. You'll also choose your role: Owner, Agent, or Tenant. After registering you're immediately logged in and taken to your dashboard.",
-      },
-      {
-        q: 'Is EstateFlow free to use?',
-        a: 'Basic listing browsing and account creation are completely free. Premium features such as featured listings, advanced analytics, and priority support are available through our subscription plans.',
-      },
-    ],
-  },
-  {
-    category: 'Properties',
-    items: [
-      {
-        q: 'How do I list a property?',
-        a: 'After logging in as an Owner or Agent, navigate to your Dashboard and click "Add Property". Fill in the property details including title, description, address, rent amount, and images. Your listing will be live immediately.',
-      },
-      {
-        q: 'What types of properties can I list?',
-        a: 'EstateFlow supports four property types: Apartments, Houses, Commercial spaces, and Land. Each type has relevant fields to capture the specific details that matter most to prospective tenants or buyers.',
-      },
-      {
-        q: 'Can I edit or remove a listing?',
-        a: 'Yes. From your Dashboard, open any property card and click "Edit" to update details, change the status (available, rented, maintenance), or upload new photos. You can also soft-delete a listing to hide it without permanently losing the data.',
-      },
-      {
-        q: 'How are property images handled?',
-        a: 'Images are uploaded securely and stored in the cloud. We accept JPEG, PNG, and WebP formats up to 5 MB each. Multiple images per listing are supported, and the first image is used as the cover thumbnail.',
-      },
-    ],
-  },
-  {
-    category: 'Accounts & Roles',
-    items: [
-      {
-        q: 'What is the difference between Owner, Agent, and Tenant roles?',
-        a: 'Owners can list and manage their own properties. Agents can manage properties on behalf of owners and assist with negotiations. Tenants can browse listings, view property details, and contact owners or agents. Each role has a dedicated dashboard tailored to their workflow.',
-      },
-      {
-        q: 'Can I change my role after registration?',
-        a: 'Role changes can be requested through the Profile page. Contact our support team if you need to switch your primary role, as some role transitions require verification.',
-      },
-      {
-        q: 'How do I update my profile information?',
-        a: 'Go to your Profile page (accessible from the top navigation). You can update your display name, email address, and phone number. Changes are saved instantly.',
-      },
-    ],
-  },
-  {
-    category: 'Security & Privacy',
-    items: [
-      {
-        q: 'How is my password stored?',
-        a: 'Passwords are never stored in plain text. We use bcrypt with a salt factor of 10, which means your password is transformed into a secure hash before being saved to the database.',
-      },
-      {
-        q: 'How does authentication work?',
-        a: 'EstateFlow uses JSON Web Tokens (JWT) for authentication. When you log in, you receive a signed token that is stored in your browser and sent with every request. Tokens expire after 7 days, after which you will be prompted to log in again.',
-      },
-      {
-        q: 'Is my data shared with third parties?',
-        a: 'No. Your personal data is never sold or shared with third parties for marketing purposes. Property data is displayed publicly as part of the platform. Please review our Privacy Policy for full details.',
-      },
-    ],
-  },
-  {
-    category: 'Technical',
-    items: [
-      {
-        q: 'Which browsers are supported?',
-        a: 'EstateFlow works on all modern browsers including Chrome, Firefox, Safari, and Edge. We recommend keeping your browser up to date for the best experience. Internet Explorer is not supported.',
-      },
-      {
-        q: 'Is there a mobile app?',
-        a: 'The EstateFlow web application is fully responsive and works great on mobile browsers. A dedicated native mobile app is on our roadmap for a future release.',
-      },
-      {
-        q: 'Who do I contact if I encounter a bug?',
-        a: 'Use the Contact page to submit a bug report. Please include a description of the issue, the steps to reproduce it, and your browser version. Our team aims to respond within 24 hours.',
-      },
-    ],
-  },
-];
-
-const CATEGORIES = ['All', ...faqs.map((f) => f.category)];
-
-export default function FAQPage() {
+const FAQPage = () => {
+  const navigate = useNavigate();
+  const [faqData, setFaqData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [openIndex, setOpenIndex] = useState(null);
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [search, setSearch] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredFaqs, setFilteredFaqs] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [showFilters, setShowFilters] = useState(false);
 
-  const toggle = (key) => setOpenIndex(openIndex === key ? null : key);
+  useEffect(() => {
+    const data = [
+      {
+        id: 1,
+        q: 'What is EstateFlow?',
+        a: "EstateFlow is a modern real estate property management platform connecting property owners, agents, and tenants. Owners can list and manage properties, agents can assist with transactions, and tenants can discover and apply for rentals — all in one place.",
+        category: 'General',
+        votes: 245,
+        date: '2024-01-15',
+      },
+      {
+        id: 2,
+        q: 'How do I search for properties?',
+        a: 'Use the search bar on the Properties page. You can filter by city, property type, price range, number of bedrooms, and furnishing status. Results update in real time as you adjust your filters.',
+        category: 'Search',
+        votes: 189,
+        date: '2024-01-20',
+      },
+      {
+        id: 3,
+        q: 'How can I contact an agent or owner?',
+        a: "Each property listing shows the owner or agent contact details. You can also use the Contact page to send us a message directly and we'll connect you with the right person.",
+        category: 'Contact',
+        votes: 156,
+        date: '2024-01-18',
+      },
+      {
+        id: 4,
+        q: 'Are the property listings verified?',
+        a: 'Yes. All properties on EstateFlow are reviewed to ensure authenticity and accuracy. Verified badges appear on listings that have passed our quality checks.',
+        category: 'Trust',
+        votes: 312,
+        date: '2024-01-10',
+      },
+      {
+        id: 5,
+        q: 'Can I schedule a property tour?',
+        a: "Absolutely! Click the 'Contact Owner' button on any property listing to request a viewing. Our team will coordinate and confirm a time that works for you.",
+        category: 'Tours',
+        votes: 98,
+        date: '2024-01-22',
+      },
+      {
+        id: 6,
+        q: 'Is EstateFlow free to use?',
+        a: 'Browsing listings and creating an account are completely free. Owners and agents may be subject to commission or listing fees for premium placement — contact us for details.',
+        category: 'Pricing',
+        votes: 267,
+        date: '2024-01-05',
+      },
+      {
+        id: 7,
+        q: 'How do I list my property?',
+        a: "Register or log in as an Owner or Agent, then go to your Dashboard and click 'Add Property'. Fill in the details, upload images, and your listing will be live immediately.",
+        category: 'Selling',
+        votes: 134,
+        date: '2024-01-25',
+      },
+      {
+        id: 8,
+        q: 'What is the difference between Owner, Agent, and Tenant roles?',
+        a: 'Owners can list and manage their own properties. Agents can manage properties on behalf of owners. Tenants can browse listings and contact owners or agents. Each role gets a dedicated dashboard tailored to their workflow.',
+        category: 'Accounts',
+        votes: 201,
+        date: '2024-01-12',
+      },
+      {
+        id: 9,
+        q: 'How is my password stored securely?',
+        a: 'Passwords are never stored in plain text. We use bcrypt hashing with a salt factor of 10, so your password is cryptographically secured before it ever reaches our database.',
+        category: 'Security',
+        votes: 176,
+        date: '2024-01-08',
+      },
+      {
+        id: 10,
+        q: 'How does authentication work?',
+        a: 'EstateFlow uses JSON Web Tokens (JWT). When you log in, you receive a signed token stored in your browser. This token is sent with every request to verify your identity. Tokens expire after 7 days.',
+        category: 'Security',
+        votes: 143,
+        date: '2024-01-09',
+      },
+      {
+        id: 11,
+        q: 'Can I update my profile information?',
+        a: 'Yes. Go to the Profile page from the navigation menu. You can update your name, email, and phone number. Changes are saved immediately.',
+        category: 'Accounts',
+        votes: 89,
+        date: '2024-01-30',
+      },
+      {
+        id: 12,
+        q: 'Is there a mobile version?',
+        a: 'The EstateFlow web app is fully responsive and works seamlessly on mobile browsers. A dedicated native mobile app is planned for a future release.',
+        category: 'General',
+        votes: 112,
+        date: '2024-02-01',
+      },
+    ];
+    setFaqData(data);
+    setFilteredFaqs(data);
+    setLoading(false);
+  }, []);
 
-  const filteredFaqs = faqs
-    .filter((section) => activeCategory === 'All' || section.category === activeCategory)
-    .map((section) => ({
-      ...section,
-      items: section.items.filter(
+  useEffect(() => {
+    let filtered = faqData;
+    if (searchTerm.trim() !== '') {
+      filtered = filtered.filter(
         (item) =>
-          !search ||
-          item.q.toLowerCase().includes(search.toLowerCase()) ||
-          item.a.toLowerCase().includes(search.toLowerCase())
-      ),
-    }))
-    .filter((section) => section.items.length > 0);
+          item.q.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.a.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.category.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    if (selectedCategory !== 'All') {
+      filtered = filtered.filter((item) => item.category === selectedCategory);
+    }
+    setFilteredFaqs(filtered);
+    setOpenIndex(null);
+  }, [searchTerm, faqData, selectedCategory]);
 
-  const totalResults = filteredFaqs.reduce((acc, s) => acc + s.items.length, 0);
+  const categories = ['All', ...new Set(faqData.map((item) => item.category))];
+
+  const handleVote = (id) => {
+    setFaqData((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, votes: item.votes + 1 } : item))
+    );
+    toast.success('Thank you for your feedback! 👍');
+  };
+
+  const handleShare = (question) => {
+    navigator.clipboard?.writeText(`Check out this FAQ: ${question}`);
+    toast.success('Copied to clipboard!');
+  };
 
   return (
-    <div style={{ minHeight: '100vh', fontFamily: 'var(--font-sans)', padding: '0 0 80px' }}>
-      {/* ── Header ── */}
+    <div style={{ background: '#080b11', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Navbar />
+
       <div
         style={{
-          textAlign: 'center',
-          padding: '80px 24px 48px',
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,0.18) 0%, transparent 70%)',
+          maxWidth: '900px',
+          margin: '0 auto',
+          padding: '120px 24px 60px',
+          flex: 1,
+          width: '100%',
         }}
       >
-        <div style={{ marginBottom: '12px' }}>
-          <Link
-            to="/"
-            style={{
-              color: 'var(--color-text-secondary)',
-              textDecoration: 'none',
-              fontSize: '14px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
-            <span>←</span> Back to Home
-          </Link>
-        </div>
+        {/* ── Hero ── */}
         <div
           style={{
-            display: 'inline-block',
-            background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.15))',
-            border: '1px solid rgba(99,102,241,0.3)',
-            borderRadius: '100px',
-            padding: '6px 18px',
-            fontSize: '13px',
-            color: '#a5b4fc',
-            marginBottom: '20px',
-            letterSpacing: '0.05em',
-            textTransform: 'uppercase',
+            marginBottom: '48px',
+            padding: '60px 40px',
+            borderRadius: '24px',
+            background:
+              'linear-gradient(145deg, rgba(99,102,241,0.10), rgba(139,92,246,0.03))',
+            border: '1px solid rgba(99,102,241,0.12)',
+            textAlign: 'center',
           }}
         >
-          Help Center
-        </div>
-        <h1
-          style={{
-            fontSize: 'clamp(32px, 5vw, 56px)',
-            fontWeight: 800,
-            background: 'linear-gradient(135deg, #f3f4f6 0%, #a5b4fc 50%, #c4b5fd 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            marginBottom: '16px',
-            lineHeight: 1.15,
-          }}
-        >
-          Frequently Asked Questions
-        </h1>
-        <p
-          style={{
-            color: 'var(--color-text-secondary)',
-            fontSize: '17px',
-            maxWidth: '520px',
-            margin: '0 auto 40px',
-            lineHeight: 1.6,
-          }}
-        >
-          Everything you need to know about EstateFlow. Can't find an answer?{' '}
-          <Link to="/contact" style={{ color: '#a5b4fc', textDecoration: 'none' }}>
-            Contact us
-          </Link>
-          .
-        </p>
-
-        {/* Search */}
-        <div style={{ maxWidth: '520px', margin: '0 auto', position: 'relative' }}>
-          <span
+          <div
             style={{
-              position: 'absolute',
-              left: '18px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              color: 'var(--color-text-secondary)',
-              fontSize: '18px',
-              pointerEvents: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'rgba(99,102,241,0.12)',
+              border: '1px solid rgba(99,102,241,0.25)',
+              borderRadius: '100px',
+              padding: '6px 18px',
+              marginBottom: '20px',
+              fontSize: '13px',
+              color: '#a5b4fc',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
             }}
           >
-            🔍
-          </span>
-          <input
-            type="text"
-            placeholder="Search questions..."
-            value={search}
-            onChange={(e) => { setSearch(e.target.value); setOpenIndex(null); }}
+            <HelpCircle size={14} /> Help Center
+          </div>
+          <h1
             style={{
-              width: '100%',
-              padding: '14px 18px 14px 50px',
-              background: 'rgba(15,23,42,0.7)',
-              border: '1px solid rgba(99,102,241,0.25)',
-              borderRadius: '14px',
-              color: 'var(--color-text-primary)',
-              fontSize: '15px',
-              outline: 'none',
-              backdropFilter: 'blur(12px)',
-              transition: 'border-color 0.2s',
+              fontSize: 'clamp(28px, 5vw, 44px)',
+              fontWeight: 800,
+              background: 'linear-gradient(135deg, #f3f4f6 0%, #818cf8 50%, #c084fc 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              marginBottom: '12px',
+              lineHeight: 1.15,
             }}
-            onFocus={(e) => (e.target.style.borderColor = 'rgba(99,102,241,0.6)')}
-            onBlur={(e) => (e.target.style.borderColor = 'rgba(99,102,241,0.25)')}
-          />
+          >
+            Frequently Asked Questions
+          </h1>
+          <p style={{ color: '#6b7280', fontSize: '15px' }}>
+            {faqData.length} FAQs across {categories.length - 1} categories
+          </p>
         </div>
-      </div>
 
-      <div style={{ maxWidth: '860px', margin: '0 auto', padding: '0 24px' }}>
-        {/* Category Pills */}
+        {/* ── Search & Filter Row ── */}
         <div
           style={{
             display: 'flex',
-            gap: '10px',
+            gap: '12px',
+            marginBottom: '20px',
             flexWrap: 'wrap',
-            justifyContent: 'center',
-            marginBottom: '40px',
+            alignItems: 'center',
           }}
         >
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => { setActiveCategory(cat); setOpenIndex(null); }}
+          {/* Search */}
+          <div
+            style={{
+              flex: 1,
+              minWidth: '240px',
+              display: 'flex',
+              alignItems: 'center',
+              background: 'rgba(255,255,255,0.03)',
+              borderRadius: '12px',
+              padding: '0 16px',
+              border: '1px solid rgba(255,255,255,0.07)',
+              transition: 'border-color 0.2s',
+            }}
+          >
+            <Search size={17} style={{ color: '#6b7280', flexShrink: 0 }} />
+            <input
+              type="text"
+              placeholder="Search questions..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               style={{
-                padding: '8px 20px',
-                borderRadius: '100px',
-                border: '1px solid',
-                borderColor: activeCategory === cat ? 'rgba(99,102,241,0.7)' : 'rgba(99,102,241,0.2)',
-                background:
-                  activeCategory === cat
-                    ? 'linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.25))'
-                    : 'rgba(15,23,42,0.5)',
-                color: activeCategory === cat ? '#a5b4fc' : 'var(--color-text-secondary)',
-                cursor: 'pointer',
-                fontSize: '13px',
-                fontWeight: activeCategory === cat ? 600 : 400,
-                transition: 'all 0.2s',
-                backdropFilter: 'blur(8px)',
+                flex: 1,
+                padding: '13px 12px',
+                background: 'transparent',
+                border: 'none',
+                color: 'white',
+                outline: 'none',
+                fontSize: '14px',
               }}
-            >
-              {cat}
-            </button>
-          ))}
+            />
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', lineHeight: 0 }}
+              >
+                <X size={15} />
+              </button>
+            )}
+          </div>
+
+          {/* Filter toggle */}
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            style={{
+              padding: '11px 20px',
+              borderRadius: '30px',
+              background: showFilters
+                ? 'rgba(99,102,241,0.2)'
+                : 'rgba(99,102,241,0.08)',
+              border: `1px solid ${showFilters ? 'rgba(99,102,241,0.4)' : 'rgba(99,102,241,0.18)'}`,
+              color: '#818cf8',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '13px',
+              fontWeight: 500,
+              transition: 'all 0.2s',
+            }}
+          >
+            <Filter size={14} /> Filters
+            {selectedCategory !== 'All' && (
+              <span
+                style={{
+                  width: '18px',
+                  height: '18px',
+                  background: '#6366f1',
+                  borderRadius: '50%',
+                  fontSize: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff',
+                  fontWeight: 700,
+                }}
+              >
+                1
+              </span>
+            )}
+          </button>
         </div>
 
-        {/* Result count when searching */}
-        {search && (
-          <p style={{ color: 'var(--color-text-secondary)', fontSize: '14px', marginBottom: '24px', textAlign: 'center' }}>
-            {totalResults === 0
-              ? 'No results found. Try a different search term.'
-              : `${totalResults} result${totalResults !== 1 ? 's' : ''} for "${search}"`}
+        {/* ── Category Pills ── */}
+        {showFilters && (
+          <div
+            style={{
+              display: 'flex',
+              gap: '8px',
+              flexWrap: 'wrap',
+              marginBottom: '24px',
+              padding: '16px 20px',
+              background: 'rgba(255,255,255,0.02)',
+              borderRadius: '14px',
+              border: '1px solid rgba(255,255,255,0.05)',
+            }}
+          >
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                style={{
+                  padding: '6px 16px',
+                  borderRadius: '20px',
+                  background:
+                    selectedCategory === category
+                      ? 'linear-gradient(135deg, #6366f1, #8b5cf6)'
+                      : 'rgba(255,255,255,0.05)',
+                  border:
+                    selectedCategory === category
+                      ? 'none'
+                      : '1px solid rgba(255,255,255,0.08)',
+                  color: selectedCategory === category ? 'white' : '#9ca3af',
+                  fontSize: '12px',
+                  fontWeight: selectedCategory === category ? 600 : 400,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  transition: 'all 0.2s',
+                }}
+              >
+                {category}
+                {category !== 'All' && (
+                  <span style={{ opacity: 0.65 }}>
+                    {faqData.filter((item) => item.category === category).length}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* ── Result count ── */}
+        {(searchTerm || selectedCategory !== 'All') && (
+          <p style={{ color: '#6b7280', fontSize: '13px', marginBottom: '20px' }}>
+            {filteredFaqs.length === 0
+              ? 'No results found.'
+              : `${filteredFaqs.length} result${filteredFaqs.length !== 1 ? 's' : ''}`}
+            {searchTerm && ` for "${searchTerm}"`}
           </p>
         )}
 
-        {/* FAQ Sections */}
-        {filteredFaqs.length === 0 ? (
+        {/* ── FAQ List ── */}
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '80px 20px' }}>
+            <div
+              style={{
+                width: '44px',
+                height: '44px',
+                border: '3px solid rgba(99,102,241,0.12)',
+                borderTopColor: '#6366f1',
+                borderRadius: '50%',
+                animation: 'spin 0.8s linear infinite',
+                margin: '0 auto',
+              }}
+            />
+            <style>{'@keyframes spin { to { transform: rotate(360deg); } }'}</style>
+            <p style={{ color: '#6b7280', marginTop: '16px', fontSize: '14px' }}>Loading FAQs…</p>
+          </div>
+        ) : filteredFaqs.length === 0 ? (
           <div
             style={{
               textAlign: 'center',
-              padding: '64px 24px',
-              background: 'rgba(15,23,42,0.5)',
-              border: '1px solid rgba(99,102,241,0.15)',
+              padding: '72px 24px',
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid rgba(255,255,255,0.06)',
               borderRadius: '20px',
             }}
           >
-            <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔍</div>
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '16px' }}>
-              No questions match your search.{' '}
-              <button
-                onClick={() => { setSearch(''); setActiveCategory('All'); }}
-                style={{ background: 'none', border: 'none', color: '#a5b4fc', cursor: 'pointer', fontSize: '16px' }}
-              >
-                Clear filters
-              </button>
-            </p>
+            <HelpCircle size={52} style={{ color: '#4b5563', margin: '0 auto 16px', display: 'block' }} />
+            <p style={{ color: '#9ca3af', fontSize: '16px', marginBottom: '20px' }}>No FAQs match your search.</p>
+            <button
+              onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }}
+              style={{
+                padding: '10px 28px',
+                background: 'rgba(99,102,241,0.12)',
+                border: '1px solid rgba(99,102,241,0.2)',
+                borderRadius: '30px',
+                color: '#818cf8',
+                cursor: 'pointer',
+                fontSize: '13px',
+              }}
+            >
+              Clear Filters
+            </button>
           </div>
         ) : (
-          filteredFaqs.map((section) => (
-            <div key={section.category} style={{ marginBottom: '40px' }}>
-              {/* Section header */}
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  marginBottom: '16px',
-                }}
-              >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {filteredFaqs.map((item, index) => {
+              const isOpen = openIndex === index;
+              return (
                 <div
+                  key={item.id}
                   style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '8px',
-                    background: 'linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.3))',
-                    border: '1px solid rgba(99,102,241,0.3)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '14px',
+                    background: isOpen
+                      ? 'linear-gradient(135deg, rgba(99,102,241,0.07), rgba(139,92,246,0.05))'
+                      : 'rgba(255,255,255,0.025)',
+                    border: `1px solid ${isOpen ? 'rgba(99,102,241,0.3)' : 'rgba(255,255,255,0.06)'}`,
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    transition: 'all 0.25s cubic-bezier(0.4,0,0.2,1)',
                   }}
                 >
-                  {section.category === 'Getting Started' && '🚀'}
-                  {section.category === 'Properties' && '🏠'}
-                  {section.category === 'Accounts & Roles' && '👤'}
-                  {section.category === 'Security & Privacy' && '🔒'}
-                  {section.category === 'Technical' && '⚙️'}
-                </div>
-                <h2
-                  style={{
-                    fontSize: '18px',
-                    fontWeight: 700,
-                    color: 'var(--color-text-primary)',
-                    letterSpacing: '-0.01em',
-                  }}
-                >
-                  {section.category}
-                </h2>
-                <div
-                  style={{
-                    marginLeft: 'auto',
-                    fontSize: '12px',
-                    color: 'var(--color-text-secondary)',
-                    background: 'rgba(99,102,241,0.1)',
-                    border: '1px solid rgba(99,102,241,0.2)',
-                    borderRadius: '100px',
-                    padding: '2px 10px',
-                  }}
-                >
-                  {section.items.length} Q{section.items.length !== 1 ? 's' : ''}
-                </div>
-              </div>
-
-              {/* Accordion items */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {section.items.map((item, idx) => {
-                  const key = `${section.category}-${idx}`;
-                  const isOpen = openIndex === key;
-                  return (
-                    <div
-                      key={key}
-                      style={{
-                        background: isOpen
-                          ? 'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08))'
-                          : 'rgba(15,23,42,0.55)',
-                        border: `1px solid ${isOpen ? 'rgba(99,102,241,0.35)' : 'rgba(255,255,255,0.06)'}`,
-                        borderRadius: '16px',
-                        overflow: 'hidden',
-                        backdropFilter: 'blur(12px)',
-                        transition: 'all 0.25s cubic-bezier(0.4,0,0.2,1)',
-                      }}
-                    >
-                      <button
-                        onClick={() => toggle(key)}
+                  {/* Question row */}
+                  <button
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      width: '100%',
+                      padding: '18px 22px',
+                      background: 'transparent',
+                      border: 'none',
+                      color: 'white',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      gap: '16px',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
+                      <span
                         style={{
-                          width: '100%',
-                          padding: '20px 24px',
-                          background: 'none',
-                          border: 'none',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          gap: '16px',
-                          textAlign: 'left',
+                          flexShrink: 0,
+                          fontSize: '10px',
+                          color: '#818cf8',
+                          background: 'rgba(99,102,241,0.12)',
+                          border: '1px solid rgba(99,102,241,0.2)',
+                          padding: '3px 11px',
+                          borderRadius: '20px',
+                          fontWeight: 600,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.04em',
                         }}
                       >
-                        <span
+                        {item.category}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: '14px',
+                          fontWeight: 500,
+                          lineHeight: 1.45,
+                          color: isOpen ? '#c4b5fd' : '#f3f4f6',
+                          transition: 'color 0.2s',
+                        }}
+                      >
+                        {item.q}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
+                        flexShrink: 0,
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: '11px',
+                          color: '#6b7280',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                        }}
+                      >
+                        <ThumbsUp size={12} /> {item.votes}
+                      </span>
+                      <ChevronDown
+                        size={18}
+                        style={{
+                          color: '#6366f1',
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.3s ease',
+                        }}
+                      />
+                    </div>
+                  </button>
+
+                  {/* Answer */}
+                  {isOpen && (
+                    <div
+                      style={{
+                        padding: '0 22px 20px',
+                        borderTop: '1px solid rgba(99,102,241,0.12)',
+                      }}
+                    >
+                      <p
+                        style={{
+                          color: '#9ca3af',
+                          fontSize: '14px',
+                          lineHeight: 1.8,
+                          paddingTop: '16px',
+                          marginBottom: '16px',
+                        }}
+                      >
+                        {item.a}
+                      </p>
+                      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleVote(item.id); }}
                           style={{
-                            fontSize: '15px',
-                            fontWeight: 600,
-                            color: isOpen ? '#c4b5fd' : 'var(--color-text-primary)',
-                            lineHeight: 1.4,
-                            transition: 'color 0.2s',
-                          }}
-                        >
-                          {item.q}
-                        </span>
-                        <span
-                          style={{
-                            flexShrink: 0,
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '50%',
-                            background: isOpen
-                              ? 'linear-gradient(135deg, rgba(99,102,241,0.4), rgba(139,92,246,0.4))'
-                              : 'rgba(99,102,241,0.1)',
-                            border: `1px solid ${isOpen ? 'rgba(99,102,241,0.5)' : 'rgba(99,102,241,0.2)'}`,
+                            fontSize: '12px',
+                            color: '#818cf8',
+                            background: 'rgba(99,102,241,0.08)',
+                            border: '1px solid rgba(99,102,241,0.18)',
+                            borderRadius: '20px',
+                            padding: '5px 16px',
+                            cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'center',
-                            color: isOpen ? '#a5b4fc' : 'var(--color-text-secondary)',
-                            fontSize: '16px',
-                            fontWeight: 300,
-                            transition: 'all 0.25s',
-                            transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+                            gap: '6px',
+                            transition: 'background 0.2s',
                           }}
+                          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(99,102,241,0.18)')}
+                          onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(99,102,241,0.08)')}
                         >
-                          +
-                        </span>
-                      </button>
-
-                      {isOpen && (
-                        <div
+                          <ThumbsUp size={12} /> Helpful
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleShare(item.q); }}
                           style={{
-                            padding: '0 24px 22px',
-                            borderTop: '1px solid rgba(99,102,241,0.12)',
-                            marginTop: '-2px',
+                            fontSize: '12px',
+                            color: '#6b7280',
+                            background: 'rgba(255,255,255,0.04)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            borderRadius: '20px',
+                            padding: '5px 16px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            transition: 'background 0.2s',
                           }}
+                          onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.08)')}
+                          onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
                         >
-                          <p
-                            style={{
-                              color: 'var(--color-text-secondary)',
-                              fontSize: '14px',
-                              lineHeight: 1.75,
-                              paddingTop: '16px',
-                            }}
-                          >
-                            {item.a}
-                          </p>
-                        </div>
-                      )}
+                          📋 Share
+                        </button>
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))
+                  )}
+                </div>
+              );
+            })}
+          </div>
         )}
 
-        {/* Bottom CTA */}
+        {/* ── Bottom CTA ── */}
         <div
           style={{
-            marginTop: '56px',
-            padding: '40px',
-            background: 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1))',
-            border: '1px solid rgba(99,102,241,0.2)',
+            marginTop: '60px',
+            padding: '48px 40px',
+            background:
+              'linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.04))',
             borderRadius: '24px',
+            border: '1px solid rgba(99,102,241,0.12)',
             textAlign: 'center',
-            backdropFilter: 'blur(12px)',
           }}
         >
-          <div style={{ fontSize: '36px', marginBottom: '12px' }}>💬</div>
+          <MessageCircle size={36} style={{ color: '#6366f1', marginBottom: '14px' }} />
           <h3
             style={{
-              fontSize: '20px',
+              color: 'white',
+              fontSize: '22px',
               fontWeight: 700,
-              color: 'var(--color-text-primary)',
               marginBottom: '8px',
             }}
           >
             Still have questions?
           </h3>
-          <p
-            style={{
-              color: 'var(--color-text-secondary)',
-              fontSize: '14px',
-              marginBottom: '24px',
-              lineHeight: 1.6,
-            }}
-          >
-            Our support team is here to help. Reach out and we'll get back to you within 24 hours.
+          <p style={{ color: '#9ca3af', marginBottom: '28px', fontSize: '14px', lineHeight: 1.6 }}>
+            Our support team is here to help. We typically respond within 24 hours.
           </p>
-          <Link
-            to="/contact"
+          <button
+            onClick={() => navigate('/contact')}
             style={{
-              display: 'inline-block',
-              padding: '12px 32px',
+              padding: '12px 36px',
               background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-              borderRadius: '12px',
-              color: '#fff',
+              border: 'none',
+              borderRadius: '30px',
+              color: 'white',
+              fontSize: '14px',
               fontWeight: 600,
-              fontSize: '15px',
-              textDecoration: 'none',
-              boxShadow: '0 0 24px rgba(99,102,241,0.35)',
-              transition: 'opacity 0.2s',
+              cursor: 'pointer',
+              boxShadow: '0 0 28px rgba(99,102,241,0.35)',
+              transition: 'opacity 0.2s, transform 0.2s',
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.85')}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; }}
           >
             Contact Support
-          </Link>
+          </button>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
-}
+};
+
+export default FAQPage;
