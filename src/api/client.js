@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app';
+const API_URL = import.meta.env.VITE_API_URL || 'https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app';
 
 const api = axios.create({
   baseURL: API_URL,

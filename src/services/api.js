@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app';
+const API_URL = import.meta.env.VITE_API_URL || 'https://estateflow-backend-mt7ox7s2k-aqsasaher5995-rgbs-projects.vercel.app';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -14,5 +14,18 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Auto-logout on 401 responses
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;
